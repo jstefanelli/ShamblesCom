@@ -27,11 +27,29 @@ export class SPA {
 	}
 
 	static navigate(targetUrl: string, method?: "POST"|"GET"|"PATCH"|"PUT"|"DELETE", requestData?: Map<string, any>) : Promise<SPA> {
-		let body = (method != "GET" && method != "DELETE") && requestData ? JSON.stringify(requestData) : null; 
 		method = (typeof(method) == "string") ? method : "GET";
+		let body = (method != "GET" && method != "DELETE") && requestData ? JSON.stringify(requestData) : null;
+		let endUrl = targetUrl;
+
+		if(requestData && (method == "GET" || method == "DELETE")) {
+			if (endUrl.indexOf("?") < 0) {
+				endUrl += "?";
+			} else {
+				endUrl += "&";
+			}
+
+			let first = true;
+			requestData.forEach((val, key) => {
+				if (!first)
+					endUrl += "&";
+
+				endUrl += encodeURIComponent(key) + "=" + encodeURIComponent(val);
+				first = false;
+			});
+		}
 
 		return new Promise<SPA>((resolve, reject) => {
-			fetch(targetUrl, {
+			fetch(endUrl, {
 				method: method,
 				body: body,
 				headers: {
@@ -45,7 +63,7 @@ export class SPA {
 
 				response.json().then((jsonData) => {
 					let myData: SPAData = {
-						url: targetUrl,
+						url: endUrl,
 						redraw: (typeof(jsonData.redraw) == 'boolean') ? jsonData.redraw : false,
 						view: (typeof(jsonData.view) == 'string') ? jsonData.view : null,
 						data: jsonData.data,
@@ -60,8 +78,8 @@ export class SPA {
 		});
 	}
 
-	public render() {
-		//TODO: Render page
+	public render(pushState?: boolean) {
+		pushState = (pushState === undefined) ? true : !!pushState;
 
 		this.view = this.view != null ? this.view : ((SPA.CurrentPage) ? SPA.CurrentPage.view : "index" );
 
@@ -74,12 +92,16 @@ export class SPA {
 		
 		SPA.CurrentPage = this;
 		if(window.history) {
-			window.history.pushState({
+			let state = {
 				view: this.view,
 				title: this.title,
 				url: this.url,
 				data: this.data
-			}, this.title, this.url);
+			};
+			if (pushState)
+				window.history.pushState(state, this.title, this.url);
+			else
+				window.history.replaceState(state, this.title, this.url);
 		}
 	}
 
@@ -104,7 +126,7 @@ export class SPA {
 					title: event.state.title,
 					redraw: true,
 					view: event.state.view
-				}).render();
+				}).render(false);
 			});
 		}
 
@@ -115,7 +137,7 @@ export class SPA {
 		}
 
 		SPA.navigate(path).then((page) => {	
-			page.render()
+			page.render(false)
 		});
 	}
 }

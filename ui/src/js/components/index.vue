@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="main">
 		<spa-link target="/test">Test!</spa-link>
 	</div>
 </template>
@@ -14,3 +14,21 @@ export default Vue.extend({
 	}
 })
 </script>
+
+<style lang="scss" scoped>
+	.main {
+		width: 100vw;
+		min-height: 100vh;
+		background-color: #444;
+
+		a {
+			text-decoration: none;
+			color: rgb(64, 128, 255);
+		}
+
+		a:visited {
+			color: rgb(48, 80, 160);
+			text-decoration: none;
+		}
+	}
+</style>
