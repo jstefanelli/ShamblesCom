@@ -1,6 +1,17 @@
 <template>
 	<div class="main">
-		<spa-link target="/test">Test!</spa-link>
+		<div class="title-screen">
+			<div class="background">
+
+			</div>
+			<div class="foreground center-container">
+				<div class="title center-item">
+					<p class="small">THE</p>
+					<p class="large">SHAMBLES</p>
+					<p class="justified">CHAMPIONSHIP</p>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -15,20 +26,67 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
-	.main {
-		width: 100vw;
-		min-height: 100vh;
-		background-color: #444;
+<style lang="scss">
 
-		a {
-			text-decoration: none;
-			color: rgb(64, 128, 255);
-		}
+.title-screen {
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	overflow: hidden;
 
-		a:visited {
-			color: rgb(48, 80, 160);
-			text-decoration: none;
+	> .background {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+	}
+
+	> .foreground {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		
+
+		> .title {
+			font-style: italic;
+
+			> p {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+			}
+
+			> .small {
+				font-size: 30pt;
+				padding-left: 20pt;
+				line-height: 30pt;
+				font-weight: bold;
+			}
+
+			> .large {
+				font-style: italic;
+				font-weight: bolder;
+				font-size: 90pt;
+				padding-left: 5pt;
+				line-height: 75pt;
+			}
+
+			> .justified {
+				width: calc(100% - 20pt);
+				font-size: 35pt;
+				line-height: 35pt;
+				font-weight: bold;
+				text-align: justify;
+				text-justify: distribute;
+				padding-right: 100px;
+
+				&:after {
+					content: '';
+					display: inline-block;
+					width: 100%;
+				}
+			}
 		}
 	}
+}
+
 </style>

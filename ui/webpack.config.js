@@ -1,8 +1,8 @@
 const path = require('path');
-const process = require('process');
 const CSSExt = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 let source = path.resolve(__dirname, "src");
 let target = path.resolve(__dirname, "..", "server", "wwwroot");
@@ -41,13 +41,19 @@ module.exports = (env, argv) => {
 				{
 					test: /\.vue$/i,
 					use: ['vue-loader']
+				},
+				{
+					test: /\.ttf$/i,
+					use: ['url-loader']
 				}
 			]
 		},
 		resolve: {
 			extensions: [ '.ts', '.js', '.vue' ],
 			alias: {
-				'@': path.resolve(source, "js")
+				'@': path.resolve(source, "js"),
+				'#': path.resolve(source, 'style'),
+				'£': path.resolve(source, 'resources')
 			}
 		},
 		plugins: [
@@ -60,7 +66,12 @@ module.exports = (env, argv) => {
 				inject: false,
 				minify: dev ? false : 'auto'
 			}),
-			new VueLoaderPlugin()
+			new VueLoaderPlugin(),
+			/*new CopyWebpackPlugin({
+				patterns: [
+					{ from: 'src/resources', to: "" }
+				]
+			})*/
 		]
 	}
 };

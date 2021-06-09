@@ -17,7 +17,6 @@ namespace ShamblesCom.Server.Controllers {
 			ActionResult res = await HandleSPARequest();
 
 			if (res != null) {
-				Console.WriteLine("Serving homepage");
 				return res;
 			}
 

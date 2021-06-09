@@ -1,6 +1,6 @@
 <template>
-  <div>
-	  <p>Test component bruddah!</p>
+  <div class="main">
+	  <div>Test component bruddah!</div>
 	  <div v-if="data != null">
 		  Test: {{ data.test }}
 	  </div>
