@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ShamblesCom.Server.SPA;
 
 namespace ShamblesCom.Server.Controllers {
+	[Route("/test2")]
 	public class Test2Controller : Controller {
 		public Test2Controller() : base() {
 
@@ -13,7 +14,6 @@ namespace ShamblesCom.Server.Controllers {
 
 		[HttpGet]
 		[SPA]
-		[ResponseCache(VaryByHeader = "X-SPA-Data", Duration = 30, Location = ResponseCacheLocation.Client)]
 		public async Task<ActionResult> Get() {
 
 			return new JsonResult(new SPAData() {

@@ -20,18 +20,19 @@ namespace ShamblesCom.Server.SPA {
 
 		public async Task InvokeAsync(HttpContext context) {
 			if (context.GetEndpoint()?.Metadata?.GetMetadata<SPAAttribute>() != null) {
-				Console.WriteLine($"SPA Middleware has header: {context.Request.Headers.ContainsKey("X-SPA-Data")}");
+
+				context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue() {
+					Public = false,
+					MaxAge = TimeSpan.FromSeconds(0),
+					MustRevalidate = true
+				};
+
 				if (context.Request.Headers.TryGetValue("X-SPA-Data", out StringValues spa) && spa.ToString() == "data") {
-					Console.WriteLine("SPA Middleware found header");
 					await Next(context);
 					return;
 				}
 				
 				string filePath = Path.Combine(Env.ContentRootPath, "wwwroot", "index.html");
-				context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue() {
-					Public = false,
-					MaxAge = TimeSpan.FromSeconds(0)
-				};
 				await new PhysicalFileResult(filePath, "text/html").ExecuteResultAsync(new ActionContext() {
 					HttpContext = context
 				});

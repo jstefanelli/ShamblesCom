@@ -48,8 +48,17 @@ export class SPA {
 			});
 		}
 
+		let saveUrl = endUrl;
+		if (endUrl.indexOf("?") >= 0) {
+			endUrl += ((endUrl.endsWith("?") ? "" : "&") + "spa=data");
+		} else {
+			endUrl += "?spa=data";
+		}
+
 		return new Promise<SPA>((resolve, reject) => {
+			console.log("Target: ", endUrl);
 			fetch(endUrl, {
+				cache: "no-cache",
 				method: method,
 				body: body,
 				headers: {
@@ -63,7 +72,7 @@ export class SPA {
 
 				response.json().then((jsonData) => {
 					let myData: SPAData = {
-						url: endUrl,
+						url: saveUrl,
 						redraw: (typeof(jsonData.redraw) == 'boolean') ? jsonData.redraw : false,
 						view: (typeof(jsonData.view) == 'string') ? jsonData.view : null,
 						data: jsonData.data,
@@ -98,10 +107,14 @@ export class SPA {
 				url: this.url,
 				data: this.data
 			};
+
+			let safePath = this.url.startsWith("/") ? this.url : '/' + this.url;
+			let url = window.location.origin + safePath;
+			console.log("Pushing url: ", url);
 			if (pushState)
-				window.history.pushState(state, this.title, this.url);
+				window.history.pushState(state, this.title, url);
 			else
-				window.history.replaceState(state, this.title, this.url);
+				window.history.replaceState(state, this.title, url);
 		}
 	}
 

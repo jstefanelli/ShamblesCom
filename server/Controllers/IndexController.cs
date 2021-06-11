@@ -14,7 +14,6 @@ namespace ShamblesCom.Server.Controllers {
 
 		[HttpGet]
 		[SPA]
-		[ResponseCache(VaryByHeader = "X-SPA-Data", Duration = 30, Location = ResponseCacheLocation.Client)]
 		public async Task<ActionResult> Get() {
 			return new JsonResult(new SPAData() {
 				View = "index",

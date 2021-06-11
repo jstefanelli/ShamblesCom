@@ -4,13 +4,13 @@
 			<div class="background">
 
 			</div>
-			<div class="foreground center-container">
+			<spa-link target="test" class="foreground center-container">
 				<div class="title center-item">
 					<p class="small">THE</p>
 					<p class="large">SHAMBLES</p>
 					<p class="justified">CHAMPIONSHIP</p>
 				</div>
-			</div>
+			</spa-link>
 		</div>
 	</div>
 </template>
