@@ -4,20 +4,18 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ShamblesCom.Server.SPA;
 
 namespace ShamblesCom.Server.Controllers {
-	public class TestController : SPAController {
-		public TestController(IWebHostEnvironment env) : base(env) {
+	public class TestController : Controller {
+		public TestController() : base() {
 
 		}
 
 		[HttpGet]
+		[SPA]
 		[ResponseCache(VaryByHeader = "X-SPA-Data", Duration = 30, Location = ResponseCacheLocation.Client)]
 		public async Task<ActionResult> Get() {
-			ActionResult res = await HandleSPARequest();
-
-			if (res != null)
-				return res;
 
 			return new JsonResult(new SPAData() {
 				View = "test",

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShamblesCom.Server.SPA;
 
 namespace ShamblesCom.Server
 {
@@ -30,6 +31,7 @@ namespace ShamblesCom.Server
 
             app.UseRouting();
 
+            SPAMiddleware.UseSPAMiddlware(app);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -37,6 +39,7 @@ namespace ShamblesCom.Server
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            
         }
     }
 }
