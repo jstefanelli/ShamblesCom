@@ -3,14 +3,11 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import {Vue, Component, Prop } from 'vue-property-decorator';
 
-export default Vue.extend({
-	data() { 
-		return {
-			dynamicComponent: null,
-			viewData: null
-		}
-	}
-});
+@Component
+export default class extends Vue{
+	dynamicComponent: any = null;
+	viewData: any = {};
+}
 </script>

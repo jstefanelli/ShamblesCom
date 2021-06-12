@@ -1,2 +1,24 @@
 $bg-color: #444;
-$fg-color: #eee; 
+$fg-color: #eee;
+
+$titlebar-color: #f44;
+
+$bg-color-darkish: darken($bg-color, 5%);
+$bg-color-dark: darken($bg-color, 10%);
+
+$renault-main: #f4df2a;
+$renault-secondary: #000;
+
+$mclaren-main: #fe9f00;
+$mclaren-secondary: #0077e7;
+
+$at-main: #181d25;
+$at-secondary: #eee;
+
+$rp-main: #feaedb;
+$rp-secondary: #0c6df2;
+
+$rb-main: #292f3b;
+$rb-secondary: #fd2e40;
+$rb-fallback: #feca2d;
+

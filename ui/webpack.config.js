@@ -43,7 +43,7 @@ module.exports = (env, argv) => {
 					use: ['vue-loader']
 				},
 				{
-					test: /\.ttf$/i,
+					test: /\.(ttf)|(png)|(jpg)|(jpeg)$/i,
 					use: ['url-loader']
 				}
 			]

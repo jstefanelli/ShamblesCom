@@ -7,4 +7,25 @@ a {
 		text-decoration: none;
 		color: unset;
 	}
+
+	&.twitch-link {
+		padding-left: 20px;
+		background-image: url('£/images/twitch-app-logo.jpg');
+		background-repeat: no-repeat;
+		background-size: contain;
+	}
+
+	&.twitter-link {
+		padding-left: 20px;
+		background-image: url('£/images/twitter-logo.jpg');
+		background-repeat: no-repeat;
+		background-size: contain;
+	}
+	
+	&.youtube-link {
+		padding-left: 20px;
+		background-image: url('£/images/youtube-logo.png');
+		background-repeat: no-repeat;
+		background-size: contain;
+	}
 }

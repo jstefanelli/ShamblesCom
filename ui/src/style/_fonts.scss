@@ -25,3 +25,41 @@
 	font-weight: 76;
 	font-style: italic;
 }
+
+$font-l-height: 25pt;
+$font-l2-height: 35pt;
+$font-xl-height: 50pt;
+$font-xxl-height: 75pt;
+
+.font-l {
+	font-size: $font-l-height;
+}
+
+.font-l2 {
+	font-size: $font-l2-height,
+}
+
+.font-xl {
+	font-size: $font-xl-height;
+}
+
+.font-xxl {
+	font-size: $font-xxl-height;
+}
+
+.emoji {
+	font-style: normal;
+	font-family: sans-serif;
+}
+
+i {
+	&.f2-first {
+		font-style: normal;
+		color: #ffcc00;
+	}
+
+	&.f2-second {
+		font-style: normal;
+		color: #ff6600;
+	}
+}

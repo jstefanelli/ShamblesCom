@@ -7,6 +7,7 @@
 		"noImplicitThis": true,
 		"moduleResolution": "node",
 		"baseUrl": "./src",
+		"experimentalDecorators": true,
 		"paths": {
 			"@/*": [ "js/*" ]
 		}
