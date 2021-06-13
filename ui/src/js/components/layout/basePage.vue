@@ -1,6 +1,6 @@
 <template>
 	<div class="fill-w">
-		<header class="titlebar flex align-center">
+		<header class="titlebar flex align-center font-m">
 			<div class="buttons flex-grow flex align-center">
 				<span class="flex-grow" />
 				<spa-link target="/drivers">

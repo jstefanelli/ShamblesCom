@@ -1,5 +1,5 @@
 <template>
-	<component :is="dynamicComponent" :data="viewData" />
+	<component :is="dynamicComponent" v-bind="viewData" />
 </template>
 
 <script lang="ts">

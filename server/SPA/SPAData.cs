@@ -11,7 +11,7 @@ namespace ShamblesCom.Server.SPA {
 		public bool Redraw { get; set; } = false;
 
 		[JsonPropertyName("data")]
-		public Dictionary<string, object> Data { get; set; } = null;
+		public object Data { get; set; } = null;
 
 		[JsonPropertyName("title")]
 		public string Title { get; set; } = null;

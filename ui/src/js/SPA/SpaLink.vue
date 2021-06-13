@@ -5,23 +5,20 @@
 </template>
 
 <script lang="ts" >
-import Vue from 'vue';
-import SPA from '@/SPA/spa';
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import SPA, { HttpMethod } from '@/SPA/spa';
 
-export default Vue.extend({
-	props: {
-		target: {
-			type: String,
-			default: "/"
-		}
-	},
-	methods: {
-		navigate(ev: Event) {
-			ev.preventDefault();
-			ev.stopPropagation();
-			SPA.navigate(this.target).then((page) => page.render()).catch((error) => console.error("[SPA Link] Error: ", error));
-		}
+@Component
+export default class extends Vue {
+	@Prop({default: "/"}) public target: string;
+	@Prop({default: "GET"}) public method: HttpMethod;
+	@Prop({default: null}) public reqData: any;
+
+	navigate(ev: Event) {
+		ev.preventDefault();
+		ev.stopPropagation();
+		SPA.navigate(this.target, this.method, this.reqData).then((page) => page.render()).catch((error) => console.error("[SPA Link] Error: ", error));
 	}
-})
+}
 
 </script>

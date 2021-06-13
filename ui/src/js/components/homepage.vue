@@ -66,7 +66,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import BasePage from './layout/basePage.vue';
-import Section from './homepage/section.vue';
+import Section from './layout/section.vue';
 import TeamBanner from './layout/teamBanner.vue';
 import Race from '@/data/Race';
 

@@ -8,6 +8,8 @@ export interface SPAData {
 	url: string
 }
 
+export type HttpMethod = "POST"|"GET"|"PATCH"|"PUT"|"DELETE";
+
 export class SPA {
 	private static CurrentPage: SPA = null;
 	private static VueInstance: Vue = null;
@@ -26,26 +28,34 @@ export class SPA {
 		this.url = (spaData) ? spaData.url : "/";
 	}
 
-	static navigate(targetUrl: string, method?: "POST"|"GET"|"PATCH"|"PUT"|"DELETE", requestData?: Map<string, any>) : Promise<SPA> {
+	static navigate(targetUrl: string, method?: HttpMethod, requestData?: any) : Promise<SPA> {
 		method = (typeof(method) == "string") ? method : "GET";
-		let body = (method != "GET" && method != "DELETE") && requestData ? JSON.stringify(requestData) : null;
+		let body: URLSearchParams = null;
 		let endUrl = targetUrl;
 
-		if(requestData && (method == "GET" || method == "DELETE")) {
-			if (endUrl.indexOf("?") < 0) {
-				endUrl += "?";
-			} else {
-				endUrl += "&";
-			}
-
-			let first = true;
-			requestData.forEach((val, key) => {
-				if (!first)
+		if(requestData) {
+			if(method == "GET" || method == "DELETE") {
+				if (endUrl.indexOf("?") < 0) {
+					endUrl += "?";
+				} else {
 					endUrl += "&";
+				}
 
-				endUrl += encodeURIComponent(key) + "=" + encodeURIComponent(val);
-				first = false;
-			});
+				let first = true;
+				for(const [key, val] of Object.entries(requestData)) {
+					if (!first)
+						endUrl += "&";
+
+					endUrl += encodeURIComponent(key) + "=" + encodeURIComponent(typeof(val) == "object" ? JSON.stringify(val) : String(val));
+					first = false;
+				}
+			} else {
+				body = new URLSearchParams();
+				for(const [k, v] of Object.entries(requestData)) {
+					body.append(k, typeof(v) == "object" ? JSON.stringify(v) : String(v));
+				}
+
+			}
 		}
 
 		let saveUrl = endUrl;

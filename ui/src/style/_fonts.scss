@@ -1,35 +1,12 @@
-@font-face {
-	font-family: 'Neue Haas', sans-serif;
-	src: url(£/fonts/nhaasgrotesktxpro-55rg.ttf) format('truetype');
-	font-weight: 55;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Neue Haas', sans-serif;
-	src: url(£/fonts/nhaasgrotesktxpro-56it.ttf) format('truetype');
-	font-weight: 56;
-	font-style: italic;
-}
-
-@font-face {
-	font-family: 'Neue Haas', sans-serif;
-	src: url(£/fonts/nhaasgrotesktxpro-75bd.ttf) format('truetype');
-	font-weight: 75;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Neue Haas', sans-serif;
-	src: url(£/fonts/nhaasgrotesktxpro-76bdit.ttf) format('truetype');
-	font-weight: 76;
-	font-style: italic;
-}
-
+$font-m-height: 16pt;
 $font-l-height: 25pt;
 $font-l2-height: 35pt;
 $font-xl-height: 50pt;
 $font-xxl-height: 75pt;
+
+.font-m {
+	font-size: $font-m-height;
+}
 
 .font-l {
 	font-size: $font-l-height;

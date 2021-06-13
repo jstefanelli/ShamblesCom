@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ShamblesCom.Server.SPA;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShamblesCom.Server.Controllers {
 	[Route("/")]
@@ -14,6 +15,7 @@ namespace ShamblesCom.Server.Controllers {
 
 		[HttpGet]
 		[SPA]
+		[Authorize]
 		public async Task<ActionResult> Get() {
 			return new JsonResult(new SPAData() {
 				View = "index",
