@@ -26,6 +26,14 @@ namespace ShamblesCom.Server.DB {
 			builder.Entity<ShamblesUser>()
 				.HasIndex(u => u.Email)
 				.IsUnique();
+
+			builder.Entity<Driver>()
+				.HasIndex(d => d.Nickname)
+				.IsUnique();
+
+			builder.Entity<Game>()
+				.HasIndex(d => d.Name)
+				.IsUnique();
 		}
 	}
 }

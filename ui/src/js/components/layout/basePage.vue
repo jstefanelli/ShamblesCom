@@ -13,8 +13,7 @@
 				<span class="flex-grow" />
 			</div>
 			<div class="logo">
-				<spa-link href="/">
-				</spa-link>
+				<spa-link target="/homepage" />
 			</div>
 			<div class="buttons flex-grow flex align-center">
 				<span class="flex-grow" />

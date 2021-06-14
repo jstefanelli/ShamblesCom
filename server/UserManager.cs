@@ -26,15 +26,24 @@ namespace ShamblesCom.Server {
 			if (await Task.Run(() => BCrypt.Net.BCrypt.Verify(password, user.HashedPassword)).ConfigureAwait(false)) {
 				ClaimsIdentity identity = new ClaimsIdentity(new [] {
 					new Claim(ClaimTypes.Email, user.Email),
+					new Claim(ClaimTypes.Role, "editor"),
 					new Claim("UserId", user.Id.ToString())
-				}, CookieAuthenticationDefaults.AuthenticationScheme);
+				}, "Cookies", ClaimTypes.Email, ClaimTypes.Role);
 
-				await context.SignInAsync(new ClaimsPrincipal(identity));
+				await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), new AuthenticationProperties {
+					IsPersistent = false,
+					AllowRefresh = true,
+					IssuedUtc = DateTime.UtcNow
+				});
 
 				return user;
 			}
 
 			return null;
+		}
+
+		public static async Task Logout(HttpContext context) {
+			await context.SignOutAsync();
 		}
 
 		public static async Task<RegisterResult> Register(ShamblesDBContext db, string email, string password) {

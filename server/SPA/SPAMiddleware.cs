@@ -42,7 +42,7 @@ namespace ShamblesCom.Server.SPA {
 			await Next(context);
 		}
 
-		public static void UseSPAMiddlware(IApplicationBuilder app) {
+		public static void UseSPAMiddleware(IApplicationBuilder app) {
 			app.UseMiddleware<SPAMiddleware>();
 		}
 	}

@@ -12,6 +12,7 @@ namespace ShamblesCom.Server.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ValidateModel]
     public class GameController : ControllerBase
     {
         private readonly ShamblesDBContext _context;

@@ -66,7 +66,6 @@ export class SPA {
 		}
 
 		return new Promise<SPA>((resolve, reject) => {
-			console.log("Target: ", endUrl);
 			fetch(endUrl, {
 				cache: "no-cache",
 				method: method,
@@ -82,7 +81,7 @@ export class SPA {
 
 				response.json().then((jsonData) => {
 					let myData: SPAData = {
-						url: saveUrl,
+						url: jsonData.url ?? saveUrl,
 						redraw: (typeof(jsonData.redraw) == 'boolean') ? jsonData.redraw : false,
 						view: (typeof(jsonData.view) == 'string') ? jsonData.view : null,
 						data: jsonData.data,
@@ -120,7 +119,6 @@ export class SPA {
 
 			let safePath = this.url.startsWith("/") ? this.url : '/' + this.url;
 			let url = window.location.origin + safePath;
-			console.log("Pushing url: ", url);
 			if (pushState)
 				window.history.pushState(state, this.title, url);
 			else

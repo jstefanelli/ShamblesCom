@@ -12,11 +12,12 @@ namespace ShamblesCom.Server.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TracknController : ControllerBase
+    [ValidateModel]
+    public class TrackController : ControllerBase
     {
         private readonly ShamblesDBContext _context;
 
-        public TracknController(ShamblesDBContext context)
+        public TrackController(ShamblesDBContext context)
         {
             _context = context;
         }

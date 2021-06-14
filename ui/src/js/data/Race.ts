@@ -1,10 +1,23 @@
+import Season from "./Season";
+import Track from "./Track";
+
 export enum RaceType {
 	MainShambles,
 	F2Shambles,
 	Other
 }
 
-export default class {
+export default interface Race {
+	id: number;
+	uuid: string;
+	dateTime: string;
+	season: Season;
+	track: Track;
+	identifier: string
+	fullName: string;
+}
+
+export class RaceClass {
 	public type: RaceType = RaceType.MainShambles;
 	public country: string = "spain";
 	public time: Date = new Date('2021-12-1 21:30');

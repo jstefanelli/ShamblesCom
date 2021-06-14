@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +17,26 @@ namespace ShamblesCom.Server.Controllers {
 		[HttpGet("/login")]
 		[SPA]
 		public async Task<ActionResult> Loginpage() {
+			if (HttpContext.User?.Identity?.IsAuthenticated == true) {
+				return Redirect("/admin");
+			}
+
 			return new JsonResult(new SPAData() {
 				View = "user/login",
-				Data = null
+				Data = null,
+				Url = "/login"
 			});
+		}
+
+		[HttpPost("/logout")]
+		[HttpGet("/logout")]
+		[SPA]
+		public async Task<ActionResult> Logout() {
+			if (HttpContext.User?.Identity.IsAuthenticated == true) {
+				await UserManager.Logout(HttpContext);
+			}
+
+			return Redirect("/homepage");
 		}
 
 		[HttpPost("/login")]
@@ -35,7 +52,8 @@ namespace ShamblesCom.Server.Controllers {
 					errors = new {
 						name = "Invalid email or password"
 					}
-				}
+				},
+				Url = "/login"
 			}) /*{
 				StatusCode = StatusCodes.Status401Unauthorized
 			}*/;

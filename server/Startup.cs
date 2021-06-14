@@ -21,9 +21,15 @@ namespace ShamblesCom.Server
         {
             services.AddControllers();
             services.AddEntityFrameworkSqlite().AddDbContext<ShamblesDBContext>();
-            services.AddAuthentication(options => {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options => {
+                options.Cookie.Name = "shambles_auth";
+                options.ExpireTimeSpan = TimeSpan.FromHours(8);
+                options.SlidingExpiration = true;
+                options.AccessDeniedPath = "/denied";
+                options.LoginPath = "/login";
+                options.LogoutPath = "/";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,16 +46,10 @@ namespace ShamblesCom.Server
                 await UserManager.Seed(client);
             }
 
-            app.UseCookiePolicy(new CookiePolicyOptions() {
-                MinimumSameSitePolicy = SameSiteMode.Strict
-            });
-
-            app.UseRouting();
-
             app.UseAuthentication();
-
+            app.UseRouting();
             app.UseAuthorization();
-            SPAMiddleware.UseSPAMiddlware(app);
+            SPAMiddleware.UseSPAMiddleware(app);
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

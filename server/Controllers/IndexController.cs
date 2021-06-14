@@ -20,7 +20,8 @@ namespace ShamblesCom.Server.Controllers {
 			return new JsonResult(new SPAData() {
 				View = "index",
 				Redraw = false,
-				Data = null
+				Data = null,
+				Url = "/"
 			});
 
 		}

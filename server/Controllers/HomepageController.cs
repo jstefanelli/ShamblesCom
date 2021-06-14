@@ -8,23 +8,15 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ShamblesCom.Server.Controllers {
 	[Route("/homepage")]
-	public class HomepageController : Controller {
+	public class HomepageController : ControllerBase {
 		[HttpGet]
 		[SPA]
 		public async Task<ActionResult> Get() {
-			/*await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(new [] {
-				new Claim(ClaimTypes.Email, "john@jstefanelli.com"),
-				new Claim(ClaimTypes.Name, "John Stefanelli")
-			}, CookieAuthenticationDefaults.AuthenticationScheme)), new AuthenticationProperties() {
-				AllowRefresh  = true,
-			});*/
-			await HttpContext.SignOutAsync();
-
-
 			return new JsonResult(new SPAData() {
 				View = "homepage",
 				Redraw = false,
-				Data = null
+				Data = null,
+				Url = "/homepage"
 			});
 
 		}

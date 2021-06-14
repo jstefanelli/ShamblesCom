@@ -15,5 +15,7 @@ namespace ShamblesCom.Server.SPA {
 
 		[JsonPropertyName("title")]
 		public string Title { get; set; } = null;
+		[JsonPropertyName("url")]
+		public string Url { get; set; } = null;
 	}
 }
