@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +22,9 @@ namespace ShamblesCom.Server.Controllers {
 			return new JsonResult(new SPAData() {
 				View = "admin/home",
 				Data = new {
-					
+					seasons = Db.Seasons.ToArray(),
+					games = Db.Games.ToArray(),
+					categories = Db.Categories.ToArray()
 				},
 				Url = "/admin"
 			});

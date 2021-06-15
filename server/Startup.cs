@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShamblesCom.Server.DB;
+using ShamblesCom.Server.DB.Seeders;
 using ShamblesCom.Server.SPA;
 
 namespace ShamblesCom.Server
@@ -19,7 +20,14 @@ namespace ShamblesCom.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddCors(options => {
+                options.AddDefaultPolicy(builder => {
+#if DEBUG
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+#endif
+                });
+            });
+            services.AddMvc();
             services.AddEntityFrameworkSqlite().AddDbContext<ShamblesDBContext>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options => {
@@ -33,7 +41,7 @@ namespace ShamblesCom.Server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -43,11 +51,15 @@ namespace ShamblesCom.Server
             using(var client = new ShamblesDBContext()) {
                 client.Database.EnsureCreated();
                 
-                await UserManager.Seed(client);
+                Task.Run(async () =>  { await UserManager.Seed(client);
+                await GameSeeder.SeedF12020(client);
+                await GameSeeder.SeedProjectCars2(client);
+                }).Wait();
             }
 
             app.UseAuthentication();
             app.UseRouting();
+            app.UseCors();
             app.UseAuthorization();
             SPAMiddleware.UseSPAMiddleware(app);
             app.UseEndpoints(endpoints =>

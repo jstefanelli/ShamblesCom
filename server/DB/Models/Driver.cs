@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ShamblesCom.Server.DB.Models {
@@ -7,6 +8,8 @@ namespace ShamblesCom.Server.DB.Models {
 		public int Id { get; set; }
 		public Guid Uuid { get; set; }
 		public string Nickname { get; set; }
+
+		public List<RaceResult> RaceResults { get; set; }
 
 	}
 }

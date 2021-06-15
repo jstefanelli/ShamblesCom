@@ -7,10 +7,13 @@ namespace ShamblesCom.Server.DB.Models {
 		[Required]
 		public int Id { get; set; }
 		[Required]
+		public int DriverId { get; set; }
 		public Driver Driver { get; set; }
 		[Required]
+		public int TeamId { get; set; }
 		public Team Team { get; set; }
 		[Required]
+		public int RaceId { get; set; }
 		public Race Race { get; set; }
 		[Required]
 		[Range(0, int.MaxValue)]
@@ -18,5 +21,7 @@ namespace ShamblesCom.Server.DB.Models {
 		public bool Finished { get; set; } = true;
 		[Range(0, int.MaxValue)]
 		public int Penalties { get; set; } = 0;
+		[Required]
+		public int StartPosition { get; set;}
 	}
 }

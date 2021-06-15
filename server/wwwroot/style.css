@@ -118,6 +118,34 @@ main {
   padding-top: 100px;
   min-height: 100vh;
 }
+.modal {
+  position: fixed;
+  overflow-x: hidden;
+  overflow-y: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(43, 43, 43, 0.5);
+}
+.modal.fade-enter-active, .modal.fade-leave-active {
+  transition: opacity 0.25s;
+}
+.modal.fade-enter, .modal.fade-leave-to {
+  opacity: 0;
+}
+.modal .modal-main {
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  min-width: 600px;
+  padding: 25px;
+  background-color: #444;
+  border-right: 5px solid white;
+  border-top: 5px solid white;
+}
+.modal .modal-footer * {
+  margin-left: 10px;
+}
 .team-banner {
   display: flex;
   overflow: hidden;
@@ -175,40 +203,6 @@ main {
   font-weight: 76;
   font-style: italic;
 }
-.font-m {
-  font-size: 16pt;
-}
-
-.font-l {
-  font-size: 25pt;
-}
-
-.font-l2 {
-  font-size: 35pt;
-}
-
-.font-xl {
-  font-size: 50pt;
-}
-
-.font-xxl {
-  font-size: 75pt;
-}
-
-.emoji {
-  font-style: normal;
-  font-family: sans-serif;
-}
-
-i.f2-first {
-  font-style: normal;
-  color: #ffcc00;
-}
-i.f2-second {
-  font-style: normal;
-  color: #ff6600;
-}
-
 .font-m {
   font-size: 16pt;
 }
@@ -1216,40 +1210,6 @@ a.youtube-link {
   box-shadow: 0 0 5px 2px #373737;
 }
 
-.font-m {
-  font-size: 16pt;
-}
-
-.font-l {
-  font-size: 25pt;
-}
-
-.font-l2 {
-  font-size: 35pt;
-}
-
-.font-xl {
-  font-size: 50pt;
-}
-
-.font-xxl {
-  font-size: 75pt;
-}
-
-.emoji {
-  font-style: normal;
-  font-family: sans-serif;
-}
-
-i.f2-first {
-  font-style: normal;
-  color: #ffcc00;
-}
-i.f2-second {
-  font-style: normal;
-  color: #ff6600;
-}
-
 .flag {
   background-repeat: no-repeat;
   background-size: contain;
@@ -1325,6 +1285,7 @@ input[type=password].active {
 button,
 input[type=submit],
 .button {
+  cursor: pointer;
   padding: 10px;
   text-align: center;
   border-radius: 5px;
@@ -1357,4 +1318,16 @@ input[type=submit].disabled,
   background-color: #444;
   border: 1px solid #f44;
   color: #aeaeae;
+}
+button.passive,
+input[type=submit].passive,
+.button.passive {
+  background-color: #444;
+  border: 1px solid #f44;
+  color: #eee;
+}
+button.passive:hover,
+input[type=submit].passive:hover,
+.button.passive:hover {
+  background-color: #515151;
 }

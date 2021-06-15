@@ -1,3 +1,5 @@
+@import "fonts";
+
 @font-face {
 	font-family: 'Neue Haas', sans-serif;
 	src: url(£/fonts/nhaasgrotesktxpro-55rg.ttf) format('truetype');
@@ -24,4 +26,42 @@
 	src: url(£/fonts/nhaasgrotesktxpro-76bdit.ttf) format('truetype');
 	font-weight: 76;
 	font-style: italic;
+}
+
+
+.font-m {
+	font-size: $font-m-height;
+}
+
+.font-l {
+	font-size: $font-l-height;
+}
+
+.font-l2 {
+	font-size: $font-l2-height,
+}
+
+.font-xl {
+	font-size: $font-xl-height;
+}
+
+.font-xxl {
+	font-size: $font-xxl-height;
+}
+
+.emoji {
+	font-style: normal;
+	font-family: sans-serif;
+}
+
+i {
+	&.f2-first {
+		font-style: normal;
+		color: #ffcc00;
+	}
+
+	&.f2-second {
+		font-style: normal;
+		color: #ff6600;
+	}
 }

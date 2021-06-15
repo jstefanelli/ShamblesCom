@@ -27,6 +27,10 @@ namespace ShamblesCom.Server.DB {
 				.HasIndex(u => u.Email)
 				.IsUnique();
 
+			builder.Entity<Category>()
+				.HasIndex(c => c.Name)
+				.IsUnique();
+
 			builder.Entity<Driver>()
 				.HasIndex(d => d.Nickname)
 				.IsUnique();

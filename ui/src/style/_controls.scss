@@ -29,12 +29,14 @@ input[type="password"] {
 button,
 input[type="submit"],
 .button {
+	cursor: pointer;
 	padding: 10px;
 	text-align: center;
 	border-radius: 5px;
 	background-color: $titlebar-color;
 	transition-duration: .5s;
 	border: 0px solid $titlebar-color;
+	
 
 	&:not(.small) {
 		min-width: 125px;
@@ -54,5 +56,15 @@ input[type="submit"],
 		background-color: $bg-color;
 		border: 1px solid $titlebar-color;
 		color: darken($fg-color, 25%);
+	}
+
+	&.passive {
+		background-color: $bg-color;
+		border: 1px solid $titlebar-color;
+		color: $fg-color;
+
+		&:hover {
+			background-color: lighten($bg-color, 5%);
+		}
 	}
 }

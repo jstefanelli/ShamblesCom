@@ -77,7 +77,7 @@ namespace ShamblesCom.Server.Controllers.Api
         // POST: api/Season
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Season>> PostSeason(Season season)
+        public async Task<ActionResult<Season>> PostSeason([FromBody] Season season)
         {
             _context.Seasons.Add(season);
             await _context.SaveChangesAsync();

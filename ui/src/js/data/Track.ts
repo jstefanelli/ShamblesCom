@@ -1,4 +1,5 @@
 import Game from "./Game";
+import Race from "./Race";
 
 export default interface Track {
 	id: number;
@@ -6,4 +7,5 @@ export default interface Track {
 	game: Game;
 	name: string;
 	country: string;
+	races: Race[];
 }

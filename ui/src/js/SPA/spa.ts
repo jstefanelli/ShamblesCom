@@ -96,6 +96,10 @@ export class SPA {
 		});
 	}
 
+	static navigateAndRender(targetUrl: string, method?: HttpMethod, requestData?: any) {
+		SPA.navigate(targetUrl, method, requestData).then(page => page.render());
+	}
+
 	public render(pushState?: boolean) {
 		pushState = (pushState === undefined) ? true : !!pushState;
 

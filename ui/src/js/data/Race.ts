@@ -1,3 +1,4 @@
+import RaceResult from "./RaceResult";
 import Season from "./Season";
 import Track from "./Track";
 
@@ -11,10 +12,14 @@ export default interface Race {
 	id: number;
 	uuid: string;
 	dateTime: string;
+	seasonId: number;
 	season: Season;
+	trackId: number;
 	track: Track;
 	identifier: string
 	fullName: string;
+
+	raceResults: RaceResult[];
 }
 
 export class RaceClass {
