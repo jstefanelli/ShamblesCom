@@ -105,29 +105,40 @@ export class SPA {
 
 		this.view = this.view != null ? this.view : ((SPA.CurrentPage) ? SPA.CurrentPage.view : "index" );
 
-		if (this.redraw || !SPA.CurrentPage || SPA.CurrentPage.view != this.view) {
-			let component = require("@/components/" + this.view).default;
-			SPA.VueInstance.$children[0].$data.dynamicComponent = component;
-		}
-		
-		SPA.VueInstance.$children[0].$data.viewData = this.data;
-		
-		SPA.CurrentPage = this;
-		if(window.history) {
-			let state = {
-				view: this.view,
-				title: this.title,
-				url: this.url,
-				data: this.data
-			};
+		let next  = () => {
+			
+			SPA.VueInstance.$children[0].$data.viewData = this.data;
+			
+			SPA.CurrentPage = this;
+			if(window.history) {
+				let state = {
+					view: this.view,
+					title: this.title,
+					url: this.url,
+					data: this.data
+				};
 
-			let safePath = this.url.startsWith("/") ? this.url : '/' + this.url;
-			let url = window.location.origin + safePath;
-			if (pushState)
-				window.history.pushState(state, this.title, url);
-			else
-				window.history.replaceState(state, this.title, url);
+				let safePath = this.url.startsWith("/") ? this.url : '/' + this.url;
+				let url = window.location.origin + safePath;
+				if (pushState)
+					window.history.pushState(state, this.title, url);
+				else
+					window.history.replaceState(state, this.title, url);
+			}
+		};
+
+		if (this.redraw || !SPA.CurrentPage || SPA.CurrentPage.view != this.view) {
+			SPA.VueInstance.$children[0].$data.dynamicComponent = null;
+			SPA.VueInstance.$nextTick(() => {
+				let component = require("@/components/" + this.view).default;
+				SPA.VueInstance.$children[0].$data.dynamicComponent = component;
+				next();
+			});
+		}else {
+			next();
 		}
+
+		
 	}
 
 	static init() {

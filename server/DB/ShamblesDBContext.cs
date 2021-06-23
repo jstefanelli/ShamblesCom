@@ -13,6 +13,7 @@ namespace ShamblesCom.Server.DB {
 		public DbSet<RaceResult> RaceResults { get; set; }
 		public DbSet<Season> Seasons { get; set; }
 		public DbSet<Track> Tracks { get; set; }
+		public DbSet<Team> Teams { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 			optionsBuilder.UseSqlite($"Data Source={DBFilePath}");
@@ -38,6 +39,26 @@ namespace ShamblesCom.Server.DB {
 			builder.Entity<Game>()
 				.HasIndex(d => d.Name)
 				.IsUnique();
+
+			builder.Entity<Team>()
+				.HasOne(t => t.Season)
+				.WithMany(s => s.Teams);
+
+			builder.Entity<Team>()
+				.HasIndex(t => new { t.Name, t.SeasonId})
+				.IsUnique();
+
+			builder.Entity<Team>()
+				.Navigation<Season>(t => t.Season);
+
+			builder.Entity<Race>()
+				.HasOne(r => r.Season)
+				.WithMany(s => s.Races);
+
+			builder.Entity<Track>()
+				.HasIndex(t => new { t.GameId, t.Name })
+				.IsUnique();
+			
 		}
 	}
 }

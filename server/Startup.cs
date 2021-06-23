@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShamblesCom.Server.DB;
@@ -27,7 +28,7 @@ namespace ShamblesCom.Server
 #endif
                 });
             });
-            services.AddMvc();
+            services.AddControllers();
             services.AddEntityFrameworkSqlite().AddDbContext<ShamblesDBContext>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options => {
@@ -50,6 +51,7 @@ namespace ShamblesCom.Server
 
             using(var client = new ShamblesDBContext()) {
                 client.Database.EnsureCreated();
+                client.Database.Migrate();
                 
                 Task.Run(async () =>  { await UserManager.Seed(client);
                 await GameSeeder.SeedF12020(client);

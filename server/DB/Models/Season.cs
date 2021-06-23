@@ -12,14 +12,16 @@ namespace ShamblesCom.Server.DB.Models {
 		public string Name { get; set; }
 		[Required]
 		public int LastSeasonId { get; set; }
+		[JsonIgnore]
 		public Season Last { get; set; }
 		[Required]
 		public int NextSeasonId { get; set; }
 		public Season Next { get; set; }
 		[Required]
 		public int CategoryId { get; set; }
+		[JsonIgnore]
 		public Category Category { get; set; }
-
 		public List<Race> Races { get; set; }
+		public List<Team> Teams { get; set; }
 	}
 }

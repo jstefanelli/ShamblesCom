@@ -1,5 +1,6 @@
 import Category from "./Category";
 import Race from "./Race";
+import Team from "./Team";
 
 export default interface Season {
 	id: number;
@@ -8,5 +9,6 @@ export default interface Season {
 	next: Season;
 	categoryId: number;
 	category: Category;
-	races: Race[];
+	races?: Race[];
+	teams?: Team[];
 }

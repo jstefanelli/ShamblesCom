@@ -18,7 +18,8 @@ module.exports = (env, argv) => {
 		output: {
 			path: target,
 			filename: dev ? "[name].js" : "[name].[contenthash].js",
-			clean: true
+			clean: true,
+			publicPath: '/'
 		},
 		module: {
 			rules: [

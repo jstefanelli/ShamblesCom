@@ -141,7 +141,7 @@ body {
 	}
 
 	.margin-r-#{$val} {
-		margin-top: $val + px;
+		margin-right: $val + px;
 	}
 	
 	.margin-l-#{$val} {
@@ -171,7 +171,7 @@ body {
 	}
 
 	.padding-r-#{$val} {
-		padding-top: $val + px;
+		padding-right: $val + px;
 	}
 	
 	.padding-l-#{$val} {
