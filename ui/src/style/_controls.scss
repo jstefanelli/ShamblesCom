@@ -1,7 +1,9 @@
 @import "colors";
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="number"],
+input[type="date"] {
 	background-color: $bg-color-dark;
 	border: 2px solid transparentize($bg-color-dark, 0.5);
 	padding: 10px;
@@ -24,6 +26,20 @@ input[type="password"] {
 		border-color: $fg-color;
 		outline: none;
 	}
+
+	&.error {
+		border-color: red;
+	}
+}
+
+input[type="select"],
+select {
+	background-color: $bg-color-dark;
+	color: $fg-color;
+	border: 2px solid transparentize($bg-color-dark, 0.5);
+	border-radius: 5px;
+	font-size: 12pt;
+	padding: 10px;
 }
 
 button,

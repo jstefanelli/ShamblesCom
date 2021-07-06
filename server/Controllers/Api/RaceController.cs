@@ -46,7 +46,7 @@ namespace ShamblesCom.Server.Controllers.Api
         // PUT: api/Race/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRace(int id, Race race)
+        public async Task<IActionResult> PutRace(int id, [FromBody] Race race)
         {
             if (id != race.Id)
             {
@@ -77,8 +77,23 @@ namespace ShamblesCom.Server.Controllers.Api
         // POST: api/Race
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Race>> PostRace(Race race)
+        public async Task<ActionResult<Race>> PostRace([FromBody] Race race)
         {
+            Track track = await _context.Tracks.FindAsync(race.TrackId);
+            if (track == null) {
+                ModelState.AddModelError("TrackId", "The given track was not found");
+            }
+            Season season = await _context.Seasons.FindAsync(race.SeasonId);
+            if (season == null) {
+                ModelState.AddModelError("SeasonId", "The given season was not found");
+            }
+
+            race.DateTime = race.DateTime.ToUniversalTime();
+
+            if (!ModelState.IsValid) {
+                return new BadRequestObjectResult(ModelState);
+            }
+
             _context.Races.Add(race);
             await _context.SaveChangesAsync();
 

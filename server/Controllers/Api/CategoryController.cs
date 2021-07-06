@@ -13,7 +13,7 @@ namespace ShamblesCom.Server.Controllers.Api
     [Route("api/[controller]")]
     [ApiController]
     [ValidateModel]
-     public class CategoryController : ControllerBase
+    public class CategoryController : ControllerBase
     {
         private readonly ShamblesDBContext _context;
 

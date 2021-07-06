@@ -159,7 +159,7 @@ namespace ShamblesCom.Server.DB.Seeders {
 					},
 					new Track {
 						Name = "Yas Marina Circuit",
-						Country = "Abu Dhabi",
+						Country = "UAE",
 						GameId = F12020.Id
 					}
 				};

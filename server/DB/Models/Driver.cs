@@ -7,7 +7,7 @@ namespace ShamblesCom.Server.DB.Models {
 		[Key]
 		public int Id { get; set; }
 		public string Nickname { get; set; }
-
+		public int Number { get; set; }
 		public List<RaceResult> RaceResults { get; set; }
 
 	}

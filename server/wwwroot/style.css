@@ -330,6 +330,18 @@ body * {
 .flex .flex-grow {
   flex-grow: 1;
 }
+.flex .flex-grow-2 {
+  flex-grow: 2;
+}
+.flex .flex-grow-3 {
+  flex-grow: 3;
+}
+.flex .flex-grow-4 {
+  flex-grow: 4;
+}
+.flex .flex-grow-5 {
+  flex-grow: 5;
+}
 
 .color-red {
   color: red;
@@ -1171,6 +1183,22 @@ body * {
   height: calc(100vh - 100px);
 }
 
+.text-start {
+  text-align: start;
+}
+
+.text-end {
+  text-align: end;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.text-center {
+  text-align: center;
+}
+
 a {
   text-decoration: none;
   color: unset;
@@ -1257,7 +1285,9 @@ a.youtube-link {
 }
 
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=number],
+input[type=date] {
   background-color: #2b2b2b;
   border: 2px solid rgba(43, 43, 43, 0.5);
   padding: 10px;
@@ -1267,19 +1297,45 @@ input[type=password] {
   transition-duration: 0.25s;
 }
 input[type=text]:not(.sm),
-input[type=password]:not(.sm) {
+input[type=password]:not(.sm),
+input[type=number]:not(.sm),
+input[type=date]:not(.sm) {
   min-width: 250px;
 }
 input[type=text]:hover,
-input[type=password]:hover {
+input[type=password]:hover,
+input[type=number]:hover,
+input[type=date]:hover {
   border-color: rgba(238, 238, 238, 0.5);
 }
 input[type=text]:active, input[type=text]:focus, input[type=text].active,
 input[type=password]:active,
 input[type=password]:focus,
-input[type=password].active {
+input[type=password].active,
+input[type=number]:active,
+input[type=number]:focus,
+input[type=number].active,
+input[type=date]:active,
+input[type=date]:focus,
+input[type=date].active {
   border-color: #eee;
   outline: none;
+}
+input[type=text].error,
+input[type=password].error,
+input[type=number].error,
+input[type=date].error {
+  border-color: red;
+}
+
+input[type=select],
+select {
+  background-color: #2b2b2b;
+  color: #eee;
+  border: 2px solid rgba(43, 43, 43, 0.5);
+  border-radius: 5px;
+  font-size: 12pt;
+  padding: 10px;
 }
 
 button,

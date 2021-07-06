@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShamblesCom.Server.DB;
+using ShamblesCom.Server.DB.Seeders;
 using ShamblesCom.Server.SPA;
 
 namespace ShamblesCom.Server.Controllers {
@@ -16,16 +17,16 @@ namespace ShamblesCom.Server.Controllers {
 
 		[HttpGet("/login")]
 		[SPA]
-		public async Task<ActionResult> Loginpage() {
+		public Task<ActionResult> Loginpage() {
 			if (HttpContext.User?.Identity?.IsAuthenticated == true) {
-				return Redirect("/admin");
+				return Task.FromResult<ActionResult>(Redirect("/admin"));
 			}
 
-			return new JsonResult(new SPAData() {
+			return Task.FromResult<ActionResult>(new JsonResult(new SPAData() {
 				View = "user/login",
 				Data = null,
 				Url = "/login"
-			});
+			}));
 		}
 
 		[HttpPost("/logout")]

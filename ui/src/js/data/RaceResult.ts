@@ -14,4 +14,5 @@ export default interface RaceResult {
 	finished: boolean;
 	penalties: number;
 	startPosition: number;
+	points: number;
 }

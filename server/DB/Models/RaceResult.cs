@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using ShamblesCom.Server.DB.Models.Validators;
@@ -26,6 +27,8 @@ namespace ShamblesCom.Server.DB.Models {
 		[Required]
 		public int StartPosition { get; set;}
 		[Required]
-		public bool FastestLap { get; set; }
+		public TimeSpan FastestLap { get; set; }
+		[Required]
+		public int Points { get; set; }
 	}
 }

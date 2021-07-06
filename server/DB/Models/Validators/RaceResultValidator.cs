@@ -9,7 +9,7 @@ namespace ShamblesCom.Server.DB.Models.Validators {
 			if (raceResult == null)
 				return new ValidationResult("Target object is not a RaceResult");
 
-			if (raceResult.Team.Season != raceResult.Race.Season) {
+			if (raceResult.Team.SeasonId != raceResult.Race.SeasonId) {
 				return new ValidationResult("The race and team are from different seasons");
 			}
 

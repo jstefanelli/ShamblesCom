@@ -99,6 +99,22 @@ body {
 	.flex-grow {
 		flex-grow: 1;
 	}
+
+	.flex-grow-2 {
+		flex-grow: 2;
+	}
+
+	.flex-grow-3 {
+		flex-grow: 3;
+	}
+
+	.flex-grow-4 {
+		flex-grow: 4;
+	}
+
+	.flex-grow-5 {
+		flex-grow: 5;
+	}
 }
 
 .color-red {
@@ -195,4 +211,20 @@ body {
 
 .margin-fill-h {
 	height: calc(100vh - 100px);
+}
+
+.text-start {
+	text-align: start;
+}
+
+.text-end {
+	text-align: end;
+}
+
+.text-justify {
+	text-align: justify;
+}
+
+.text-center {
+	text-align: center;
 }

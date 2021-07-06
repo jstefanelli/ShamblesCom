@@ -14,6 +14,10 @@ export class SPA {
 	private static CurrentPage: SPA = null;
 	private static VueInstance: Vue = null;
 
+	public static get Current() : SPA {
+		return SPA.CurrentPage;
+	}
+
 	private data: object;
 	private view: string;
 	private redraw: boolean;
@@ -28,9 +32,11 @@ export class SPA {
 		this.url = (spaData) ? spaData.url : "/";
 	}
 
-	static navigate(targetUrl: string, method?: HttpMethod, requestData?: any) : Promise<SPA> {
+	static navigate(targetUrl: string, method?: HttpMethod, requestData?: any, useJsonBody?: boolean) : Promise<SPA> {
+		useJsonBody = useJsonBody === true;
 		method = (typeof(method) == "string") ? method : "GET";
 		let body: URLSearchParams = null;
+		let jsonBody: string = null;
 		let endUrl = targetUrl;
 
 		if(requestData) {
@@ -50,9 +56,13 @@ export class SPA {
 					first = false;
 				}
 			} else {
-				body = new URLSearchParams();
-				for(const [k, v] of Object.entries(requestData)) {
-					body.append(k, typeof(v) == "object" ? JSON.stringify(v) : String(v));
+				if (!useJsonBody) {
+					body = new URLSearchParams();
+					for(const [k, v] of Object.entries(requestData)) {
+						body.append(k, typeof(v) == "object" ? JSON.stringify(v) : String(v));
+					}
+				} else {
+					jsonBody = JSON.stringify(requestData);
 				}
 
 			}
@@ -69,14 +79,30 @@ export class SPA {
 			fetch(endUrl, {
 				cache: "no-cache",
 				method: method,
-				body: body,
+				body: useJsonBody ? jsonBody : body,
 				headers: {
-					"X-SPA-Data": "data"
-				}
+					"X-SPA-Data": "data",
+					'Content-Type': useJsonBody ? "application/json" : "application/x-www-form-urlencoded"
+				},
+				redirect: "follow"
 			}).then((response) => {
+
 				if (!response.ok) {
-					reject(response.statusText);
-					return;
+					response.text().then((txt) => {
+						let err = null;
+						try {
+							err = JSON.parse(txt);
+							return;
+						}catch(error) {
+							console.warn("[SPA] Failed to parse error contents: ", error);
+							err = response.statusText;
+						}
+
+						reject(err);
+					}).catch((err) => {
+						console.warn("[SPA] Failed to get error contents: ", err);
+						reject(response.statusText);
+					});
 				}
 
 				response.json().then((jsonData) => {
@@ -96,8 +122,15 @@ export class SPA {
 		});
 	}
 
-	static navigateAndRender(targetUrl: string, method?: HttpMethod, requestData?: any) {
-		SPA.navigate(targetUrl, method, requestData).then(page => page.render());
+	static navigateAndRender(targetUrl: string, method?: HttpMethod, requestData?: any, useJsonBody?: boolean) : Promise<void> {
+		return new Promise((resolve, fail) => {
+			SPA.navigate(targetUrl, method, requestData, useJsonBody).then(page => {
+				 page.render();
+				 resolve(null);
+			}).catch((error) => {
+				fail(error);
+			});
+		});
 	}
 
 	public render(pushState?: boolean) {

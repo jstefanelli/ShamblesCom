@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShamblesCom.Server.Converters;
 using ShamblesCom.Server.DB;
 using ShamblesCom.Server.DB.Seeders;
 using ShamblesCom.Server.SPA;
@@ -28,7 +29,9 @@ namespace ShamblesCom.Server
 #endif
                 });
             });
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options => {
+                options.JsonSerializerOptions.Converters.Add(new UTCDateTimeConverter());
+            });
             services.AddEntityFrameworkSqlite().AddDbContext<ShamblesDBContext>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options => {
@@ -39,6 +42,7 @@ namespace ShamblesCom.Server
                 options.LoginPath = "/login";
                 options.LogoutPath = "/";
             });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,12 +54,12 @@ namespace ShamblesCom.Server
             }
 
             using(var client = new ShamblesDBContext()) {
-                client.Database.EnsureCreated();
                 client.Database.Migrate();
+                client.Database.EnsureCreated();
                 
                 Task.Run(async () =>  { await UserManager.Seed(client);
-                await GameSeeder.SeedF12020(client);
-                await GameSeeder.SeedProjectCars2(client);
+                    await GameSeeder.SeedF12020(client);
+                    await GameSeeder.SeedProjectCars2(client);
                 }).Wait();
             }
 

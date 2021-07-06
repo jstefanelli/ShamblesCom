@@ -7,10 +7,10 @@ export default interface Race {
 	id: number;
 	dateTime: string;
 	seasonId: number;
-	season: Season;
+	season?: Season;
 	trackId: number;
-	track: Track;
-	identifier: string;
+	track?: Track;
+	name: string;
 	livestreamLink: string;
 	vodLink: string;
 

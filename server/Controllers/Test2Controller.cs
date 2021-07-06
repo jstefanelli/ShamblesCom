@@ -14,16 +14,16 @@ namespace ShamblesCom.Server.Controllers {
 
 		[HttpGet]
 		[SPA]
-		public async Task<ActionResult> Get() {
+		public Task<ActionResult> Get() {
 
-			return new JsonResult(new SPAData() {
+			return Task.FromResult<ActionResult>(new JsonResult(new SPAData() {
 				View = "test",
 				Redraw = false,
 				Data = new Dictionary<string, object>{
 					{ "test", "some other value" },
 					{ "test2", "another value "}
 				}
-			});
+			}));
 		}
 	}
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using ShamblesCom.Server.DB;
 using ShamblesCom.Server.DB.Models;
 
-namespace ShamblesCom.Server {
+namespace ShamblesCom.Server.DB.Seeders {
 	public static class UserManager {
 		public static readonly string RootEmail = Environment.GetEnvironmentVariable("shamblescom_rootEmail") ?? "john@jstefanelli.com";
 		public static readonly string RootPassword = Environment.GetEnvironmentVariable("shamblescom_rootPsw") ?? "This_is_unsafe_49";
