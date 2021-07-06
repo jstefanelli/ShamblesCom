@@ -10,11 +10,11 @@
 					WARNING: A new driver might not appear in the list until you add a race result for that driver
 				</span>
 
-				<span v-if="errors && errors.Nickname" class="color-red margin-b-10"><b>Error:</b> {{ errors.Nickname }}</span>
+				<error-display v-if="errors && errors.Nickname" :errors="errors.Nickname" />
 				<span>Nickname:</span>
 				<input type="text" class="margin-v-10" v-model="name"/>
 
-				<span v-if="errors && errors.DateTime" class="color-red margin-b-10"><b>Error:</b> {{ errors.DateTime }}</span>
+				<error-display v-if="errors && errors.Number" :errors="errors.Number" />
 				<span>Driver Number:</span>
 				<input type="number" v-model.number="number" class="margin-v-10" />
 			</div>
@@ -32,6 +32,7 @@
 </template>
 
 <script lang="ts">
+import ErrorDisplay from '@/components/common/ErrorDisplay.vue';
 import Modal from '@/components/modal/modal.vue';
 import Driver from '@/data/Driver';
 import Season from '@/data/Season';
@@ -41,6 +42,7 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 @Component({
 	components: {
 		Modal,
+ErrorDisplay,
 	}
 })
 export default class extends Vue {
@@ -77,7 +79,11 @@ export default class extends Vue {
 				this.errors = {};
 			}).catch((errors) => {
 				if (typeof(errors) == 'object') {
-					this.errors = errors.errors;
+					if (typeof(errors.erroors) == 'object') {
+						this.errors = errors.errors;
+					} else {
+						this.errors = errors;
+					}
 				}else {
 					this.errors = {
 						Name: "Server error"
@@ -89,7 +95,11 @@ export default class extends Vue {
 				this.errors = {};
 			}).catch((errors) => {
 				if (typeof(errors) == 'object') {
-					this.errors = errors.errors;
+					if (typeof(errors.erroors) == 'object') {
+						this.errors = errors.errors;
+					} else {
+						this.errors = errors;
+					}
 				} else {
 					this.errors = {
 						Name: "Server Error"

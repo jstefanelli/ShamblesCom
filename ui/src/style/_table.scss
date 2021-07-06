@@ -1,0 +1,26 @@
+@import "colors";
+
+table {
+    border: 1px solid $fg-color;
+    border-radius: 5px;
+
+    > thead {
+        padding: 5px;
+
+        th:not(:last-of-type) {
+            border-right: 1px solid transparentize($fg-color, 0.5);
+        }
+    }
+
+    > tbody {
+        padding: 5px;
+
+        > tr {
+            border-bottom: 1px solid transparentize($fg-color, 0.5);
+            
+            > td:not(:last-of-type) {
+                border-right: 1px solid transparentize($fg-color, 0.5);
+            }
+        }
+    }
+}

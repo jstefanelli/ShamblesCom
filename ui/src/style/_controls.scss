@@ -40,6 +40,8 @@ select {
 	border-radius: 5px;
 	font-size: 12pt;
 	padding: 10px;
+	appearance: unset;
+	-webkit-appearance: none;
 }
 
 button,

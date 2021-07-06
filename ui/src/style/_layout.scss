@@ -131,6 +131,22 @@ body {
 	.height-#{$val} {
 		height: $val + px;
 	}
+
+	.min-width-#{$val} {
+		min-width: $val + px;
+	}
+
+	.min-height-#{$val} {
+		min-height: $val + px;
+	}
+
+	.max-width-#{$val} {
+		max-width: $val + px;
+	}
+
+	.max-height-#{$val} {
+		max-height: $val + px;
+	}
 }
 
 @for $i from 1 to 21 {
@@ -142,6 +158,22 @@ body {
 
 	.height-#{$val} {
 		height: $val + px;
+	}
+
+	.min-width-#{$val} {
+		min-width: $val + px;
+	}
+
+	.min-height-#{$val} {
+		min-height: $val + px;
+	}
+
+	.max-width-#{$val} {
+		max-width: $val + px;
+	}
+
+	.max-height-#{$val} {
+		max-height: $val + px;
 	}
 }
 
@@ -227,4 +259,28 @@ body {
 
 .text-center {
 	text-align: center;
+}
+
+.overflow-y-auto {
+	overflow-y: auto;
+}
+
+.overflow-y-scoll {
+	overflow-y: scroll;
+}
+
+.overflow-y-hidden {
+	overflow-y: hidden;
+}
+
+.overflow-x-auto {
+	overflow-y: auto;
+}
+
+.overflow-x-scoll {
+	overflow-y: scroll;
+}
+
+.overflow-x-hidden {
+	overflow-y: hidden;
 }

@@ -92,7 +92,6 @@ export class SPA {
 						let err = null;
 						try {
 							err = JSON.parse(txt);
-							return;
 						}catch(error) {
 							console.warn("[SPA] Failed to parse error contents: ", error);
 							err = response.statusText;
@@ -103,6 +102,7 @@ export class SPA {
 						console.warn("[SPA] Failed to get error contents: ", err);
 						reject(response.statusText);
 					});
+					return;
 				}
 
 				response.json().then((jsonData) => {
