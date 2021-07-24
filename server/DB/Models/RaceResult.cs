@@ -1,15 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using ShamblesCom.Server.DB.Models.Validators;
 
 namespace ShamblesCom.Server.DB.Models {
-	[RaceResultValidator]
 	public class RaceResult {
 		[Required]
 		public int Id { get; set; }
 		[Required]
 		public int DriverId { get; set; }
+		[JsonIgnore]
 		public Driver Driver { get; set; }
 		[Required]
 		public int TeamId { get; set; }

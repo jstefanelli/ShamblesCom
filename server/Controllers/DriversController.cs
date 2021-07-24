@@ -9,6 +9,7 @@ using ShamblesCom.Server.DB;
 using ShamblesCom.Server.DB.Models;
 using ShamblesCom.Server.SPA;
 using ShamblesCom.Server.Controllers.Data;
+using ShamblesCom.Server.DB.DTO;
 
 namespace ShamblesCom.Server.Controllers {
 	
@@ -21,7 +22,7 @@ namespace ShamblesCom.Server.Controllers {
 
 		private static int CompareDrivers(DriverInfo d0, DriverInfo d1, int pos = 1) {
 			if (d0.SeasonPoints != d1.SeasonPoints) {
-				return d0.SeasonPoints - d1.SeasonPoints;
+				return d1.SeasonPoints - d0.SeasonPoints;
 			}
 
 			if (pos >= 50)
@@ -34,7 +35,7 @@ namespace ShamblesCom.Server.Controllers {
 				return CompareDrivers(d0, d1, pos + 1);
 			}
 
-			return d0p - d1p;
+			return d1p - d0p;
 		}
 
 		[HttpGet("")]
@@ -43,15 +44,26 @@ namespace ShamblesCom.Server.Controllers {
 			var query = Db.Drivers
 				.Include(d => d.RaceResults.Where(rr => rr.Race.SeasonId == seasonId))
 				.Where(d => d.RaceResults.Where(rr => rr.Race.SeasonId == seasonId).Any())
-				.Select(d => new DriverInfo{ Driver = d, SeasonPoints = d.RaceResults.Where(rr => rr.Race.SeasonId == seasonId).Sum(rr => rr.Points) })
-				.OrderByDescending(d => d.SeasonPoints);
+				.Select(d => new DriverInfo{ Driver = new DTODriver(d) {
+					RaceResults = d.RaceResults.Select(rr => new DTORaceResult(rr)).ToList()
+				}, SeasonPoints = d.RaceResults.Where(rr => rr.Race.SeasonId == seasonId).Sum(rr => rr.Points) });
 
 			List<DriverInfo> drivers = await query.ToListAsync();
 			
 			drivers.Sort((d0, d1) => CompareDrivers(d0, d1));
+			
+			var query_others = Db.Drivers
+				.Include(d => d.RaceResults.Where(rr => rr.Race.SeasonId == seasonId))
+				.Where(d => d.RaceResults.Where(rr => rr.Race.SeasonId == seasonId).Count() == 0)
+				.OrderByDescending(d => d.Nickname)
+				.Select(d => new DTODriver(d) {
+					RaceResults = d.RaceResults.Select(rr => new DTORaceResult(rr)).ToList()
+				});
+
+			List<DTODriver> other_drivers = await query_others.ToListAsync();
 
 			for (int i = 0; i < drivers.Count; i++) {
-				drivers[i].SeasonPoints = i + 1;
+				drivers[i].SeasonPosition = i + 1;
 			}
 
 			return new JsonResult(new SPAData {
@@ -59,7 +71,8 @@ namespace ShamblesCom.Server.Controllers {
 				Data = new {
 					index = await AdminController.IndexData(Db, seasonId),
 					season = await Db.Seasons.FindAsync(seasonId),
-					drivers = drivers
+					drivers = drivers,
+					other_drivers = other_drivers
 				},
 				Url = $"admin/{seasonId}/drivers"
 			});
@@ -78,6 +91,24 @@ namespace ShamblesCom.Server.Controllers {
 			}
 
 			Db.Drivers.Add(driver);
+			await Db.SaveChangesAsync();
+
+			return new SeeOtherResult($"/admin/{seasonId}/drivers");
+		}
+
+		[ValidateModel]
+		[SPA]
+		[HttpPut("{driverId}")]
+		public async Task<ActionResult> EditDriver(int seasonId, int driverId, [FromBody] Driver d) {
+			if (d.Id != driverId) {
+				ModelState.AddModelError("Id", "The URI DriverID does not match the content DriverID");
+			}
+
+			if (!ModelState.IsValid) {
+				return new BadRequestObjectResult(ModelState);
+			}
+
+			Db.Drivers.Update(d);
 			await Db.SaveChangesAsync();
 
 			return new SeeOtherResult($"/admin/{seasonId}/drivers");

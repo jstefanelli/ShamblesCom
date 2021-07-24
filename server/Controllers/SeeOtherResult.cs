@@ -16,7 +16,6 @@ namespace ShamblesCom.Server.Controllers {
 		{
 			context.HttpContext.Response.Headers.Add("Location", Location + (AddSPAQuery ? "?spa=data" : ""));
 			context.HttpContext.Response.StatusCode = (int)HttpStatusCode.SeeOther;
-			//context.HttpContext.Response.Body.Close();
 		}
 	}
 }

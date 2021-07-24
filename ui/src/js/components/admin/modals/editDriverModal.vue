@@ -6,10 +6,6 @@
 
 		<template>
 			<div class="flex flex-vertical">
-				<span v-if="(!driver) || driver.id == 0" class="margin-b-10">
-					WARNING: A new driver might not appear in the list until you add a race result for that driver
-				</span>
-
 				<error-display v-if="errors && errors.Nickname" :errors="errors.Nickname" />
 				<span>Nickname:</span>
 				<input type="text" class="margin-v-10" v-model="name"/>
@@ -57,7 +53,7 @@ export default class extends Vue {
 	}
 
 	@Watch("driver")
-	private raceChanged(val: Driver, old: Driver) {
+	private driverChanged(val: Driver, old: Driver) {
 		if (val) {
 			this.name = val.nickname;
 			this.number = val.number;

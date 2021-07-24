@@ -5,11 +5,11 @@ import Race from "./Race";
 export default interface RaceResult {
 	id: number;
 	driverId: number;
-	driver: Driver;
+	driver?: Driver;
 	teamId: number;
-	team: Team;
+	team?: Team;
 	raceId: number;
-	race: Race;
+	race?: Race;
 	position: number;
 	finished: boolean;
 	penalties: number;

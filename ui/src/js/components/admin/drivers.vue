@@ -9,49 +9,89 @@
 					Drivers:
 				</span>
 			</div>
-			<div class="flex-grow fill-h overflow-y-auto margin-v-5">
-				<table class="fill-w">
-					<thead>
-						<tr>
-							<th class="width-100">
-								#
-							</th>
-							<th>
-								Nickname
-							</th>
-							<th class="width-100">
-								Number
-							</th>
-							<th class="width-100">
-								Points
-							</th>
-							<th class="width-200">
-								Edit
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-for="info in drivers" :key="info.driver.id">
-							<td>
-								{{ info.seasonPosition }}
-							</td>
-							<td>
-								{{ info.driver.nickname }}
-							</td>
-							<td>
-								{{ info.driver.number }}
-							</td>
-							<td>
-								{{ info.seasonPoints }}
-							</td>
-							<td>
-								<button @click="editDriver(info)">
+			<div class="flex flex-grow fill-h">
+				<div class="flex-grow-2 flex flex-vertical margin-5">
+					<div class="font-m">
+						Season Drivers:
+					</div>
+					<table class="fill-w">
+						<thead>
+							<tr>
+								<th class="width-100">
+									#
+								</th>
+								<th>
+									Nickname
+								</th>
+								<th class="width-100">
+									Number
+								</th>
+								<th class="width-100">
+									Points
+								</th>
+								<th class="width-200">
 									Edit
-								</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+								</th>
+							</tr>
+						</thead>
+						<tbody class="overflow-y-auto">
+							<tr v-for="info in drivers" :key="info.driver.id">
+								<td>
+									{{ info.seasonPosition }}
+								</td>
+								<td>
+									{{ info.driver.nickname }}
+								</td>
+								<td>
+									{{ info.driver.number }}
+								</td>
+								<td>
+									{{ info.seasonPoints }}
+								</td>
+								<td>
+									<button @click="editDriver(info.driver)">
+										Edit
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="flex-grow flex flex-vertical margin-5">
+					<div class="font-m">
+						Other Drivers:
+					</div>
+					<table class="fill-w">
+						<thead>
+							<tr>
+								<th>
+									Nickname
+								</th>
+								<th class="width-100">
+									Number
+								</th>
+								<th class="width-200">
+									Edit
+								</th>
+							</tr>
+						</thead>
+						<tbody class="overflow-y-auto">
+							<tr v-for="d in other_drivers" :key="d.id">
+								<td>
+									{{ d.nickname }}
+								</td>
+								<td>
+									{{ d.number }}
+								</td>
+								<td>
+									<button @click="editDriver(d)">
+										Edit
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="flex">
 				<div class="flex-grow" />
@@ -83,8 +123,9 @@ export default class extends Vue {
 	@Prop({default: (): any => {}}) private index: any;
 	@Prop({default: (): Season => null}) private season: Season;
 	@Prop({default: (): DriverInfo[] => []}) private drivers: DriverInfo[];
+	@Prop({default: (): Driver[] => []}) private other_drivers: Driver[];
 
-	private selectedDriver: DriverInfo = null;
+	private selectedDriver: Driver = null;
 
 
 	private goBack() {
@@ -94,6 +135,11 @@ export default class extends Vue {
 
 	private createDriver() {
 		this.selectedDriver = null;
+		(this.$refs["driver-modal"] as any).open();
+	}
+
+	private editDriver(d: Driver) {
+		this.selectedDriver = d;
 		(this.$refs["driver-modal"] as any).open();
 	}
 }

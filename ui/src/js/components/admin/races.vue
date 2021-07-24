@@ -26,36 +26,92 @@
 				</div>
 			</div>
 			<div class="flex-grow" v-else>
-				<!--TODO: Race result table -->
+				<div class="flex flex-vertical fill-w fill-h">
+					<div class="flex-grow">
+						<table class="fill-w">
+							<thead>
+								<th class="width-100">
+									#
+								</th>
+								<th>
+									Driver
+								</th>
+								<th class="width-200">
+									Team
+								</th>
+								<th class="width-100">
+									Points
+								</th>
+								<th class="width-200">
+									Edit
+								</th>
+							</thead>
+							<tbody class="overflow-y-auto">
+								<tr v-for="rr in results" :key="rr.id">
+									<td>
+										{{ rr.finished ? rr.position : "DNF" }}
+									</td>
+									<td>
+										{{ rr.driver.nickname }}
+									</td>
+									<td>
+										{{ rr.team.name}}
+									</td>
+									<td>
+										{{ rr.points }}
+									</td>
+									<td>
+										<button @click="editResult(rr)">
+											Edit
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="flex">
+						<div class="flex-grow" />
+						<button class="passive" @click="addResult">
+							Add Resiòt
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<edit-race-modal :season="season" :tracks="tracks" ref="new_race_modal" :race="editingRace" />
+		<edit-result-modal :season="season" :teams="season.teams" :drivers="drivers" :result="activeResult" :race="selectedRace" ref="edit_result_modal" />
 	</base-layout>
 </template>
 
 <script lang="ts">
+import Driver from '@/data/Driver';
 import Race from '@/data/Race';
+import RaceResult from '@/data/RaceResult';
 import Season from '@/data/Season';
 import Track from '@/data/Track';
 import { SPA } from '@/SPA/spa';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import BaseLayout from './baseLayout.vue';
 import EditRaceModal from './modals/editRaceModal.vue';
+import EditResultModal from './modals/editResultModal.vue';
 
 @Component({
 	components: {
 		BaseLayout,
-		EditRaceModal
-
+		EditRaceModal,
+		EditResultModal
 	}
 })
 export default class extends Vue {
 	@Prop({default: (): any => {} }) private index: any;
 	@Prop({default: (): Season => null }) private season: Season;
 	@Prop({default: (): Track[] => [] }) private tracks: Track[];
+	@Prop({default: (): RaceResult[] => []}) private results: RaceResult[]
 	@Prop({default: 0}) private selectedRaceId: number;
+	@Prop({default: (): Driver[] => []}) private drivers: Driver[]
 
+	private activeResult: RaceResult = null;
 	private internalSelectedRaceId: number = 0;
 	private selectedRace: Race = null;
 	private editingRace: Race = null;
@@ -100,6 +156,16 @@ export default class extends Vue {
 
 		if (!found)
 			this.selectedRace = null;
-		}
+	}
+
+	private editResult(r: RaceResult) {
+		this.activeResult = r;
+		(this.$refs["edit_result_modal"] as any).open()
+	}
+
+	private addResult() {
+		this.activeResult = null;
+		(this.$refs["edit_result_modal"] as any).open();
+	}
 }
 </script>	

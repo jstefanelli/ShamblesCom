@@ -1878,11 +1878,10 @@ input[type=submit].passive:hover,
   background-color: #515151;
 }
 
-table {
-  border: 1px solid #eee;
-  border-radius: 5px;
-}
 table > thead {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background-color: rgba(255, 68, 68, 0.5);
   padding: 5px;
 }
 table > thead th:not(:last-of-type) {
@@ -1893,6 +1892,9 @@ table > tbody {
 }
 table > tbody > tr {
   border-bottom: 1px solid rgba(238, 238, 238, 0.5);
+}
+table > tbody > tr > td {
+  text-align: center;
 }
 table > tbody > tr > td:not(:last-of-type) {
   border-right: 1px solid rgba(238, 238, 238, 0.5);

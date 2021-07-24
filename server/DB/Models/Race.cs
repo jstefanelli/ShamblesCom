@@ -18,6 +18,8 @@ namespace ShamblesCom.Server.DB.Models {
 		public string Name { get; set; }
 		public string LivestreamLink { get; set; }
 		public string VodLink { get; set; }
+
+		
 		public List<RaceResult> RaceResults { get; set;}
 	}
 }

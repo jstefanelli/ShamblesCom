@@ -58,7 +58,6 @@ namespace ShamblesCom.Server.DB {
 			builder.Entity<Track>()
 				.HasIndex(t => new { t.GameId, t.Name })
 				.IsUnique();
-			
 		}
 	}
 }

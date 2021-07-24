@@ -42,6 +42,14 @@ namespace ShamblesCom.Server
                 options.LoginPath = "/login";
                 options.LogoutPath = "/";
             });
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             
         }
 
@@ -68,6 +76,9 @@ namespace ShamblesCom.Server
             app.UseCors();
             app.UseAuthorization();
             SPAMiddleware.UseSPAMiddleware(app);
+
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

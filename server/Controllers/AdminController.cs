@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShamblesCom.Server.Controllers.Api;
 using ShamblesCom.Server.DB;
+using ShamblesCom.Server.DB.DTO;
 using ShamblesCom.Server.DB.Models;
 using ShamblesCom.Server.SPA;
 
@@ -20,8 +21,8 @@ namespace ShamblesCom.Server.Controllers {
 
 		public static async Task<Object> IndexData(ShamblesDBContext db, int selectedSeasonId = 0) {
 			return new {
-				seasons = await db.Seasons.ToArrayAsync(),
-				categories = await db.Categories.ToArrayAsync(),
+				seasons =  await db.Seasons.Select(s => new DTOSeason(s)).ToArrayAsync(),
+				categories = await db.Categories.Select(c => new DTOCategory(c)).ToArrayAsync(),
 				selectedSeasonId = selectedSeasonId
 			};
 		}
@@ -49,88 +50,24 @@ namespace ShamblesCom.Server.Controllers {
 				View = "admin/season",
 				Data = new {
 					index = await IndexData(Db, seasonId),
-					season = await GetSeason(seasonId)
+					season = await GetSeason(Db, seasonId)
 				},
 				Redraw = true,
 				Url=$"/admin/{seasonId}"
 			});
 		}
 
-		private Task<Season> GetSeason(int seasonId) {
-			return Db.Seasons.Include(s => s.Races.OrderBy(r => r.DateTime)).ThenInclude(r => r.RaceResults.OrderBy(rr => rr.Position)).Include(s => s.Teams).Where(s => s.Id == seasonId).FirstOrDefaultAsync();
-		}
+		public static async Task<DTOSeason> GetSeason(ShamblesDBContext Db, int seasonId) {
+			Season s = await Db.Seasons.Include(s => s.Races.OrderBy(r => r.DateTime)).Include(s => s.Teams).Where(s => s.Id == seasonId)
+				.Include(s => s.Category).ThenInclude(c => c.Game).FirstOrDefaultAsync();
 
-		[HttpGet("{seasonId}/races/{raceId?}")]
-		[SPA]
-		[Authorize]
-		public async Task<ActionResult> WithSeasonAndRaces(int seasonId, int? raceId = null) {
-			Season season = await GetSeason(seasonId);
-
-			return new JsonResult(new SPAData() {
-				View = "admin/races",
-				Data = new {
-					index = await IndexData(Db, seasonId),
-					games = Db.Games.Include(g => g.Tracks).ToArray(),
-					season = season,
-					selectedRaceId = raceId,
-					tracks = await Db.Tracks.Where(t => t.GameId == season.Category.Game.Id).ToArrayAsync()
+			return new DTOSeason(s) {
+				Category = new DTOCategory(s.Category) {
+					Game = new DTOGame(s.Category.Game)
 				},
-				Redraw = true,
-				Url= raceId == null ? $"/admin/{seasonId}/races/" : $"/admin/{seasonId}/races/{raceId}"
-			});
+				Races = s.Races.Select(r => new DTORace(r)).ToList(),
+				Teams = s.Teams.Select(t => new DTOTeam(t)).ToList()
+			};
 		}
-
-		[HttpPost("{seasonId}/races")]
-		[SPA]
-		[Authorize]
-		[ValidateModel]
-		public async Task<ActionResult> AddRace(int seasonId, [FromBody] Race race) {
-			Track track = await Db.Tracks.FindAsync(race.TrackId);
-            if (track == null) {
-                ModelState.AddModelError("TrackId", "The given track was not found");
-            }
-            Season season = await Db.Seasons.FindAsync(race.SeasonId);
-            if (season == null) {
-                ModelState.AddModelError("SeasonId", "The given season was not found");
-            }
-
-            if (!ModelState.IsValid) {
-                return new BadRequestObjectResult(ModelState);
-            }
-
-            race.DateTime = race.DateTime.ToUniversalTime();
-
-            Db.Races.Add(race);
-            await Db.SaveChangesAsync();
-
-			return new SeeOtherResult($"/admin/{seasonId}/races/{race.Id}");
-		}
-
-		[HttpPut("{seasonId}/races/{raceId}")]
-		[SPA]
-		[Authorize]
-		[ValidateModel]
-		public async Task<ActionResult> EditRace(int seasonId, int raceId, [FromBody] Race race) {
-			Track track = await Db.Tracks.FindAsync(race.TrackId);
-            if (track == null) {
-                ModelState.AddModelError("TrackId", "The given track was not found");
-            }
-            Season season = await Db.Seasons.FindAsync(race.SeasonId);
-            if (season == null) {
-                ModelState.AddModelError("SeasonId", "The given season was not found");
-            }
-
-            if (!ModelState.IsValid) {
-                return new BadRequestObjectResult(ModelState);
-            }
-
-            race.DateTime = race.DateTime.ToUniversalTime();
-			race.Id = raceId;
-
-            Db.Races.Update(race);
-            await Db.SaveChangesAsync();
-
-			return new SeeOtherResult($"/admin/{seasonId}/races/{raceId}");
-		}
-	}
+	}		
 }
