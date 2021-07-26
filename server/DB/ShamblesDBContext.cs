@@ -14,6 +14,7 @@ namespace ShamblesCom.Server.DB {
 		public DbSet<Season> Seasons { get; set; }
 		public DbSet<Track> Tracks { get; set; }
 		public DbSet<Team> Teams { get; set; }
+		public DbSet<SiteSettings> Settings { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 			optionsBuilder.UseSqlite($"Data Source={DBFilePath}");

@@ -13,6 +13,7 @@
 					</div>
 
 					<div class="modal-footer flex align-center">
+						<slot name="footer-heading" />
 						<div class="flex-grow" />
 						<slot name="footer" />
 					</div>

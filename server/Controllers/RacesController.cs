@@ -25,7 +25,8 @@ namespace ShamblesCom.Server.Controllers {
 		public async Task<ActionResult> WithSeasonAndRaces(int seasonId, int? raceId = null) {
 			DTOSeason season = await AdminController.GetSeason(Db, seasonId);
 
-			List<DTORaceResult> rrs = raceId.HasValue ? await Db.RaceResults.Where(rr => rr.RaceId == raceId).Include(rr => rr.Driver).Include(rr => rr.Team).Select(rr => new DTORaceResult(rr) {
+			List<DTORaceResult> rrs = raceId.HasValue ? await Db.RaceResults.Where(rr => rr.RaceId == raceId).Include(rr => rr.Driver).Include(rr => rr.Team)
+			.Select(rr => new DTORaceResult(rr) {
 				Driver = new DTODriver(rr.Driver),
 				Team = new DTOTeam(rr.Team),
 			}).ToListAsync() : null;
@@ -106,6 +107,26 @@ namespace ShamblesCom.Server.Controllers {
 
 			return new SeeOtherResult($"/admin/{seasonId}/races/{raceId}");
 		}
+
+		[HttpDelete("{raceId}")]
+		[SPA]
+		[ValidateModel]
+		public async Task<ActionResult> DeleteRace(int seasonId, int raceId) {
+			Race r = await Db.Races.FindAsync(raceId);
+			if (r == null) {
+				ModelState.AddModelError("RaceId", "Race not found");
+			}
+
+			if (!ModelState.IsValid) {
+				return new BadRequestObjectResult(ModelState);
+			}
+
+            Db.Races.Remove(r);
+            await Db.SaveChangesAsync();
+
+			return new SeeOtherResult($"/admin/{seasonId}/races");
+		}
+
 
 
 		[HttpPost("{raceId}/results")]

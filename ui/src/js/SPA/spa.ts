@@ -138,8 +138,16 @@ export class SPA {
 
 		this.view = this.view != null ? this.view : ((SPA.CurrentPage) ? SPA.CurrentPage.view : "index" );
 
-		let next  = () => {
-			
+		let next = () => {
+			if (SPA.VueInstance.$children[0] != null) {
+				let mountedComponent = SPA.VueInstance.$children[0].$children[0] as any;
+				if (mountedComponent !== undefined) {
+					let unmountHandler = mountedComponent.unmounted;
+					if (typeof(unmountHandler) == "function")
+						unmountHandler();
+				}
+			}
+
 			SPA.VueInstance.$children[0].$data.viewData = this.data;
 			
 			SPA.CurrentPage = this;
@@ -161,7 +169,6 @@ export class SPA {
 		};
 
 		if (this.redraw || !SPA.CurrentPage || SPA.CurrentPage.view != this.view) {
-			SPA.VueInstance.$children[0].$data.dynamicComponent = null;
 			SPA.VueInstance.$nextTick(() => {
 				let component = require("@/components/" + this.view).default;
 				SPA.VueInstance.$children[0].$data.dynamicComponent = component;

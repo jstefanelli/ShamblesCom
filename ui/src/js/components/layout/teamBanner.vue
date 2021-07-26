@@ -1,7 +1,7 @@
 <template>
-		<div :class="'team-banner ' + teamClass() ">
-			<div class="color-main" />
-			<div class="color-secondary" />
+		<div :class="'team-banner'">
+			<div class="color-main" :style="'background-color: #' + mainColor" />
+			<div class="color-secondary" :style="'background-color: #' + secondaryColor" />
 			<div class="font-l2">
 				<slot />
 			</div>
@@ -18,11 +18,8 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 	}
 })
 export default class extends Vue {
-	@Prop({default: 'renault'}) readonly team: string;
-
-	teamClass() {
-		return "team-" + this.team;
-	}
+	@Prop({default: "000"}) readonly mainColor: string;
+	@Prop({default: "FFF"}) readonly secondaryColor: string;
 }
 
 </script>

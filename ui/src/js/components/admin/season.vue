@@ -1,8 +1,16 @@
 <template>
 	<base-layout v-bind="index">
 		<div class="fill card no-hover flex flex-vertical padding-25">
-			<div class="font-m margin-b-25">
-				{{ season ? season.name : "unknown-season"}}
+			<div class="flex margin-b-25 align-center">
+				<div class="font-m ">
+					{{ season ? season.name : "unknown-season"}}
+				</div>
+				<div class="flex-grow">
+
+				</div>
+				<button class="passive" @click="showOneHomepage" v-if="settings && season && settings.currentHomeSeasonId != season.id">
+					Display this season on the HomePage
+				</button>
 			</div>
 			<div class="flex-grow flex">
 				<button class="passive flex-grow margin-r-25 font-m" @click="viewRaces">
@@ -15,9 +23,7 @@
 					Edit Teams
 				</button>
 			</div>
-			<edit-teams-modal :season="season" ref="editTeamsModal">
-
-			</edit-teams-modal>
+			<edit-teams-modal :season="season" ref="editTeamsModal" />
 		</div>
 	</base-layout>
 </template>
@@ -28,6 +34,7 @@ import Season from '@/data/Season';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import EditTeamsModal from './modals/editTeamsModal.vue';
 import BaseLayout from './baseLayout.vue';
+import SiteSettings from '@/data/SiteSettings'
 
 @Component({
 	components: {
@@ -37,8 +44,9 @@ import BaseLayout from './baseLayout.vue';
 	}
 })
 export default class extends Vue {
-	@Prop({default: () : any => {} }) public index: any;
-	@Prop({default: () : Season => null}) public season: Season;
+	@Prop({default: (): any => {} }) public index: any;
+	@Prop({default: (): Season => null}) public season: Season;
+	@Prop({default: (): SiteSettings => null }) public settings: SiteSettings;
 
 	private viewRaces() {
 		SPA.navigateAndRender("/admin/" + this.season.id + "/races");
@@ -46,6 +54,10 @@ export default class extends Vue {
 
 	private viewDrivers() {
 		SPA.navigateAndRender("/admin/" + this.season.id + "/drivers");
+	}
+
+	showOneHomepage() {
+		SPA.navigateAndRender("/admin/" + this.season.id + "/displaySeason", "POST");
 	}
 }
 </script>

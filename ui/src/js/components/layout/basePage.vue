@@ -3,11 +3,11 @@
 		<header class="titlebar flex align-center font-m">
 			<div class="buttons flex-grow flex align-center">
 				<span class="flex-grow" />
-				<spa-link target="/drivers">
+				<spa-link target="/drivers" class="bold italics">
 					Drivers
 				</spa-link>
 				<span class="flex-grow" />
-				<spa-link target="/standings">
+				<spa-link target="/standings" class="bold italics">
 					Standings
 				</spa-link>
 				<span class="flex-grow" />
@@ -17,11 +17,11 @@
 			</div>
 			<div class="buttons flex-grow flex align-center">
 				<span class="flex-grow" />
-				<spa-link target="/schedule">
+				<spa-link target="/schedule" class="bold italics">
 					Schedule
 				</spa-link>
 				<span class="flex-grow" />
-				<spa-link target="/highlights">
+				<spa-link target="/highlights" class="bold italics">
 					Highlights
 				</spa-link>
 				<span class="flex-grow" />

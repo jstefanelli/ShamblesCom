@@ -70,16 +70,16 @@ export default class extends Vue {
 	private parseDateString(date: string): Date {
 		let bits = date.split("-");
 		
-		let dt = new Date(Number(bits[0]), Number(bits[1]), Number(bits[2]));
+		let dt = new Date(Number(bits[0]), Number(bits[1]) - 1, Number(bits[2]));
 		return dt;
 	}
 
 	private createDateString(date: Date) : string {
 		let year = date.getFullYear();
-		let month = date.getMonth();
+		let month = date.getMonth() + 1;
 		let day = date.getDate();
 
-		let dt = "" + year + "-" + (month < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
+		let dt = "" + year + "-" + (month + 1 < 10 ? "0" + month : month) + "-" + (day < 10 ? "0" + day : day);
 		return dt;
 	}
 

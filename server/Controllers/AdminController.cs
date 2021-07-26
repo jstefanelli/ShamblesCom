@@ -50,11 +50,41 @@ namespace ShamblesCom.Server.Controllers {
 				View = "admin/season",
 				Data = new {
 					index = await IndexData(Db, seasonId),
-					season = await GetSeason(Db, seasonId)
+					season = await GetSeason(Db, seasonId),
+					settings = await Db.Settings.Select(st => new DTOSiteSettings(st)).FirstOrDefaultAsync(),
 				},
 				Redraw = true,
 				Url=$"/admin/{seasonId}"
 			});
+		}
+
+		[HttpPost("{seasonId}/displaySeason")]
+		[SPA]
+		[Authorize]
+		public async Task<ActionResult> DisplaySeason(int seasonId) {
+			if (await Db.Seasons.FindAsync(seasonId) == null) {
+				ModelState.AddModelError("seasonId", "Season not found");
+			}
+
+			if (!ModelState.IsValid) {
+				return new BadRequestObjectResult(ModelState);
+			}
+
+			SiteSettings st = await Db.Settings.FirstOrDefaultAsync();
+			if (st == null) {
+				st = new SiteSettings() {
+					CurrentHomeSeasonId = seasonId
+				};
+
+				Db.Settings.Add(st);
+			} else {
+				st.CurrentHomeSeasonId = seasonId;
+				Db.Settings.Update(st);
+			}
+
+			await Db.SaveChangesAsync();
+
+			return new SeeOtherResult($"/admin/{seasonId}");
 		}
 
 		public static async Task<DTOSeason> GetSeason(ShamblesDBContext Db, int seasonId) {

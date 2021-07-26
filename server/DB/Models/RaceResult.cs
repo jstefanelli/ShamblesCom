@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace ShamblesCom.Server.DB.Models {
-	public class RaceResult {
+	public class RaceResult : IComparable<RaceResult> {
 		[Required]
 		public int Id { get; set; }
 		[Required]
@@ -29,5 +29,15 @@ namespace ShamblesCom.Server.DB.Models {
 		public TimeSpan FastestLap { get; set; }
 		[Required]
 		public int Points { get; set; }
+
+		public int CompareTo(RaceResult other)
+		{
+			if (Finished && !other.Finished)
+				return -1;
+			if (!Finished && other.Finished)
+				return 1;
+
+			return Position - other.Position;
+		}
 	}
 }

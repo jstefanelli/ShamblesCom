@@ -54,6 +54,22 @@
 	font-family: sans-serif;
 }
 
+.italics  {
+	font-style: italic;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.bolder {
+	font-weight: bolder;
+}
+
+.letter-spaceing-3 {
+	letter-spacing: 3px;
+}
+
 i {
 	&.f2-first {
 		font-style: normal;

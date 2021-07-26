@@ -32,6 +32,12 @@
 			</div>
 		</template>
 
+		<template slot="footer-heading">
+			<button @click="deleteRace" class="passive" v-if="race">
+				Delete this race
+			</button>
+		</template>
+
 		<template slot="footer">
 			<button @click="close" class="passive">
 				Cancel
@@ -126,6 +132,13 @@ export default class extends Vue {
 				}
 			});
 		}
+	}
+	
+	private deleteRace() {
+		if (!this.race)
+			return;
+
+		SPA.navigateAndRender("/admin/" + this.season.id + "/races/" + this.race.id, "DELETE");
 	}
 
 	private close() {

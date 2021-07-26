@@ -6,7 +6,7 @@
 					Last race:
 				</div>
 				<div class="font-xxl">
-					<span class="flag xxl spain">Spain SGP</span>
+					<span class="xxl">{{ lastRace ? lastRace.name : "No Data" }} </span>
 				</div>
 				<!--<div>
 					Watch the VOD <a class="twitch-link" href="#">Here! </a>
@@ -16,34 +16,41 @@
 					Results:
 				</div>
 				<div class="font-l2">
-					<team-banner team="renault"> JStefanelli </team-banner>
-					<team-banner team="rp" > Clu </team-banner>
-					<team-banner team="at" > Raycevick</team-banner>
+					<team-banner v-if="lastRace != null && lastRace.raceResults != null && (lastRace.raceResults.length > 0)"
+						:mainColor="lastRace.raceResults[0].team.mainColor"
+						:secondaryColor="lastRace.raceResults[0].team.secondaryColor"> 
+						{{ lastRace.raceResults[0].driver.nickname }}
+					</team-banner>
+					
+					<team-banner v-if="lastRace && lastRace.raceResults && (lastRace.raceResults.length > 1)"
+						:mainColor="lastRace.raceResults[1].team.mainColor"
+						:secondaryColor="lastRace.raceResults[1].team.secondaryColor"> 
+						{{ lastRace.raceResults[1].driver.nickname }}
+					</team-banner>
+					
+					<team-banner v-if="lastRace && lastRace.raceResults && lastRace.raceResults.length > 2"
+						:mainColor="lastRace.raceResults[2].team.mainColor"
+						:secondaryColor="lastRace.raceResults[2].team.secondaryColor"> 
+						{{ lastRace.raceResults[2].driver.nickname }}
+					</team-banner>
 				</div>
 			</my-section>
 			<my-section class="section-top-right flex flex-vertical padding-25">
 				<div class="font-l">
 					Next race:
 				</div>
-				<span class="flex-grow" />
-				<div class="font-l" v-if="!nextRace || nextRace.isF2()">
-					<i class="f2-first">SUPER</i> WEENIE HUT <i class="f2-second">SHAMBLES</i> {{(nextRace ? nextRace.capitalCountry() : "Monaco")}} GP
-				</div>
-				<div class="font-l" v-else>
-					{{nextRace ? nextRace.toString() : "Some GP" }}
+				<div class="font-l">
+					{{ nextRace ? nextRace.name : "No Data" }}
 				</div>
 				<div class="font-l">
 
 				</div>
 				<div class="font-xl" id="countdown" ref="countdown">
-					12:00:00
+					No Data
 				</div>
 				<span class="flex-grow" />
-				<div v-if="!nextRace || nextRace.isF2()">
-					Live on <a class="twitch-link" href="https://twitch.tv/hammiam">Hammiam's channel</a>
-				</div>
-				<div v-else>
-					Live on <a class="twitch-link" href="https://twitch.tv/LHudsonxx">LHudson's channel</a>
+				<div>
+					Live <a class="twitch-link" :href="nextRace ? nextRace.livestreamLink : 'https://twitch.tv/lhudsonx'">Here</a>
 				</div>
 			</my-section>
 			<my-section class="section-bottom-right padding-25">
@@ -78,7 +85,41 @@ import Race from '@/data/Race';
 	}
 })
 export default class extends Vue {
-	@Prop({default: null}) readonly nextRace : Race;
+	@Prop({default: (): Race => null}) readonly lastRace : Race;
+	@Prop({default: (): any => {}}) private nextRace : Race;
+
+	private timerThread: number = 0;
+
+	public mounted() {
+		console.log("Next: ", this.nextRace);
+
+		this.updateTimer();
+		this.timerThread = window.setInterval(() => {
+			if (this.nextRace ) {
+				this.updateTimer();		
+			}
+
+		}, 1000);
+	}
+
+	private updateTimer() {
+		let now = new Date();
+		let raceDate = new Date(this.nextRace.dateTime);
+
+		var amount = raceDate.getTime() - now.getTime();
+		let hours = Math.floor(amount / (1000 * 60 * 60));
+		amount -= hours * 1000 * 60 * 60;
+		let minutes = Math.floor(amount / (1000 * 60));
+		amount -= minutes * 1000 * 60;
+		let seconds = Math.floor(amount / 1000);
+
+		let str = "" + (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+		document.getElementById("countdown").innerText = str;
+	}
+
+	public unmounted() {
+		window.window.clearInterval(this.timerThread);
+	}
 }
 
 </script>
