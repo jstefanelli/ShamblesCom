@@ -30,7 +30,10 @@
 									Points
 								</th>
 								<th class="width-200">
-									Edit
+									Edit Nickname/Number
+								</th>
+								<th class="width-200">
+									Edit Profile
 								</th>
 							</tr>
 						</thead>
@@ -52,6 +55,11 @@
 									<button @click="editDriver(info.driver)">
 										Edit
 									</button>
+								</td>
+								<td>
+									<a class="button" :href="'/admin/' + index.selectedSeasonId + '/drivers/' + info.driver.id">
+										Edit
+									</a>
 								</td>
 							</tr>
 						</tbody>

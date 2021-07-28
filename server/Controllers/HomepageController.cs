@@ -36,7 +36,7 @@ namespace ShamblesCom.Server.Controllers {
 				Race tmp = Db.Races.Where(r => r.DateTime > now).FirstOrDefault();
 			
 				lastRace = await Db.Races.Where(r => r.DateTime < now && r.SeasonId == settings.CurrentHomeSeasonId).OrderByDescending(r => r.DateTime)
-					.Include(r => r.RaceResults).ThenInclude(rr => rr.Team).Include(r => r.RaceResults).ThenInclude(rr => rr.Driver).FirstOrDefaultAsync();
+					.Include(r => r.RaceResults).ThenInclude(rr => rr.Team).Include(r => r.RaceResults).ThenInclude(rr => rr.Driver).ThenInclude(d => d.Profiles.Where(p => p.SeasonId == settings.CurrentHomeSeasonId)).FirstOrDefaultAsync();
 				nextRace = await Db.Races.Where(r => r.DateTime > now && r.SeasonId == settings.CurrentHomeSeasonId).OrderBy(r => r.DateTime).FirstOrDefaultAsync();
 			}
 
@@ -50,8 +50,10 @@ namespace ShamblesCom.Server.Controllers {
 				Data = new {
 					lastRace = lastRace != null ? new DTORace(lastRace) {
 						RaceResults = await Task.Run(() => lastRace.RaceResults?.Select(rr => new DTORaceResult(rr) {
-							Driver = new DTODriver(rr.Driver),
-							Team = new DTOTeam(rr.Team)
+							Driver = new DTODriver(rr.Driver){
+								Profiles = rr.Driver.Profiles.Select(p => new DTODriverProfile(p)).ToList(),
+							},
+							Team = new DTOTeam(rr.Team),
 						}).ToList())
 					} : null,
 					nextRace = nextRace != null ? new DTORace(nextRace) : null				},

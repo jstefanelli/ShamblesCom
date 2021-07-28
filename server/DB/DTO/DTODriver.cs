@@ -8,6 +8,7 @@ namespace ShamblesCom.Server.DB.DTO {
 		public string Nickname { get; set; }
 		public int Number { get; set; }
 		public List<DTORaceResult> RaceResults { get; set; }
+		public List<DTODriverProfile> Profiles { get; set; }
 
 		public DTODriver(Driver d) {
 			Id = d.Id;

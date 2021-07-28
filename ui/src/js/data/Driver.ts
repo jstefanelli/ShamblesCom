@@ -1,3 +1,4 @@
+import DriverProfile from "./DriverProfile";
 import RaceResult from "./RaceResult";
 
 export default interface Driver {
@@ -5,4 +6,5 @@ export default interface Driver {
 	nickname: string;
 	number: number;
 	raceResults?: RaceResult[];
+	profiles?: DriverProfile[];
 }

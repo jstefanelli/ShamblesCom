@@ -86,3 +86,15 @@ input[type="submit"],
 		}
 	}
 }
+
+textarea {
+	border: 2px solid transparentize($bg-color-dark, 0.5);
+	border-radius: 15px;
+	background-color: $bg-color-dark;
+	display: block;
+	color: $fg-color;
+
+	&.noresize {
+		resize: none;
+	}
+}

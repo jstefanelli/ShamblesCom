@@ -9,7 +9,8 @@ namespace ShamblesCom.Server.DB.Models {
 		[StringLength(512, MinimumLength = 1)]
 		public string Nickname { get; set; }
 		public int Number { get; set; }
-		public List<RaceResult> RaceResults { get; set; }
 
+		public List<RaceResult> RaceResults { get; set; }
+		public List<DriverProfile> Profiles { get; set; }
 	}
 }

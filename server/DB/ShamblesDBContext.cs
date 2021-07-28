@@ -15,6 +15,7 @@ namespace ShamblesCom.Server.DB {
 		public DbSet<Track> Tracks { get; set; }
 		public DbSet<Team> Teams { get; set; }
 		public DbSet<SiteSettings> Settings { get; set; }
+		public DbSet<DriverProfile> Profiles { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 			optionsBuilder.UseSqlite($"Data Source={DBFilePath}");
@@ -58,6 +59,10 @@ namespace ShamblesCom.Server.DB {
 
 			builder.Entity<Track>()
 				.HasIndex(t => new { t.GameId, t.Name })
+				.IsUnique();
+
+			builder.Entity<DriverProfile>()
+				.HasIndex(p => new { p.SeasonId, p.DriverId})
 				.IsUnique();
 		}
 	}

@@ -8,49 +8,57 @@
 				<div class="font-xxl">
 					<span class="xxl">{{ lastRace ? lastRace.name : "No Data" }} </span>
 				</div>
-				<!--<div>
-					Watch the VOD <a class="twitch-link" href="#">Here! </a>
-				</div>-->
-				<span class="flex-grow" />
 				<div class="font-l">
 					Results:
 				</div>
-				<div class="font-l2">
-					<team-banner v-if="lastRace != null && lastRace.raceResults != null && (lastRace.raceResults.length > 0)"
-						:mainColor="lastRace.raceResults[0].team.mainColor"
-						:secondaryColor="lastRace.raceResults[0].team.secondaryColor"> 
-						{{ lastRace.raceResults[0].driver.nickname }}
-					</team-banner>
-					
-					<team-banner v-if="lastRace && lastRace.raceResults && (lastRace.raceResults.length > 1)"
-						:mainColor="lastRace.raceResults[1].team.mainColor"
-						:secondaryColor="lastRace.raceResults[1].team.secondaryColor"> 
-						{{ lastRace.raceResults[1].driver.nickname }}
-					</team-banner>
-					
-					<team-banner v-if="lastRace && lastRace.raceResults && lastRace.raceResults.length > 2"
-						:mainColor="lastRace.raceResults[2].team.mainColor"
-						:secondaryColor="lastRace.raceResults[2].team.secondaryColor"> 
-						{{ lastRace.raceResults[2].driver.nickname }}
-					</team-banner>
+				<div class="relative flex-grow">
+					<div class="absolute relative-center fill-w fill-h">
+						<div class="font-m images-container fill-w fill-h">
+							<img class="object-position-bottom object-fit-contain images-first"
+								:src="lastRace.raceResults[0].driver.profiles[0].imageLink"
+							/>
+							<team-banner class="title-first"
+								:mainColor="lastRace.raceResults[0].team.mainColor"
+								:secondaryColor="lastRace.raceResults[0].team.secondaryColor"> 
+								{{ lastRace.raceResults[0].driver.nickname }}
+							</team-banner>
+
+							<img class="object-position-bottom object-fit-contain images-second"
+								:src="lastRace.raceResults[1].driver.profiles[0].imageLink"
+							/>
+							<team-banner class="title-second"
+								:mainColor="lastRace.raceResults[1].team.mainColor"
+								:secondaryColor="lastRace.raceResults[1].team.secondaryColor"> 
+								{{ lastRace.raceResults[1].driver.nickname }}
+							</team-banner>
+
+							<img class="object-position-bottom object-fit-contain images-third"
+								:src="lastRace.raceResults[2].driver.profiles[0].imageLink"
+							/>
+							<team-banner class="title-third"
+								:mainColor="lastRace.raceResults[2].team.mainColor"
+								:secondaryColor="lastRace.raceResults[2].team.secondaryColor"> 
+								{{ lastRace.raceResults[2].driver.nickname }}
+							</team-banner>
+						</div>
+					</div>
 				</div>
 			</my-section>
 			<my-section class="section-top-right flex flex-vertical padding-25">
 				<div class="font-l">
-					Next race:
+					Next up:
 				</div>
 				<div class="font-l">
-					{{ nextRace ? nextRace.name : "No Data" }}
+					{{ nextRace ? nextRace.name : "No race planned" }}
 				</div>
 				<div class="font-l">
 
 				</div>
 				<div class="font-xl" id="countdown" ref="countdown">
-					No Data
 				</div>
 				<span class="flex-grow" />
-				<div>
-					Live <a class="twitch-link" :href="nextRace ? nextRace.livestreamLink : 'https://twitch.tv/lhudsonx'">Here</a>
+				<div v-if="nextRace">
+					Live <a class="twitch-link" :href="nextRace.livestreamLink">Here</a>
 				</div>
 			</my-section>
 			<my-section class="section-bottom-right padding-25">
@@ -90,19 +98,24 @@ export default class extends Vue {
 
 	private timerThread: number = 0;
 
+	private showImage(n: number) {
+		return this.lastRace != null && this.lastRace.raceResults != null && this.lastRace.raceResults.length > n - 1;
+	}
+
 	public mounted() {
-		console.log("Next: ", this.nextRace);
+		console.log("Last: ", this.lastRace.raceResults[0].driver);
 
 		this.updateTimer();
 		this.timerThread = window.setInterval(() => {
-			if (this.nextRace ) {
-				this.updateTimer();		
-			}
+			this.updateTimer();
 
 		}, 1000);
 	}
 
 	private updateTimer() {
+		if (!this.nextRace)
+			return;
+
 		let now = new Date();
 		let raceDate = new Date(this.nextRace.dateTime);
 
@@ -147,5 +160,51 @@ export default class extends Vue {
 .section-top-left {
 	grid-column: 2;
 	grid-row: 2;
+}
+
+.images-container {
+	display: grid;
+	grid-template-columns: 40% 30% 30%;
+	grid-template-rows: 20% minmax(0, 1fr) auto;
+	max-height: 100%;
+}
+
+.images-first {
+	width: 100%;
+	height: 100%;
+	grid-row-start: 1;
+	grid-row-end: 3;
+	grid-column: 1;
+}
+
+.images-second {
+	width: 100%;
+	height: 100%;
+	grid-row-start: 2;
+	grid-row-end: 3;
+	grid-column: 2;
+}
+
+.images-third {
+	width: 100%;
+	height: 100%;
+	grid-row-start: 2;
+	grid-row-end: 3;
+	grid-column: 3;
+}
+
+.title-first {
+	grid-row: 3;
+	grid-column: 1;
+}
+
+.title-second {
+	grid-row: 3;
+	grid-column: 2;
+}
+
+.title-third {
+	grid-row: 3;
+	grid-column: 3;
 }
 </style>

@@ -2,7 +2,7 @@
 		<div :class="'team-banner'">
 			<div class="color-main" :style="'background-color: #' + mainColor" />
 			<div class="color-secondary" :style="'background-color: #' + secondaryColor" />
-			<div class="font-l2">
+			<div class="font-l">
 				<slot />
 			</div>
 		</div>

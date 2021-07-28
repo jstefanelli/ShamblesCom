@@ -36,6 +36,17 @@ body {
 	position: relative;
 }
 
+.absolute {
+	position: absolute;
+}
+
+.relative-center {
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
+
 .inline-block {
 	display: inline-block;
 }
@@ -117,8 +128,44 @@ body {
 	}
 }
 
+.object-fit-cover {
+	object-fit: cover;
+}
+
+.object-fit-fill {
+	object-fit: fill;
+}
+
+.object-fit-contain {
+	object-fit: contain;
+}
+
+.object-position-left {
+	object-position: left;
+}
+
+.object-position-right {
+	object-position: right;
+}
+
+.object-position-top {
+	object-position: top;
+}
+
+.object-position-bottom {
+	object-position: bottom;
+}
+
 .color-red {
 	color: red;
+}
+
+.width-auto {
+	width: auto;
+}
+
+.height-auto {
+	height: auto;
 }
 
 @for $i from 1 to 10 {
@@ -283,4 +330,14 @@ body {
 
 .overflow-x-hidden {
 	overflow-y: hidden;
+}
+
+.w-fit-content {
+	width: fit-content;
+	width: -moz-fit-content;
+}
+
+.h-fit-content {
+	height: fit-content;
+	height: -moz-fit-content;
 }
