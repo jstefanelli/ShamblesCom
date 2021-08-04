@@ -15,30 +15,33 @@
 					<div class="absolute relative-center fill-w fill-h">
 						<div class="font-m images-container fill-w fill-h">
 							<img class="object-position-bottom object-fit-contain images-first"
-								:src="lastRace.raceResults[0].driver.profiles[0].imageLink"
+								v-if="firstResult != null"
+								:src="firstImageLink"
 							/>
-							<team-banner class="title-first"
-								:mainColor="lastRace.raceResults[0].team.mainColor"
-								:secondaryColor="lastRace.raceResults[0].team.secondaryColor"> 
-								{{ lastRace.raceResults[0].driver.nickname }}
+							<team-banner class="title-first" v-if="firstResult != null"
+								:mainColor="firstResult.team.mainColor"
+								:secondaryColor="firstResult.team.secondaryColor"> 
+								{{ firstResult.driver.nickname }}
 							</team-banner>
 
 							<img class="object-position-bottom object-fit-contain images-second"
-								:src="lastRace.raceResults[1].driver.profiles[0].imageLink"
+								v-if="secondResult != null"
+								:src="secondImageLink"
 							/>
-							<team-banner class="title-second"
-								:mainColor="lastRace.raceResults[1].team.mainColor"
-								:secondaryColor="lastRace.raceResults[1].team.secondaryColor"> 
-								{{ lastRace.raceResults[1].driver.nickname }}
+							<team-banner class="title-second" v-if="secondResult"
+								:mainColor="secondResult.team.mainColor"
+								:secondaryColor="secondResult.team.secondaryColor"> 
+								{{ secondResult.driver.nickname }}
 							</team-banner>
 
 							<img class="object-position-bottom object-fit-contain images-third"
-								:src="lastRace.raceResults[2].driver.profiles[0].imageLink"
+								v-if="thirdResult != null"
+								:src="thirdImageLink"
 							/>
-							<team-banner class="title-third"
-								:mainColor="lastRace.raceResults[2].team.mainColor"
-								:secondaryColor="lastRace.raceResults[2].team.secondaryColor"> 
-								{{ lastRace.raceResults[2].driver.nickname }}
+							<team-banner class="title-third" v-if="thirdResult != null"
+								:mainColor="thirdResult.team.mainColor"
+								:secondaryColor="thirdResult.team.secondaryColor"> 
+								{{ thirdResult.driver.nickname }}
 							</team-banner>
 						</div>
 					</div>
@@ -57,7 +60,7 @@
 				<div class="font-xl" id="countdown" ref="countdown">
 				</div>
 				<span class="flex-grow" />
-				<div v-if="nextRace">
+				<div v-if="nextRace && nextRace.livestreamLink != null && nextRace.livestreamLink.length > 0">
 					Live <a class="twitch-link" :href="nextRace.livestreamLink">Here</a>
 				</div>
 			</my-section>
@@ -84,6 +87,8 @@ import BasePage from './layout/basePage.vue';
 import Section from './layout/section.vue';
 import TeamBanner from './layout/teamBanner.vue';
 import Race from '@/data/Race';
+import RaceResult from '@/data/RaceResult';
+import MissingDriver from "£/images/Missing_profile.png"
 
 @Component({
 	components: {
@@ -98,18 +103,79 @@ export default class extends Vue {
 
 	private timerThread: number = 0;
 
-	private showImage(n: number) {
-		return this.lastRace != null && this.lastRace.raceResults != null && this.lastRace.raceResults.length > n - 1;
-	}
-
 	public mounted() {
-		console.log("Last: ", this.lastRace.raceResults[0].driver);
 
 		this.updateTimer();
 		this.timerThread = window.setInterval(() => {
 			this.updateTimer();
 
 		}, 1000);
+	}
+
+	public get firstResult() : RaceResult {
+		if (this.lastRace.raceResults != null && this.lastRace.raceResults.length > 0) {
+			return this.lastRace.raceResults[0];
+		}
+		return null;
+	}
+	
+	public get firstImageLink() : string {
+		let link: string = MissingDriver;
+		let res = this.firstResult;
+		if (res != null &&
+			res.driver != null &&
+			res.driver.profiles != null &&
+			res.driver.profiles.length > 0 &&
+			res.driver.profiles[0] != null &&
+			res.driver.profiles[0].imageLink != null &&
+			res.driver.profiles[0].imageLink.length > 0) {
+			link = res.driver.profiles[0].imageLink;
+		}
+		return link;
+	}
+	
+	public get secondResult() : RaceResult {
+		if (this.lastRace.raceResults != null && this.lastRace.raceResults.length > 1) {
+			return this.lastRace.raceResults[1];
+		}
+		return null;
+	}
+
+	public get secondImageLink() : string {
+		let link: string = MissingDriver;
+		let res = this.secondResult;
+		if (res != null &&
+			res.driver != null &&
+			res.driver.profiles != null &&
+			res.driver.profiles.length > 0 &&
+			res.driver.profiles[0] != null &&
+			res.driver.profiles[0].imageLink != null &&
+			res.driver.profiles[0].imageLink.length > 0) {
+			link = res.driver.profiles[0].imageLink;
+		}
+		return link;
+	}
+	
+	public get thirdResult() : RaceResult {
+		if (this.lastRace.raceResults != null && this.lastRace.raceResults.length > 2) {
+			return this.lastRace.raceResults[2];
+		}
+		return null;
+	}
+
+	public get thirdImageLink() : string {
+		let link: string = MissingDriver;
+		let res = this.thirdResult;
+		if (res != null &&
+			res.driver != null &&
+			res.driver.profiles != null &&
+			res.driver.profiles.length > 0 &&
+			res.driver.profiles[0] != null &&
+			res.driver.profiles[0].imageLink != null &&
+			res.driver.profiles[0].imageLink.length > 0) {
+			link = res.driver.profiles[0].imageLink;
+		}
+		return link;
 	}
 
 	private updateTimer() {

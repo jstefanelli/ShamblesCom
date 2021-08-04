@@ -30,14 +30,17 @@ export default class extends Vue {
 .team-banner {
 	display: flex;
 	overflow: hidden;
+	align-items: center;
 	margin: 5px;
 
 	> .color-main {
 		width: 10px;
+		height: 100%;
 	}
 
 	> .color-secondary {
 		width: 10px;
+		height: 100%;
 		margin-right: 10px;
 	}
 }

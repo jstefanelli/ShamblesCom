@@ -149,13 +149,16 @@ main {
 .team-banner {
   display: flex;
   overflow: hidden;
+  align-items: center;
   margin: 5px;
 }
 .team-banner > .color-main {
   width: 10px;
+  height: 100%;
 }
 .team-banner > .color-secondary {
   width: 10px;
+  height: 100%;
   margin-right: 10px;
 }
 .sections-container {
@@ -1836,17 +1839,6 @@ a.youtube-link {
 }
 .card:not(.no-hover):hover {
   box-shadow: 0 0 5px 2px #373737;
-}
-
-.flag {
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.flag.xxl {
-  padding-left: 175px;
-}
-.flag.spain {
-  background-image: url(/830ef30606c3895f2b48.png);
 }
 
 .team-renault > .color-main {
