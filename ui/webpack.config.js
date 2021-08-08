@@ -3,6 +3,7 @@ const CSSExt = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { WebpackManifestPlugin} = require("webpack-manifest-plugin");
 
 let source = path.resolve(__dirname, "src");
 let target = path.resolve(__dirname, "..", "server", "wwwroot");
@@ -73,6 +74,7 @@ module.exports = (env, argv) => {
 					{ from: 'src/resources', to: "" }
 				]
 			})*/
+			new WebpackManifestPlugin(),
 		]
 	}
 };

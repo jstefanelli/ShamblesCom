@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -7,8 +8,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShamblesCom.Server.Assets;
 using ShamblesCom.Server.Converters;
 using ShamblesCom.Server.DB;
 using ShamblesCom.Server.DB.Seeders;
@@ -18,6 +21,14 @@ namespace ShamblesCom.Server
 {
     public class Startup
     {
+        private const string AssetsManifestName = "manifest.json";
+        private string ContentRoot { get; set; }
+
+        public Startup(IConfiguration config) {
+            ContentRoot = config.GetValue<string>(WebHostDefaults.ContentRootKey);
+        }
+
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -44,6 +55,7 @@ namespace ShamblesCom.Server
             });
 
             services.AddDistributedMemoryCache();
+            services.AddSingleton<IFrontendAssets>(new FrontendAssets(Path.Combine(ContentRoot, "wwwroot", AssetsManifestName)));
 
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
