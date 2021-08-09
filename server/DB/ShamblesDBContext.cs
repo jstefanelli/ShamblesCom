@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ShamblesCom.Server.DB.Models;
 
@@ -64,6 +65,10 @@ namespace ShamblesCom.Server.DB {
 			builder.Entity<DriverProfile>()
 				.HasIndex(p => new { p.SeasonId, p.DriverId})
 				.IsUnique();
+		}
+
+		public async Task<SiteSettings> GetSettings() {
+			return await Settings.FirstOrDefaultAsync();
 		}
 	}
 }

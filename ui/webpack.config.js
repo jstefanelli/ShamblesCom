@@ -45,7 +45,7 @@ module.exports = (env, argv) => {
 					use: ['vue-loader']
 				},
 				{
-					test: /\.(ttf)|(png)|(jpg)|(jpeg)|(mp4)|(mp3)|(webm)$/i,
+					test: /\.(otf)|(ttf)|(png)|(jpg)|(jpeg)|(mp4)|(mp3)|(webm)$/i,
 					type: 'asset/resource'
 				}
 			]

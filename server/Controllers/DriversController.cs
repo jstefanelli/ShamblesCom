@@ -20,7 +20,7 @@ namespace ShamblesCom.Server.Controllers {
 			Db = db;
 		}
 
-		private static int CompareDrivers(DriverInfo d0, DriverInfo d1, int pos = 1) {
+		public static int CompareDrivers(DriverInfo d0, DriverInfo d1, int pos = 1) {
 			if (d0.SeasonPoints != d1.SeasonPoints) {
 				return d1.SeasonPoints - d0.SeasonPoints;
 			}

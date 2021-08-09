@@ -6,7 +6,8 @@
 					Last race:
 				</div>
 				<div class="font-xxl">
-					<span class="xxl">{{ lastRace ? lastRace.name : "No Data" }} </span>
+					<spa-link v-if="lastRace" :target="'/race/' + lastRace.id" class="color-accent">{{ lastRace.name }}</spa-link>
+					<span class="xxl" v-else>No Data</span>
 				</div>
 				<div class="font-l">
 					Results:
@@ -14,7 +15,12 @@
 				<div class="relative flex-grow">
 					<div class="absolute relative-center fill-w fill-h">
 						<div class="font-m images-container fill-w fill-h">
-							<img class="object-position-bottom object-fit-contain images-first"
+							<span class="rank-first font-xxxl text-border-5"
+								:style="'color: #' + firstResult.team.mainColor + '; text-shadow: 10px 10px #' + firstResult.team.secondaryColor">
+								#1
+							</span>
+
+							<img class="object-position-bottom-right object-fit-contain images-first"
 								v-if="firstResult != null"
 								:src="firstImageLink"
 							/>
@@ -24,17 +30,28 @@
 								{{ firstResult.driver.nickname }}
 							</team-banner>
 
-							<img class="object-position-bottom object-fit-contain images-second"
+							<span class="rank-second font-xxxl text-border-5"
+								:style="'color: #' + secondResult.team.mainColor + '; text-shadow: 10px 10px #' + secondResult.team.secondaryColor">
+								#2
+							</span>
+
+							<img class="object-position-bottom-right object-fit-contain images-second"
 								v-if="secondResult != null"
 								:src="secondImageLink"
 							/>
+
 							<team-banner class="title-second" v-if="secondResult"
 								:mainColor="secondResult.team.mainColor"
 								:secondaryColor="secondResult.team.secondaryColor"> 
 								{{ secondResult.driver.nickname }}
 							</team-banner>
+							
+							<span class="rank-third font-xxxl text-border-5"
+								:style="'color: #' + thirdResult.team.mainColor + '; text-shadow: 10px 10px #' + thirdResult.team.secondaryColor">
+								#3
+							</span>
 
-							<img class="object-position-bottom object-fit-contain images-third"
+							<img class="object-position-bottom-right object-fit-contain images-third"
 								v-if="thirdResult != null"
 								:src="thirdImageLink"
 							/>
@@ -51,8 +68,9 @@
 				<div class="font-l">
 					Next up:
 				</div>
-				<div class="font-l">
-					{{ nextRace ? nextRace.name : "No race planned" }}
+				<div class="font-l margin-v-10">
+					<spa-link v-if="nextRace" :target="'/race/' + nextRace.id" class="color-accent"> {{ nextRace.name }}</spa-link>
+					<span v-else>No race planned</span>
 				</div>
 				<div class="font-l">
 
@@ -89,12 +107,14 @@ import TeamBanner from './layout/teamBanner.vue';
 import Race from '@/data/Race';
 import RaceResult from '@/data/RaceResult';
 import MissingDriver from "£/images/Missing_profile.png"
+import SpaLink from '@/SPA/SpaLink.vue';
 
 @Component({
 	components: {
 		BasePage,
 		"my-section": Section,
-		TeamBanner
+		TeamBanner,
+		"spa-link": SpaLink
 	}
 })
 export default class extends Vue {
@@ -243,6 +263,14 @@ export default class extends Vue {
 	grid-column: 1;
 }
 
+.rank-first {
+	width: 100%;
+	height: 100%;
+	grid-row-start: 1;
+	grid-row-end: 3;
+	grid-column: 1;
+}
+
 .images-second {
 	width: 100%;
 	height: 100%;
@@ -251,10 +279,26 @@ export default class extends Vue {
 	grid-column: 2;
 }
 
+.rank-second {
+	width: 100%;
+	height: 100%;
+	grid-row-start: 1;
+	grid-row-end: 3;
+	grid-column: 2;
+}
+
 .images-third {
 	width: 100%;
 	height: 100%;
 	grid-row-start: 2;
+	grid-row-end: 3;
+	grid-column: 3;
+}
+
+.rank-third {
+	width: 100%;
+	height: 100%;
+	grid-row-start: 1;
 	grid-row-end: 3;
 	grid-column: 3;
 }

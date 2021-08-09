@@ -1,7 +1,8 @@
-$bg-color: #444;
+$bg-color: #15151e;
+$bg-color-2: lighten($bg-color, 15%);
 $fg-color: #eee;
 
-$titlebar-color: #f44;
+$titlebar-color: #e10600;
 
 $bg-color-darkish: darken($bg-color, 5%);
 $bg-color-dark: darken($bg-color, 10%);
@@ -18,7 +19,6 @@ $at-secondary: #eee;
 $rp-main: #feaedb;
 $rp-secondary: #0c6df2;
 
-$rb-main: #292f3b;
-$rb-secondary: #fd2e40;
-$rb-fallback: #feca2d;
+$rb-main: #0c3db2;
+$rb-secondary: #001a30;
 

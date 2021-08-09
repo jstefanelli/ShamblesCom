@@ -18,6 +18,9 @@ namespace ShamblesCom.Server.DB.DTO {
 		}
 
 		public DTODriverProfile(DriverProfile pr) {
+			if (pr == null)
+				return;
+
 			Id = pr.Id;
 			DriverId = pr.DriverId;
 			ShortDescription = pr.ShortDescription;

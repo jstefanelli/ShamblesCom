@@ -1,31 +1,53 @@
 @import "fonts";
+@import "colors";
 
 @font-face {
-	font-family: 'Neue Haas', sans-serif;
-	src: url(£/fonts/nhaasgrotesktxpro-55rg.ttf) format('truetype');
+	font-family: 'Neue Haas';
+	src: url(£/fonts/nhaasgrotesktxpro-55rg.ttf);
 	font-weight: 55;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: 'Neue Haas', sans-serif;
-	src: url(£/fonts/nhaasgrotesktxpro-56it.ttf) format('truetype');
+	font-family: 'Neue Haas';
+	src: url(£/fonts/nhaasgrotesktxpro-56it.ttf);
 	font-weight: 56;
 	font-style: italic;
 }
 
 @font-face {
-	font-family: 'Neue Haas', sans-serif;
-	src: url(£/fonts/nhaasgrotesktxpro-75bd.ttf) format('truetype');
+	font-family: 'Neue Haas';
+	src: url(£/fonts/nhaasgrotesktxpro-75bd.ttf);
 	font-weight: 75;
 	font-style: normal;
 }
 
 @font-face {
-	font-family: 'Neue Haas', sans-serif;
-	src: url(£/fonts/nhaasgrotesktxpro-76bdit.ttf) format('truetype');
+	font-family: 'Neue Haas';
+	src: url(£/fonts/nhaasgrotesktxpro-76bdit.ttf);
 	font-weight: 76;
 	font-style: italic;
+}
+
+@font-face {
+	font-family: 'Formula1 Display Regular';
+	src: url(£/fonts/Formula1-Regular.otf);
+	font-weight: 55;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Formula1 Display Bold';
+	src: url(£/fonts/Formula1-Bold.otf);
+	font-weight: 75;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Formula1 Display Wide';
+	src: url(£/fonts/Formula1-Wide.otf);
+	font-weight: 55;
+	font-style: normal;
 }
 
 
@@ -47,6 +69,22 @@
 
 .font-xxl {
 	font-size: $font-xxl-height;
+}
+
+.font-xxxl {
+	font-size: $font-3xl-height;
+}
+
+.font-f1 {
+	font-family: 'Formula 1', sans-serif;
+}
+
+.font-f1-wide {
+	font-family: 'Formula 1 Wide', 'Formula 1', sans-serif;
+}
+
+.font-haas {
+	font-family: 'Neue Haas';
 }
 
 .emoji {
@@ -80,4 +118,12 @@ i {
 		font-style: normal;
 		color: #ff6600;
 	}
+}
+
+.color-transparent {
+	color: transparent;
+}
+
+.color-accent {
+	color: $titlebar-color;
 }

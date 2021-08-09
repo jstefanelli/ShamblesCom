@@ -7,7 +7,7 @@ body {
 	min-height: 100%;
 	margin: 0;
 	padding: 0;
-	font-family: 'Neue Haas', sans-serif;
+	font-family: 'Formula1 Display Regular', sans-serif;
 	color: $fg-color;
 	background-color: $bg-color;
 	box-sizing: border-box;
@@ -154,6 +154,10 @@ body {
 
 .object-position-bottom {
 	object-position: bottom;
+}
+
+.object-position-bottom-right {
+	object-position: bottom right;
 }
 
 .color-red {

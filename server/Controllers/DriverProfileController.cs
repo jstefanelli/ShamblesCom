@@ -38,6 +38,7 @@ namespace ShamblesCom.Server.Controllers {
 				profile.SeasonId = seasonId;
 				profile.ShortDescription = "A description";
 				profile.Description = "A longer description";
+				profile.Driver = await Db.Drivers.FindAsync(driverId);
 
 				Db.Profiles.Add(profile);
 				await Db.SaveChangesAsync();

@@ -47,6 +47,7 @@ select {
 button,
 input[type="submit"],
 .button {
+	color: $fg-color !important;
 	cursor: pointer;
 	padding: 10px;
 	text-align: center;
@@ -78,11 +79,24 @@ input[type="submit"],
 
 	&.passive {
 		background-color: $bg-color;
-		border: 1px solid $titlebar-color;
+		border: 1px solid lighten($bg-color, 15%);
 		color: $fg-color;
 
 		&:hover {
 			background-color: lighten($bg-color, 5%);
+		}
+	}
+}
+
+a {
+
+	&:not(.plain) {
+		color: $titlebar-color;
+		transition-duration: .5s;
+
+		&:hover {
+			color: lighten($titlebar-color, 15%);
+			transition-duration: .5s;
 		}
 	}
 }
