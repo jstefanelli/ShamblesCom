@@ -12,8 +12,9 @@ namespace ShamblesCom.Server.DB.Models {
 		public string MainColor { get; set; }
 		public string SecondaryColor { get; set; }
 		public int SeasonId { get; set; }
-		[JsonIgnore]
 		public Season Season { get; set; }
+		public byte[] ImageData { get; set; }
+		public string ImageMimeType { get; set; }
 
 		public List<RaceResult> RaceResults { get; set; }
 	}

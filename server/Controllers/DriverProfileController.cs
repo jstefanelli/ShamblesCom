@@ -18,12 +18,6 @@ namespace ShamblesCom.Server.Controllers {
 	
 	[Route("/admin/{seasonId}/drivers/{driverId}")]
 	public class DriverProfileController : Controller {
-
-		public static readonly string[] SupportedImageTypes = new string[] {
-			"image/png",
-			"image/jpeg",
-			"image/jpg"
-		};
 		public ShamblesDBContext Db { get; protected set; }
 		public DriverProfileController(ShamblesDBContext db) {
 			Db = db;
@@ -75,17 +69,10 @@ namespace ShamblesCom.Server.Controllers {
 				return new BadRequestObjectResult(ModelState);
 			}
 
-			int idx = file.Base64Data.IndexOf(";base64,");
-			int dataLength = "data:".Length;
-			string mimeType = file.Base64Data.Substring(dataLength, idx - dataLength);
-			string dataStr = file.Base64Data.Substring(idx + ";base64,".Length);
-
-			if (!SupportedImageTypes.Contains(mimeType)) {
-				ModelState.AddModelError("File", "Unsupported data type");
+			if (!file.Decode(out byte[] data, out string mimeType)) {
+				ModelState.AddModelError("File", "Invalid data submitted");
 				return new BadRequestObjectResult(ModelState);
 			}
-
-			byte[] data = System.Convert.FromBase64String(dataStr);
 
 			DriverProfile profile = await GetProfile(seasonId, driverId, false);
 			profile.ImageData = data;
@@ -110,9 +97,5 @@ namespace ShamblesCom.Server.Controllers {
 			return new SeeOtherResult($"/admin/{seasonId}/drivers/{driverId}");
 		}
 
-		public struct ImageSubmitData {
-			[JsonPropertyName("base64data")]
-			public string Base64Data { get; set; }
-		}
 	}
 }

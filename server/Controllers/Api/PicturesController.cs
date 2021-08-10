@@ -47,5 +47,19 @@ namespace ShamblesCom.Server.Controllers.Api
 
 			return File(rp.ImageData, rp.ImageMimeType);
 		}
+
+		[HttpGet("team/{teamId}")]
+		public async Task<ActionResult> TeamImage(int teamId) {
+			Team t = await Db.Teams.FindAsync(teamId);
+			if (t == null) {
+				return NotFound();
+			}
+
+			if (t.ImageData == null || t.ImageData.Length == 0) {
+				return NotFound();
+			}
+
+			return File(t.ImageData, t.ImageMimeType);
+		}
 	}
 }
