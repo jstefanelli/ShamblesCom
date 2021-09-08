@@ -1,104 +1,29 @@
-.title-screen {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  max-height: 100vh;
-  overflow: hidden;
-  transition-duration: 0.5s;
+@charset "UTF-8";
+.index-background {
+  background-image: url(/29e7dd33696dfb027888.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
-.title-screen * {
-  transition-duration: 0.5s;
-}
-.title-screen.small {
-  max-height: 90px;
+.index-logo {
+  width: 80vh;
   height: auto;
 }
-.title-screen.small .foreground {
-  position: unset;
-}
-.title-screen.small .foreground > .title {
-  padding: 15px;
-}
-.title-screen.small .foreground > .title > .small {
-  font-size: 10pt;
-  padding-left: 7.5pt;
-  line-height: 10pt;
-}
-.title-screen.small .foreground > .title > .large {
-  font-size: 30pt;
-  line-height: 25pt;
-  padding-left: 1.2pt;
-}
-.title-screen.small .foreground > .title > .justified {
-  margin-top: 0;
-  font-size: 11pt;
-  line-height: 11pt;
-  padding-right: 130px;
-}
-.title-screen > .background {
+.index-logo > img {
   width: 100%;
-  height: 100%;
-  position: absolute;
+  height: auto;
 }
-.title-screen .foreground {
-  background-color: black;
-  width: 100%;
-  height: 100%;
-  position: absolute;
+.index-continue {
+  width: 80vh;
+  height: auto;
 }
-.title-screen .foreground > .title {
-  display: inline-block;
-  font-style: italic;
+.index-continue > svg {
+  font-family: "Neue Haas Display";
+  font-style: normal;
+  font-weight: black;
+  letter-spacing: 8pt;
+  font-size: 25pt;
 }
-.title-screen .foreground > .title > p {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-.title-screen .foreground > .title > .small {
-  font-size: 30pt;
-  padding-left: 20pt;
-  line-height: 30pt;
-  font-weight: bolder;
-}
-.title-screen .foreground > .title > .large {
-  font-style: italic;
-  font-weight: bolder;
-  font-size: 90pt;
-  padding-left: 5pt;
-  line-height: 75pt;
-}
-.title-screen .foreground > .title > .justified {
-  width: calc(100% - 20pt);
-  font-size: 35pt;
-  line-height: 17.5pt;
-  font-weight: bold;
-  text-align: justify;
-  text-justify: distribute;
-  margin-top: 5px;
-  padding-right: 100px;
-}
-.title-screen .foreground > .title > .justified:after {
-  content: "";
-  display: inline-block;
-  width: 100%;
-}
-.main {
-  width: 100%;
-  min-height: 200vh;
-  transition-duration: 0.5s;
-}
-.main.padding-full {
-  padding-top: 100vh;
-}
-.main.padding-small {
-  padding-top: 90px;
-  min-height: calc(100vh + 90px);
-}
-.main *:first-child {
-  margin-top: 90px;
-}
-@charset "UTF-8";
 header.titlebar {
   position: fixed;
   width: 100%;
@@ -107,10 +32,6 @@ header.titlebar {
 }
 .logo > a {
   display: block;
-  background-image: url(/dfab9eed1b76d94ef845.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
   width: 236px;
   height: 74px;
 }
@@ -287,6 +208,102 @@ main > .page-content {
   font-weight: 55;
   font-style: normal;
 }
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: normal;
+  font-weight: 45;
+  src: local("Neue Haas Grotesk Display Pro 45 Light"), url(/646ed20dfbcb0eba5057.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: italic;
+  font-weight: 46;
+  src: local("Neue Haas Grotesk Display Pro 46 Light Italic"), url(/a86ac02d6d8539923cff.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: normal;
+  font-weight: 15;
+  src: local("Neue Haas Grotesk Display Pro 15 XXThin"), url(/5655ae28b8f5cf0d48cc.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: italic;
+  font-weight: 16;
+  src: local("Neue Haas Grotesk Display Pro 16 XXThin Italic"), url(/9e2a58788f5e27047791.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: normal;
+  font-weight: 25;
+  src: local("Neue Haas Grotesk Display Pro 25 XThin"), url(/747a06577652e59d4957.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: italic;
+  font-weight: 26;
+  src: local("Neue Haas Grotesk Display Pro 26 XThin Italic"), url(/222ed514adfa967aa49d.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: normal;
+  font-weight: 35;
+  src: local("Neue Haas Grotesk Display Pro 35 Thin"), url(/dda1d873a98a3feb5972.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: italic;
+  font-weight: 36;
+  src: local("Neue Haas Grotesk Display Pro 36 Thin Italic"), url(/e67256adccb019ba0ebb.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: normal;
+  font-weight: 55;
+  src: local("Neue Haas Grotesk Display Pro 55 Roman"), url(/bf8caa25260dcf491fd5.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: italic;
+  font-weight: 56;
+  src: local("Neue Haas Grotesk Display Pro 56 Roman Italic"), url(/8e81f54f2d7e06009513.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: normal;
+  font-weight: 65;
+  src: local("Neue Haas Grotesk Display Pro 65 Medium"), url(/f832a6de7899a449de29.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: italic;
+  font-weight: 66;
+  src: local("Neue Haas Grotesk Display Pro 66 Medium Italic"), url(/6413cf1b196088a68ea0.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: normal;
+  font-weight: 75;
+  src: local("Neue Haas Grotesk Display Pro 75 Bold"), url(/385a203e7f434afd6eb9.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: italic;
+  font-weight: 76;
+  src: local("Neue Haas Grotesk Display Pro 76 Bold Italic"), url(/ef6ab007539366a4d4d6.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: normal;
+  font-weight: 95;
+  src: local("Neue Haas Grotesk Display Pro 95 Black"), url(/eddf2ac3f3465397707f.woff) format("woff");
+}
+@font-face {
+  font-family: "Neue Haas Display";
+  font-style: italic;
+  font-weight: 96;
+  src: local("Neue Haas Grotesk Display Pro 96 Black Italic"), url(/7d7b1563a5af2b8dfec0.woff) format("woff");
+}
 .font-m {
   font-size: 14pt;
 }
@@ -375,6 +392,10 @@ body {
 html *,
 body * {
   box-sizing: border-box;
+}
+
+html {
+  height: 100vh;
 }
 
 .main {
@@ -518,8 +539,24 @@ body * {
   width: auto;
 }
 
+.width-screen {
+  width: 100vw;
+}
+
+.min-width-screen {
+  min-width: 100vw;
+}
+
 .height-auto {
   height: auto;
+}
+
+.height-screen {
+  height: 100vh;
+}
+
+.min-height-screen {
+  min-height: 100vh;
 }
 
 .width-5 {
@@ -1862,6 +1899,10 @@ body * {
   overflow-y: hidden;
 }
 
+.overflow-hidden {
+  overflow: hidden;
+}
+
 .w-fit-content {
   width: fit-content;
   width: -moz-fit-content;
@@ -1870,6 +1911,13 @@ body * {
 .h-fit-content {
   height: fit-content;
   height: -moz-fit-content;
+}
+
+.background-logo {
+  background-image: url(/dfab9eed1b76d94ef845.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 a {
@@ -2093,4 +2141,12 @@ table > tbody > tr > td {
 }
 table > tbody > tr > td:not(:last-of-type) {
   border-right: 1px solid rgba(238, 238, 238, 0.5);
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.text-white {
+  color: white;
 }

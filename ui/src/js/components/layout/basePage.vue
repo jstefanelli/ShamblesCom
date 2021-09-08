@@ -13,7 +13,7 @@
 				<span class="flex-grow" />
 			</div>
 			<div class="logo">
-				<spa-link target="/homepage" />
+				<spa-link class="background-logo" target="/homepage" />
 			</div>
 			<div class="buttons flex-grow flex align-center">
 				<span class="flex-grow" />
@@ -61,10 +61,6 @@ header.titlebar {
 .logo {
 	> a {
 		display: block;
-		background-image: url("£/images/logo.png");
-		background-size: contain;
-		background-repeat: no-repeat;
-		background-position: center center;
 		width: 236px;
 		height: 74px;
 	}

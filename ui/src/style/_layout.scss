@@ -17,6 +17,10 @@ body {
 	}
 }
 
+html {
+	height: 100vh;
+}
+
 .main {
 	width: 100%;
 }
@@ -168,8 +172,24 @@ body {
 	width: auto;
 }
 
+.width-screen {
+	width: 100vw;
+}
+
+.min-width-screen {
+	min-width: 100vw;
+}
+
 .height-auto {
 	height: auto;
+}
+
+.height-screen {
+	height: 100vh;
+}
+
+.min-height-screen {
+	min-height: 100vh;
 }
 
 @for $i from 1 to 10 {
@@ -336,6 +356,10 @@ body {
 	overflow-y: hidden;
 }
 
+.overflow-hidden {
+	overflow: hidden;
+}
+
 .w-fit-content {
 	width: fit-content;
 	width: -moz-fit-content;
@@ -344,4 +368,11 @@ body {
 .h-fit-content {
 	height: fit-content;
 	height: -moz-fit-content;
+}
+
+.background-logo {
+	background-image: url("£/images/logo.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
 }

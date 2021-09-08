@@ -36,7 +36,8 @@ namespace ShamblesCom.Server.Controllers {
 				Race tmp = Db.Races.Where(r => r.DateTime > now).FirstOrDefault();
 			
 				lastRace = await Db.Races.Where(r => r.DateTime < now && r.SeasonId == settings.CurrentHomeSeasonId).OrderByDescending(r => r.DateTime)
-					.Include(r => r.RaceResults).ThenInclude(rr => rr.Team).Include(r => r.RaceResults).ThenInclude(rr => rr.Driver).ThenInclude(d => d.Profiles.Where(p => p.SeasonId == settings.CurrentHomeSeasonId)).FirstOrDefaultAsync();
+					.Include(r => r.RaceResults).ThenInclude(rr => rr.Team)
+					.Include(r => r.RaceResults).ThenInclude(rr => rr.Driver).ThenInclude(d => d.Profiles.Where(p => p.SeasonId == settings.CurrentHomeSeasonId)).FirstOrDefaultAsync();
 				nextRace = await Db.Races.Where(r => r.DateTime > now && r.SeasonId == settings.CurrentHomeSeasonId).OrderBy(r => r.DateTime).FirstOrDefaultAsync();
 			}
 

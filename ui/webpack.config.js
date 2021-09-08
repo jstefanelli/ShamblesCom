@@ -22,6 +22,9 @@ module.exports = (env, argv) => {
 			clean: true,
 			publicPath: '/'
 		},
+		stats: {
+			children: true
+		},
 		module: {
 			rules: [
 				{
@@ -45,7 +48,7 @@ module.exports = (env, argv) => {
 					use: ['vue-loader']
 				},
 				{
-					test: /\.(otf)|(ttf)|(png)|(jpg)|(jpeg)|(mp4)|(mp3)|(webm)$/i,
+					test: /\.(otf)|(woff)|(ttf)|(png)|(jpg)|(jpeg)|(mp4)|(mp3)|(webm)$/i,
 					type: 'asset/resource'
 				}
 			]
