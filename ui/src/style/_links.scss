@@ -28,4 +28,14 @@ a {
 		background-repeat: no-repeat;
 		background-size: contain;
 	}
+
+	&:not(.plain) {
+		color: $titlebar-color;
+		transition-duration: .5s;
+
+		&:hover {
+			color: lighten($titlebar-color, 15%);
+			transition-duration: .5s;
+		}
+	}
 }

@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { WebpackManifestPlugin} = require("webpack-manifest-plugin");
+const WebpackBar = require('webpackbar');
 
 let source = path.resolve(__dirname, "src");
 let target = path.resolve(__dirname, "..", "server", "wwwroot");
@@ -22,9 +23,7 @@ module.exports = (env, argv) => {
 			clean: true,
 			publicPath: '/'
 		},
-		stats: {
-			children: true
-		},
+		stats: 'errors-warnings',
 		module: {
 			rules: [
 				{
@@ -78,6 +77,7 @@ module.exports = (env, argv) => {
 				]
 			})*/
 			new WebpackManifestPlugin(),
+			new WebpackBar()
 		]
 	}
 };

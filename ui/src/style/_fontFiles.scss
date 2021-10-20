@@ -4,42 +4,42 @@
 @font-face {
 	font-family: 'Neue Haas';
 	src: url(£/fonts/nhaasgrotesktxpro-55rg.ttf);
-	font-weight: 55;
+	font-weight: 400;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'Neue Haas';
 	src: url(£/fonts/nhaasgrotesktxpro-56it.ttf);
-	font-weight: 56;
+	font-weight: 400;
 	font-style: italic;
 }
 
 @font-face {
 	font-family: 'Neue Haas';
 	src: url(£/fonts/nhaasgrotesktxpro-75bd.ttf);
-	font-weight: 75;
+	font-weight: 600;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'Neue Haas';
 	src: url(£/fonts/nhaasgrotesktxpro-76bdit.ttf);
-	font-weight: 76;
+	font-weight: 600;
 	font-style: italic;
 }
 
 @font-face {
 	font-family: 'Formula1 Display Regular';
 	src: url(£/fonts/Formula1-Regular.otf);
-	font-weight: 55;
+	font-weight: 400;
 	font-style: normal;
 }
 
 @font-face {
 	font-family: 'Formula1 Display Bold';
 	src: url(£/fonts/Formula1-Bold.otf);
-	font-weight: 75;
+	font-weight: 600;
 	font-style: normal;
 }
 
@@ -51,25 +51,9 @@
 }
 
 @font-face {
-    font-family: 'Neue Haas Display';
-    font-style: normal;
-    font-weight: 45;
-    src: local('Neue Haas Grotesk Display Pro 45 Light'), url(£/fonts/NeueHaasDisplayLight.woff) format('woff');
-}
-    
-
-@font-face {
-	font-family: 'Neue Haas Display';
-	font-style: italic;
-	font-weight: 46;
-	src: local('Neue Haas Grotesk Display Pro 46 Light Italic'), url(£/fonts/NeueHaasDisplayLightItalic.woff) format('woff');
-}
-    
-
-@font-face {
 	font-family: 'Neue Haas Display';
 	font-style: normal;
-	font-weight: 15;
+	font-weight: 100;
 	src: local('Neue Haas Grotesk Display Pro 15 XXThin'), url(£/fonts/NeueHaasDisplayXXThin.woff) format('woff');
 }
     
@@ -77,7 +61,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: italic;
-	font-weight: 16;
+	font-weight: 100;
 	src: local('Neue Haas Grotesk Display Pro 16 XXThin Italic'), url(£/fonts/NeueHaasDisplayXXThinItalic.woff) format('woff');
 }
     
@@ -85,7 +69,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: normal;
-	font-weight: 25;
+	font-weight: 200;
 	src: local('Neue Haas Grotesk Display Pro 25 XThin'), url(£/fonts/NeueHaasDisplayXThin.woff) format('woff');
 }
     
@@ -93,7 +77,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: italic;
-	font-weight: 26;
+	font-weight: 200;
 	src: local('Neue Haas Grotesk Display Pro 26 XThin Italic'), url(£/fonts/NeueHaasDisplayXThinItalic.woff) format('woff');
 }
     
@@ -101,7 +85,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: normal;
-	font-weight: 35;
+	font-weight: 300;
 	src: local('Neue Haas Grotesk Display Pro 35 Thin'), url(£/fonts/NeueHaasDisplayThin.woff) format('woff');
 }
     
@@ -109,15 +93,28 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: italic;
-	font-weight: 36;
+	font-weight: 300;
 	src: local('Neue Haas Grotesk Display Pro 36 Thin Italic'), url(£/fonts/NeueHaasDisplayThinItalic.woff) format('woff');
 }
-    
+
+@font-face {
+    font-family: 'Neue Haas Display';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Neue Haas Grotesk Display Pro 45 Light'), url(£/fonts/NeueHaasDisplayLight.woff) format('woff');
+}
+
+@font-face {
+	font-family: 'Neue Haas Display';
+	font-style: italic;
+	font-weight: 400;
+	src: local('Neue Haas Grotesk Display Pro 46 Light Italic'), url(£/fonts/NeueHaasDisplayLightItalic.woff) format('woff');
+}
 
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: normal;
-	font-weight: 55;
+	font-weight: 500;
 	src: local('Neue Haas Grotesk Display Pro 55 Roman'), url(£/fonts/NeueHaasDisplayRoman.woff) format('woff');
 }
     
@@ -125,7 +122,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: italic;
-	font-weight: 56;
+	font-weight: 500;
 	src: local('Neue Haas Grotesk Display Pro 56 Roman Italic'), url(£/fonts/NeueHaasDisplayRomanItalic.woff) format('woff');
 }
     
@@ -133,7 +130,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: normal;
-	font-weight: 65;
+	font-weight: 600;
 	src: local('Neue Haas Grotesk Display Pro 65 Medium'), url(£/fonts/NeueHaasDisplayMediu.woff) format('woff');
 }
     
@@ -141,7 +138,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: italic;
-	font-weight: 66;
+	font-weight: 600;
 	src: local('Neue Haas Grotesk Display Pro 66 Medium Italic'), url(£/fonts/NeueHaasDisplayMediumItalic.woff) format('woff');
 }
     
@@ -149,7 +146,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: normal;
-	font-weight: 75;
+	font-weight: 700;
 	src: local('Neue Haas Grotesk Display Pro 75 Bold'), url(£/fonts/NeueHaasDisplayBold.woff) format('woff');
 }
     
@@ -157,7 +154,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: italic;
-	font-weight: 76;
+	font-weight: 700;
 	src: local('Neue Haas Grotesk Display Pro 76 Bold Italic'), url(£/fonts/NeueHaasDisplayBoldItalic.woff) format('woff');
 }
     
@@ -165,7 +162,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: normal;
-	font-weight: 95;
+	font-weight: 800;
 	src: local('Neue Haas Grotesk Display Pro 95 Black'), url(£/fonts/NeueHaasDisplayBlack.woff) format('woff');
 }
     
@@ -173,7 +170,7 @@
 @font-face {
 	font-family: 'Neue Haas Display';
 	font-style: italic;
-	font-weight: 96;
+	font-weight: 800;
 	src: local('Neue Haas Grotesk Display Pro 96 Black Italic'), url(£/fonts/NeueHaasDisplayBlackItalic.woff) format('woff');
 }
 
@@ -203,7 +200,7 @@
 }
 
 .font-f1 {
-	font-family: 'Formula 1', sans-serif;
+	font-family: 'Formula1 Display Regular', sans-serif;
 }
 
 .font-f1-wide {
@@ -212,6 +209,49 @@
 
 .font-haas {
 	font-family: 'Neue Haas';
+}
+
+h1,
+h2,
+h3,
+h4 {
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	font-size: $font-xxl-height;
+	font-weight: normal;
+	font-family: 'Formula1 Display Regular', sans-serif;
+}
+
+h2 {
+	font-size: $font-l-height;
+	font-weight: bold;
+	font-family: 'Neue Haas Display', sans-serif;
+}
+
+h3 {
+	font-size: $font-m-height;
+	font-weight: bold;
+	font-family: 'Neue Haas Display', sans-serif;
+}
+
+h4 {
+	font-weight: normal;
+	font-family: 'Neue Haas Display', sans-serif;
+}
+
+.font-normal {
+	font-weight: normal;
+}
+
+.font-semibold {
+	font-weight: 500;
+}
+
+.font-bold {
+	font-weight: bold;
 }
 
 .emoji {

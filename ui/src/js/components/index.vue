@@ -1,6 +1,6 @@
 <template>
 	<div class="height-screen">
-		<div class="fill index-background flex flex-vertical align-center">
+		<spa-link target="/homepage" class="fill index-background flex flex-vertical align-center">
 			<div class="flex-grow" />
 			<div :style="'height: ' + (targetBarHeight - currentBarHeight) + 'px'" />
 			<div class="index-logo overflow-hidden">
@@ -12,14 +12,14 @@
 				<svg :viewBox="currentViewBox()" width="525" :height="currentBarHeight">
 					<mask id="msk0">
 						<rect x="0" y="0" width="10000" height="100" fill="white" />
-						<text x="5" :y="currentTextOffset" fill="black">CLICK TO CONTINUE </text>
+						<text x="5" :y="currentTextOffset" style="font-weight: bold" fill="black">CLICK TO CONTINUE </text>
 					</mask>
 					<rect x="0" y="0" width="10000" height="100" fill="white" mask="url(#msk0)" />
 				</svg>
 				<div class="flex-grow bg-white" />
 			</div>
 			<div class="flex-grow" />
-		</div>
+		</spa-link>
 	</div>
 </template>
 

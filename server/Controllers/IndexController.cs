@@ -15,7 +15,6 @@ namespace ShamblesCom.Server.Controllers {
 
 		[HttpGet]
 		[SPA]
-		[Authorize]
 		public Task<ActionResult> Get() {
 			return Task.FromResult<ActionResult>(new JsonResult(new SPAData() {
 				View = "index",

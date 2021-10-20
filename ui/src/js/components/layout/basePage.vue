@@ -1,14 +1,14 @@
 <template>
 	<div class="fill-w">
-		<header class="titlebar flex align-center font-m font-haas">
+		<header class="titlebar flex align-center font-m font-haas z-45">
 			<div class="buttons flex-grow flex align-center">
 				<span class="flex-grow" />
 				<spa-link target="/drivers" class="italics plain">
-					Drivers
+					<h3>Drivers</h3>
 				</spa-link>
 				<span class="flex-grow" />
-				<spa-link target="/standings" class="italics plain">
-					Standings
+				<spa-link target="/teams" class="italics plain">
+					<h3>Teams</h3>
 				</spa-link>
 				<span class="flex-grow" />
 			</div>
@@ -18,11 +18,11 @@
 			<div class="buttons flex-grow flex align-center">
 				<span class="flex-grow" />
 				<spa-link target="/schedule" class="italics plain">
-					Schedule
+					<h3>Schedule</h3>
 				</spa-link>
 				<span class="flex-grow" />
 				<spa-link target="/highlights" class="italics plain">
-					Highlights
+					<h3>Highlights</h3>
 				</spa-link>
 				<span class="flex-grow" />
 			</div>
@@ -63,15 +63,6 @@ header.titlebar {
 		display: block;
 		width: 236px;
 		height: 74px;
-	}
-}
-
-main {
-	padding-top: 100px;
-	min-height: 100vh;
-
-	> .page-content {
-		min-height: calc(100vh - 100px);
 	}
 }
 </style>
