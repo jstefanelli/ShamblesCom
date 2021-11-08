@@ -13,10 +13,10 @@
 				</spa-link>
 			</div>
 			<div class="grid cols-3 fill-w margin-b-25 gap-25">
-				<spa-link class="card flex flex-vertical padding-10 plain" v-for="(p, i) in profiles" :key="p.driver.id">
+				<spa-link :target="'drivers/' + p.driver.id" class="card flex flex-vertical padding-10 plain" v-for="(p, i) in profiles" :key="p.driver.id">
 					<div class="flex fill-w align-center margin-b-5">
-						<h3> {{ i + 1 }} </h3>
-						<div class="flex-grow text-end">
+						<h3> #{{ i + 1 }} </h3>
+						<div class="flex-grow text-end font-ml">
 							Points: <b>{{ p.seasonPoints }}</b>
 						</div>
 					</div>

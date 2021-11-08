@@ -179,6 +179,10 @@
 	font-size: $font-m-height;
 }
 
+.font-ml {
+	font-size: $font-ml-height;
+}
+
 .font-l {
 	font-size: $font-l-height;
 }
@@ -232,12 +236,13 @@ h2 {
 }
 
 h3 {
-	font-size: $font-m-height;
+	font-size: $font-ml-height;
 	font-weight: bold;
 	font-family: 'Neue Haas Display', sans-serif;
 }
 
 h4 {
+	font-size: $font-m-height;
 	font-weight: normal;
 	font-family: 'Neue Haas Display', sans-serif;
 }
