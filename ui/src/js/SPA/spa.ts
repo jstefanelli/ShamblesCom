@@ -209,12 +209,28 @@ export class SPA {
 		}
 
 		let path = window.location.pathname;
+		let query = window.location.search;
+		let req = {} as any;
+		let any = false;
+
+		if (query && query.length > 0) {
+			query = query.substring(1);
+			
+			let params = query.split('&');
+			params.forEach(p => {
+				let pair = p.split('=');
+				if (pair[0] == 'spa')
+					return;
+				any = true;
+				req[pair[0]] = pair[1];
+			});
+		}
 
 		if (!path.startsWith("/")) {
 			path = "/" + path;
 		}
 
-		SPA.navigate(path).then((page) => {	
+		SPA.navigate(path, "GET", any ? req : null).then((page) => {	
 			page.render(false)
 		});
 	}

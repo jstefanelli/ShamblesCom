@@ -8,7 +8,9 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@types/chart.js": "^2.9.37",
     "@types/vue": "^2.0.0",
+    "chart.js": "^3.7.1",
     "copy-webpack-plugin": "^9.0.0",
     "css-loader": "^5.2.4",
     "html-webpack-plugin": "^5.3.1",
@@ -20,12 +22,15 @@
     "url-loader": "^4.1.1",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
-    "vue-loader": "^15.9.7",
+    "vue-loader": "^15.9.8",
     "vue-property-decorator": "^9.1.2",
     "vue-template-compiler": "^2.6.12",
-    "webpack": "^5.36.2",
-    "webpack-cli": "^4.7.2",
-    "webpack-manifest-plugin": "^4.0.2",
-    "webpackbar": "^5.0.0-3"
+    "webpack": "^5.47.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-manifest-plugin": "^4.1.1",
+    "webpackbar": "^5.0.2"
+  },
+  "dependencies": {
+    "npm": "^8.9.0"
   }
 }
