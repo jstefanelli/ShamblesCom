@@ -24,16 +24,22 @@ namespace ShamblesCom.Server.Controllers {
 
 		[HttpGet]
 		[SPA]
-		public async Task<ActionResult> Index() {
-			SiteSettings settings = await Db.Settings.FirstOrDefaultAsync();
+		public async Task<ActionResult> Index(int seasonId = -1) {
+			if (seasonId == -1) {
+				SiteSettings settings = await Db.Settings.FirstOrDefaultAsync();
+				if (settings == null) {
+					return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+				}
 
+				seasonId = settings.CurrentHomeSeasonId ?? 1;
+			}
+			
 			List<Driver> seasonDrivers = new List<Driver>();
 
-			if (settings == null) {
+			Season currentSeason = await Db.Seasons.Include(s => s.Races).ThenInclude(r => r.RaceResults).Where(s => s.Id == seasonId).FirstOrDefaultAsync();
+			if (currentSeason == null) {
 				return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
 			}
-
-			Season currentSeason = await Db.Seasons.Where(s => s.Id == settings.CurrentHomeSeasonId ).FirstOrDefaultAsync();
 			List<DTODriverInfo> profiles = await Db.Profiles.Where(p => p.SeasonId == currentSeason.Id)
 				.Include(p => p.Driver)
 					.ThenInclude(d => d.RaceResults.Where(rr => rr.Race.SeasonId == currentSeason.Id))
@@ -75,9 +81,39 @@ namespace ShamblesCom.Server.Controllers {
 				View = "drivers/index",
 				Data = new {
 					profiles = profiles,
-					season = new DTOSeason(currentSeason)
+					season = await Task.Run(() => { 
+						return new DTOSeason(currentSeason) {
+							Races = currentSeason.Races.Select(r => new DTORace(r) {
+								RaceResults = r.RaceResults.Select(rr => new DTORaceResult(rr)).ToList()
+							}).ToList()
+						};
+					})
 				}
 			});
-		} 
+		}
+
+		[HttpGet("{driverId:int}")]
+		[SPA]
+		public async Task<ActionResult> Details(int driverId, [FromQuery] int seasonId = -1) {
+			if (seasonId == -1) {
+				seasonId = (await Db.Settings.FirstOrDefaultAsync())?.CurrentHomeSeasonId ?? throw new Exception("No default season ID");
+			}
+
+			Season s = await Db.Seasons.Include(s => s.Races.Where(r => r.RaceResults.Where(rr => rr.DriverId == driverId).Count() > 0)).ThenInclude(r => r.RaceResults.Where(rr => rr.DriverId == driverId)).FirstOrDefaultAsync();
+			
+			DriverProfile p = await Db.Profiles.Where(p => p.DriverId == driverId && p.SeasonId == seasonId).FirstOrDefaultAsync();
+
+			return new JsonResult(new SPAData() {
+				View = "drivers/detail",
+				Data = new {
+					season = new DTOSeason(s) {
+						Races = s.Races.Select(r => new DTORace(r) {
+							RaceResults = r.RaceResults.Select(rr => new DTORaceResult(rr)).ToList()
+						}).ToList()
+					},
+					profile = new DTODriverProfile(p)
+				}
+			});
+		}
 	}
 }

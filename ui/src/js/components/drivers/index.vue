@@ -13,7 +13,7 @@
 				</spa-link>
 			</div>
 			<div class="grid cols-3 fill-w margin-b-25 gap-25">
-				<spa-link :target="'drivers/' + p.driver.id" class="card flex flex-vertical padding-10 plain" v-for="(p, i) in profiles" :key="p.driver.id">
+				<spa-link :target="'drivers/' + p.driver.id" :reqData="{ seasonId: season.id}" class="card flex flex-vertical padding-10 plain" v-for="(p, i) in profiles" :key="p.driver.id">
 					<div class="flex fill-w align-center margin-b-5">
 						<h3> #{{ i + 1 }} </h3>
 						<div class="flex-grow text-end font-ml">
@@ -34,6 +34,12 @@
 					</div>
 				</spa-link>
 			</div>
+			<h1 class="font-l2 margin-b-25" v-if="chartOk">
+				Points Timeline
+			</h1>
+			<canvas class="fill-w" id="driver-points-canvas">
+
+			</canvas>
 		</div>
 	</base-page>
 </template>
@@ -44,7 +50,21 @@ import Season from '@/data/Season';
 import SpaLink from '@/SPA/SpaLink.vue';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import BasePage from '../layout/basePage.vue';
+import * as Chart from 'chart.js';
 
+interface ProfileDataset {
+	label: string,
+	data: number[],
+	fill: boolean,
+	backgroundColor: string,
+	borderColor: string,
+	tension: number,
+}
+
+interface SeasonData {
+	labels: string[],
+	datasets: ProfileDataset[]
+}
 
 @Component({
 	components: {
@@ -56,5 +76,109 @@ import BasePage from '../layout/basePage.vue';
 export default class extends Vue{
 	@Prop({default: (): DriverInfo[] => null}) readonly profiles: DriverInfo[];
 	@Prop({default: (): Season => null}) readonly season: Season;
+
+	private _chart: Chart.Chart;
+
+	chartOk() {
+		return this._chart != null;
+	}
+
+	mounted() {
+		let data: SeasonData = {
+			labels: [],
+			datasets:  [],
+		};
+
+		let profileDatasets = new Map<number, ProfileDataset>();
+
+
+		if (this.profiles) {
+			this.profiles.forEach((p) => {
+				let profileDataset = {
+					label: p.driver.nickname,
+					data: new Array<number>(),
+					fill: false,
+					backgroundColor: '#' + p.mostCommonTeam.mainColor,
+					borderColor: '#' + p.mostCommonTeam.mainColor,
+					tension: 0.001,
+					pointRadius: 5,
+					pointHoverRadius: 8
+				};
+				
+				data.datasets.push(profileDataset);
+				profileDatasets.set(p.driver.id, profileDataset);
+			});
+		} else {
+			return;
+		}
+
+		if (this.season.races) {
+			for (let i = 0; i < this.season.races.length; i++) {
+				let r = this.season.races[i];
+				data.labels.push(r.name);
+
+				if (r.raceResults) {
+					r.raceResults.forEach(rr => {
+						if (profileDatasets.has(rr.driverId)) {
+							let dataSet = profileDatasets.get(rr.driverId);
+							let points = rr.points;
+							if (i > 0) {
+								points += dataSet.data[i - 1];
+							}
+							dataSet.data.push(points);
+						}
+					});
+
+					profileDatasets.forEach(val => {
+						if (val.data.length < i + 1) {
+							val.data.push(i > 0 ? val.data[i - 1] : 0);
+						}
+					});
+				}
+			}
+		} else {
+			console.log("No races in season");
+			return;
+		}
+
+		Chart.Chart.register(Chart.LineController, Chart.CategoryScale, Chart.LinearScale, Chart.PointElement, Chart.LineElement, Chart.Tooltip);
+
+		const chart = new Chart.Chart('driver-points-canvas', {
+			type: "line",
+			data: data,
+			options: {
+				plugins: {
+					tooltip: {
+						enabled: true,
+						titleFont: {
+							weight: 'bold',
+							size: 16,
+						},
+						bodyFont: {
+							size: 16
+						},
+						callbacks: {
+							labelTextColor: function(context) {
+								return context.dataset.borderColor?.toString() ?? '#FFF';
+							},
+							label: function(context) {
+								let name = context.dataset.label ?? '<Driver>';
+
+								return name + ' ' + context.dataset.data[context.dataIndex];
+							}
+						}
+					}
+				}
+			}
+		});
+
+		this._chart = chart;
+	}
+
+	unmounted() {
+		if (this._chart) {
+			this._chart.destroy();
+		}
+	}
 }
 </script>
