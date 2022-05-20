@@ -80,6 +80,7 @@ namespace ShamblesCom.Server
                 Task.Run(async () =>  { await UserManager.Seed(client);
                     await GameSeeder.SeedF12020(client);
                     await GameSeeder.SeedProjectCars2(client);
+                    await GameSeeder.SeedF12021(client);
                 }).Wait();
             }
 

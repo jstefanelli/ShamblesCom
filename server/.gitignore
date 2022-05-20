@@ -450,4 +450,6 @@ $RECYCLE.BIN/
 
 ## Local data
 shambles.db
+shambles.db-shm
+shambles.db-wal
 Config/*

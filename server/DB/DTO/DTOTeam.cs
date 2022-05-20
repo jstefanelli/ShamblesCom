@@ -10,6 +10,7 @@ namespace ShamblesCom.Server.DB.DTO {
 		public string SecondaryColor { get; set; }
 		public int SeasonId { get; set; }
 		public Season Season { get; set; }
+		public string Image { get; set; }
 
 		public DTOTeam(Team t) {
 			Id = t.Id;
@@ -17,6 +18,7 @@ namespace ShamblesCom.Server.DB.DTO {
 			MainColor = t.MainColor;
 			SecondaryColor = t.SecondaryColor;
 			SeasonId = t.SeasonId;
+			Image = $"/api/pics/team/{Id}";
 		}
 	}
 }

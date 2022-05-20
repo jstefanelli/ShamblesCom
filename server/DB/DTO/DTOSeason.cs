@@ -14,6 +14,7 @@ namespace ShamblesCom.Server.DB.DTO {
 		public DTOCategory Category { get; set; }
 		public List<DTORace> Races { get; set; }
 		public List<DTOTeam> Teams { get; set; }
+		public Dictionary<string, string> Options { get; set; }
 
 		public DTOSeason(Season s) {
 			Id = s.Id;
@@ -21,6 +22,7 @@ namespace ShamblesCom.Server.DB.DTO {
 			LastSeasonId = s.LastSeasonId;
 			NextSeasonId = s.NextSeasonId;
 			CategoryId = s.CategoryId;
+			Options = s.Options ?? new Dictionary<string, string>();
 		}
 	}
 }

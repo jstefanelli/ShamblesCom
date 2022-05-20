@@ -22,7 +22,7 @@
 					<driver-card :result="thirdResult" title="#3" />
 				</div>
 				<div class="grid cols-2" style="grid-auto-rows: 1fr">
-					<spa-link class="plain flex padding-5 align-center max-height-50" v-for="(rr, i) in otherResults" :key="rr.id" :target="'/driver' + rr.driver.id">
+					<spa-link class="plain flex padding-5 align-center max-height-50" v-for="(rr, i) in otherResults" :key="rr.id" :target="'/driver/' + rr.driver.id">
 						<h4>{{ rr.finished ? i + 4 : 'DNF' }}</h4>
 						<h3 class="flex-grow text-end">{{ rr.driver.nickname }}</h3>
 						<team-banner class="fill-h padding-v-5"

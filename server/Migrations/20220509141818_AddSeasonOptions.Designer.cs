@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShamblesCom.Server.DB;
 
 namespace ShamblesCom.Server.Migrations
 {
     [DbContext(typeof(ShamblesDBContext))]
-    partial class ShamblesDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220509141818_AddSeasonOptions")]
+    partial class AddSeasonOptions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

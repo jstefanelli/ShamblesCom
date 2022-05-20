@@ -1,6 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ShamblesCom.Server.DB.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 namespace ShamblesCom.Server.DB {
 	public class ShamblesDBContext : DbContext {
@@ -26,6 +29,13 @@ namespace ShamblesCom.Server.DB {
 			builder.Entity<Season>()
 				.HasOne(s => s.Last)
 				.WithOne(s => s.Next);
+
+			builder.Entity<Season>()
+				.Property(s => s.Options)
+				.HasConversion(
+					v => JsonSerializer.Serialize(v, null),
+					v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, null)
+				);
 
 			builder.Entity<ShamblesUser>()
 				.HasIndex(u => u.Email)

@@ -23,5 +23,6 @@ namespace ShamblesCom.Server.DB.Models {
 		public Category Category { get; set; }
 		public List<Race> Races { get; set; }
 		public List<Team> Teams { get; set; }
+		public Dictionary<String, String> Options { get; set; }
 	}
 }

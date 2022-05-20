@@ -45,17 +45,19 @@ namespace ShamblesCom.Server.Controllers {
 					.ThenInclude(d => d.RaceResults.Where(rr => rr.Race.SeasonId == currentSeason.Id))
 						.ThenInclude(rr => rr.Race)
 				.Select(p => new DTODriverInfo(new DTODriver(p.Driver) {
-					RaceResults = p.Driver.RaceResults.Select(rr => new DTORaceResult(rr)).ToList()
+					RaceResults = p.Driver.RaceResults.Select(rr => new DTORaceResult(rr) {
+						Race = new DTORace(rr.Race)
+					}).ToList()
 				}) {
 					Profile = new DTODriverProfile(p),
-					SeasonPoints = p.Driver.RaceResults.Sum(rr => rr.Points),
+					SeasonPoints = p.Driver.RaceResults.Where(r => r.Race.SeasonId == seasonId).Sum(rr => rr.Points),
 				})
 				.ToListAsync();
 
 			foreach(var i in profiles) {
 				int maxTeamId = 0;
 				int maxTeamAmount = 0;
-				foreach(int teamId in i.Driver.RaceResults.Select(t => t.TeamId).Distinct()) {
+				foreach(int teamId in i.Driver.RaceResults.Where(rr => rr.Race?.SeasonId == seasonId).Select(t => t.TeamId).Distinct()) {
 					int amount = i.Driver.RaceResults.Where(rr => rr.TeamId == teamId).Count();
 
 					if (amount > maxTeamAmount) {

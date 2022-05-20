@@ -1,5 +1,5 @@
 <template>
-	<spa-link :target="'/driver/' + result.driver.id" class="plain flex flex-vertical fill-h padding-5 card-2" v-if="result">
+	<spa-link :target="'/drivers/' + result.driver.id" class="plain flex flex-vertical fill-h padding-5 card-2" v-if="result">
 		<div class="flex-grow fill-w relative">
 			<span class="font-xxxl text-border-5 absolute"
 				:style="'color: #' + result.team.mainColor + '; text-shadow: 10px 10px #' + result.team.secondaryColor">
