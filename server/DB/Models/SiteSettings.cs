@@ -10,7 +10,7 @@ namespace ShamblesCom.Server.DB.Models {
 		public string LiveStreamLinks { get; set; }
 
 		[NotMapped]
-		public string[] LiveStreamLinsArray {
+		public string[] LiveStreamLinksArray {
 			get {
 				return LiveStreamLinks?.Split(";") ?? new string[0];
 			}

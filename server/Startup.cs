@@ -81,6 +81,7 @@ namespace ShamblesCom.Server
                     await GameSeeder.SeedF12020(client);
                     await GameSeeder.SeedProjectCars2(client);
                     await GameSeeder.SeedF12021(client);
+                    await SettingsSeeder.SeedSettings(client);
                 }).Wait();
             }
 

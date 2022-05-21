@@ -17,8 +17,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <None Include="Config/google_auth_test.json" CopyToOutputDirectory="preserveNewest" />
-  </ItemGroup>
+  </ItemGroup>-->
 
 </Project>

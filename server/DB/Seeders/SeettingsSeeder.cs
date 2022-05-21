@@ -9,15 +9,18 @@ namespace ShamblesCom.Server.DB.Seeders {
 		public static async Task SeedSettings(ShamblesDBContext db) {
 			if (db.Settings.Count() == 0) {
 				SiteSettings st = new SiteSettings() {
-					CurrentHomeSeasonId = await db.Seasons.Select(s => s.Id).FirstOrDefaultAsync()
+					CurrentHomeSeasonId = null,
+					CurrentHomeSeason = null,
+					LiveRaceId = null,
+					LiveRace = null
 				};
 
 				db.Settings.Add(st);
 				await db.SaveChangesAsync();
-			} else if (db.Settings.Count() > 1) {
+			} /*else if (db.Settings.Count() > 1) {
 				db.Settings.RemoveRange(db.Settings.Where(st => st.Id > 1));
 				await db.SaveChangesAsync();
-			}
+			}*/
 		}
 	}
 

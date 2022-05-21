@@ -105,28 +105,28 @@ export default class extends Vue {
 	}
 
 	public get firstResult() : RaceResult {
-		if (this.lastRace.raceResults != null && this.lastRace.raceResults.length > 0) {
+		if (this.lastRace && this.lastRace.raceResults != null && this.lastRace.raceResults.length > 0) {
 			return this.lastRace.raceResults[0];
 		}
 		return null;
 	}
 
 	public get secondResult() : RaceResult {
-		if (this.lastRace.raceResults != null && this.lastRace.raceResults.length > 1) {
+		if (this.lastRace && this.lastRace.raceResults != null && this.lastRace.raceResults.length > 1) {
 			return this.lastRace.raceResults[1];
 		}
 		return null;
 	}
 	
 	public get thirdResult() : RaceResult {
-		if (this.lastRace.raceResults != null && this.lastRace.raceResults.length > 2) {
+		if (this.lastRace && this.lastRace.raceResults != null && this.lastRace.raceResults.length > 2) {
 			return this.lastRace.raceResults[2];
 		}
 		return null;
 	}
 
 	public get otherResults() : RaceResult[] {
-		if (this.lastRace.raceResults != null && this.lastRace.raceResults.length >= 4) {
+		if (this.lastRace && this.lastRace.raceResults != null && this.lastRace.raceResults.length >= 4) {
 			return this.lastRace.raceResults.slice(3);
 		}
 

@@ -12,10 +12,11 @@ namespace ShamblesCom.Server.Controllers {
 			AddSPAQuery = addSPAQuery;
 		}
 
-		public override async Task ExecuteResultAsync(ActionContext context)
+		public override Task ExecuteResultAsync(ActionContext context)
 		{
 			context.HttpContext.Response.Headers.Add("Location", Location + (AddSPAQuery ? "?spa=data" : ""));
 			context.HttpContext.Response.StatusCode = (int)HttpStatusCode.SeeOther;
+			return Task.CompletedTask;
 		}
 	}
 }

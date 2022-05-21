@@ -17,7 +17,7 @@ namespace ShamblesCom.Server.DB.DTO {
 			Id = c.Id;
 			LiveRaceId = c.LiveRaceId;
 			CurrentHomeSeasonId = c.CurrentHomeSeasonId;
-			LiveStreamLinks = c.LiveStreamLinsArray;
+			LiveStreamLinks = c.LiveStreamLinksArray;
 		}
 	}
 }
