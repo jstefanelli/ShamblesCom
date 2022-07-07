@@ -28,11 +28,11 @@ module.exports = (env, argv) => {
 			rules: [
 				{
 					test: /\.css$/i,
-					use: [CSSExt.loader, 'css-loader']
+					use: [CSSExt.loader, 'css-loader', 'postcss-loader']
 				},
 				{
 					test: /\.s[ac]ss$/i,
-					use: [CSSExt.loader, 'css-loader', 'sass-loader']
+					use: [CSSExt.loader, 'css-loader', 'postcss-loader', 'sass-loader']
 				},
 				{
 					test: /\.ts$/i,

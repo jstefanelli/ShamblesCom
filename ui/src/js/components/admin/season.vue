@@ -1,7 +1,7 @@
 <template>
 	<base-layout v-bind="index">
-		<div class="fill card no-hover flex flex-vertical padding-25">
-			<div class="flex margin-b-25 align-center">
+		<card class="w-full h-full flex flex-col p-6">
+			<div class="flex mb-6 items-center">
 				<div class="font-m ">
 					{{ season ? season.name : "unknown-season"}}
 				</div>
@@ -19,16 +19,17 @@
 				<button class="passive flex-grow margin-r-25 font-m" @click="viewDrivers">
 					Edit Drivers
 				</button>
-				<button class="passive flex-grow font-m" @click="$refs.editTeamsModal.open()">
+				<button class="passive flex-grow font-m" @click="($refs.editTeamsModal).open()">
 					Edit Teams
 				</button>
 			</div>
-			<edit-teams-modal :season="season" ref="editTeamsModal" />
-		</div>
+			<edit-teams-modal :season="season" ref="editTeamsModal"></edit-teams-modal>
+		</card>
 	</base-layout>
 </template>
 
 <script lang="ts">
+import Section from '../layout/section.vue';
 import SPA from '@/SPA/spa';
 import Season from '@/data/Season';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
@@ -39,8 +40,8 @@ import SiteSettings from '@/data/SiteSettings'
 @Component({
 	components: {
 		EditTeamsModal,
-		BaseLayout
-
+		BaseLayout,
+		"card": Section
 	}
 })
 export default class extends Vue {
@@ -48,11 +49,11 @@ export default class extends Vue {
 	@Prop({default: (): Season => null}) public season: Season;
 	@Prop({default: (): SiteSettings => null }) public settings: SiteSettings;
 
-	private viewRaces() {
+	public viewRaces() {
 		SPA.navigateAndRender("/admin/" + this.season.id + "/races");
 	}
 
-	private viewDrivers() {
+	public viewDrivers() {
 		SPA.navigateAndRender("/admin/" + this.season.id + "/drivers");
 	}
 

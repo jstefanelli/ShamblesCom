@@ -1,10 +1,8 @@
 @import 'fontFiles';
-@import 'fonts';
 @import 'colors';
-@import 'layout';
 @import 'links';
-@import 'cards';
-@import 'teams';
-@import 'controls';
-@import 'table';
-@import 'layoutColors';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+

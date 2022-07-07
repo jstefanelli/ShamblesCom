@@ -1,28 +1,28 @@
 <template>
 	<base-page>
-		<div class="flex flex-vertical gap-50 padding-v-50">
-			<my-section class="section-main padding-50 flex flex-vertical">
-				<h2 class="font-semibold">
+		<div class="flex flex-col gap-12 py-12">
+			<my-section class=" p-12 flex flex-col gap-2">
+				<h2 class="font-semibold text-3xl">
 					Last race:
 				</h2>
-				<div class="font-xxl">
-					<spa-link v-if="lastRace" :target="'/race/' + lastRace.id" class="color-accent"><h1>{{ lastRace.name }}</h1></spa-link>
+				<div class="text-6xl font-bold">
+					<spa-link v-if="lastRace" :target="'/race/' + lastRace.id" class=" text-red-titlebar"><h1>{{ lastRace.name }}</h1></spa-link>
 					<span class="xxl" v-else>No Data</span>
 				</div>
-				<h2 class="font-semibold">
+				<h2 class="font-semibold text-3xl">
 					Results:
 				</h2>
-				<div class="height-350 fill-w grid cols-3 gap-25 font-m">
-					<span class="font-xl text-border-5 flex-grow" v-if="!firstResult">
+				<div class=" h-80 fill-w grid grid-cols-3 gap-6 font-m">
+					<span class="text-xl text-border-5 flex-grow" v-if="!firstResult">
 						No results available
 					</span>
 
-					<driver-card :result="firstResult" title="#1" />
-					<driver-card :result="secondResult" title="#2" />
-					<driver-card :result="thirdResult" title="#3" />
+					<driver-card :result="firstResult" title="#1" ></driver-card>
+					<driver-card :result="secondResult" title="#2" ></driver-card>
+					<driver-card :result="thirdResult" title="#3" ></driver-card>
 				</div>
-				<div class="grid cols-2" style="grid-auto-rows: 1fr">
-					<spa-link class="plain flex padding-5 align-center max-height-50" v-for="(rr, i) in otherResults" :key="rr.id" :target="'/driver/' + rr.driver.id">
+				<div class="grid grid-cols-2" style="grid-auto-rows: 1fr">
+					<spa-link class=" flex padding-5 align-center max-height-50" v-for="(rr, i) in otherResults" :key="rr.id" :target="'/driver/' + rr.driver.id">
 						<h4>{{ rr.finished ? i + 4 : 'DNF' }}</h4>
 						<h3 class="flex-grow text-end">{{ rr.driver.nickname }}</h3>
 						<team-banner class="fill-h padding-v-5"
@@ -33,35 +33,32 @@
 
 				</div>
 			</my-section>
-			<div class="flex gap-50">
-				<my-section class="section-top-right flex flex-vertical padding-25 flex-grow">
-					<h2 class="font-semibold">
+			<div class="flex gap-12">
+				<my-section class=" flex flex-col p-6 flex-grow">
+					<h2 class="font-semibold text-3xl">
 						Next up:
 					</h2>
-					<div class="font-l margin-v-10">
-						<spa-link v-if="nextRace" :target="'/race/' + nextRace.id" class="color-accent"> {{ nextRace.name }}</spa-link>
+					<div class="text-6xl my-3 ">
+						<spa-link v-if="nextRace" :target="'/race/' + nextRace.id" class="text-red-titlebar font-bold"> {{ nextRace.name }}</spa-link>
 						<span v-else>No race planned</span>
 					</div>
-					<div class="font-l">
-
+					<div class="text-5xl" id="countdown" ref="countdown">
 					</div>
-					<div class="font-xl" id="countdown" ref="countdown">
-					</div>
-					<span class="flex-grow" />
+					<span class="flex-grow" ></span>
 					<div v-if="nextRace && nextRace.livestreamLink != null && nextRace.livestreamLink.length > 0">
-						Live <a class="twitch-link" :href="nextRace.livestreamLink">Here</a>
+						Live <a class="twitch-link text-red-titlebar" :href="nextRace.livestreamLink">Here</a>
 					</div>
 				</my-section>
-				<my-section class="section-bottom-right padding-25 flex-grow">
-					<h2 class="font-semibold">
+				<my-section class="p-6 flex-grow">
+					<h2 class="font-semibold text-3xl pb-2">
 						Social:
 					</h2>
 					<div>
-						<a class="twitter-link" href="https://twitter.com/shambleschamp"> Official Shambles Championship Twitter </a><br/>
-						<a class="youtube-link" href="https://www.youtube.com/channel/UCwByts4CkdG2Oc_LO77wD3w"> Official Shambles Championship Clips channel</a><br/>
-						<a class="twitch-link" href="https://twitch.tv/lhudsonx"> LHudson's Twitch Page </a><br/>
-						<a class="twitch-link" href="https://twitch.tv/thepatyman"> ThePatyMan's Twitch Page </a><br/>
-						<a class="twitch-link" href="https://twitch.tv/clu_snake"> Clu's Twitch Page </a><br/>
+						<a class="twitter-link" href="https://twitter.com/shambleschamp"> Official Shambles Championship Twitter </a><br>
+						<a class="youtube-link" href="https://www.youtube.com/channel/UCwByts4CkdG2Oc_LO77wD3w"> Official Shambles Championship Clips channel</a><br>
+						<a class="twitch-link" href="https://twitch.tv/lhudsonx"> LHudson's Twitch Page </a><br>
+						<a class="twitch-link" href="https://twitch.tv/thepatyman"> ThePatyMan's Twitch Page </a><br>
+						<a class="twitch-link" href="https://twitch.tv/clu_snake"> Clu's Twitch Page </a><br>
 					</div>
 					
 				</my-section>

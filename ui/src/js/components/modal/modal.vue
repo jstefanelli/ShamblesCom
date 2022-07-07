@@ -1,24 +1,24 @@
 <template>
 	<transition name="fade">
-		<div class="modal" v-if="visible">
-			<div class="flex align-start">
-				<div class="flex-grow" />
-				<div class="modal-main flex flex-vertical margin-t-25">
-					<div class="modal-header font-m margin-b-25">
-						<slot name="header" />
+		<div class="modal fixed overflow-x-hidden overflow-y-auto inset-0 top-28 bg-opacity-50 bg-black " v-if="visible">
+			<div class="flex items-start">
+				<div class="flex-grow" ></div>
+				<card class="flex flex-col mt-6 bg-opacity-100">
+					<div class="text-xl mb-6">
+						<slot name="header" ></slot>
 					</div>
 
-					<div class="modal-content flex-grow margin-b-25">
-						<slot />
+					<div class="flex-grow mb-6">
+						<slot ></slot>
 					</div>
 
-					<div class="modal-footer flex align-center">
-						<slot name="footer-heading" />
-						<div class="flex-grow" />
-						<slot name="footer" />
+					<div class="ml-px flex items-center gap-2">
+						<slot name="footer-heading" ></slot>
+						<div class="flex-grow" ></div>
+						<slot name="footer" ></slot>
 					</div>
-				</div>
-				<div class="flex-grow" />
+				</card>
+				<div class="flex-grow" ></div>
 			</div>
 		</div>
 	</transition>
@@ -26,10 +26,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import Section from '@/components/layout/section.vue';
 
 @Component({
 	components: {
-
+		"card": Section
 	}
 })
 export default class extends Vue {
@@ -48,17 +49,7 @@ export default class extends Vue {
 </script>
 
 <style lang="scss">
-@import "#/colors";
-
 .modal {
-	position: fixed;
-	overflow-x: hidden;
-	overflow-y: auto;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: transparentize($bg-color-dark, .5);
 
 	&.fade-enter-active,
 	&.fade-leave-active {
@@ -68,22 +59,6 @@ export default class extends Vue {
 	&.fade-enter,
 	&.fade-leave-to {
 		opacity: 0;
-	}
-
-	.modal-main {
-		border-top-right-radius: 10px;
-		border-bottom-left-radius: 10px;
-		min-width: 600px;
-		padding: 25px;
-		background-color: $bg-color;
-		border-right: 5px solid white;
-		border-top: 5px solid white;
-	}
-
-	.modal-footer {
-		* {
-			margin-left: 10px;
-		}
 	}
 }
 </style>

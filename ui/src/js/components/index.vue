@@ -1,24 +1,24 @@
 <template>
-	<div class="height-screen">
-		<spa-link target="/homepage" class="fill index-background flex flex-vertical align-center">
-			<div class="flex-grow" />
-			<div :style="'height: ' + (targetBarHeight - currentBarHeight) + 'px'" />
+	<div class="h-screen index-background">
+		<spa-link target="/homepage" class=" h-full w-full flex flex-col items-center">
+			<div class=" flex-grow" ></div>
+			<div :style="'height: ' + (targetBarHeight - currentBarHeight) + 'px'" ></div>
 			<div class="index-logo overflow-hidden">
-				<img :src="require('£/images/logo_borderless.png')" />
+				<img :src="require('£/images/logo_borderless.png')">
 			</div>
-			<dov class="height-25" />
-			<div class="hidden index-continue flex">
-				<div class="flex-grow bg-white" />
+			<dov class=" h-[25px]" ></dov>
+			<div class="index-continue flex">
+				<div class="flex-grow bg-white" ></div>
 				<svg :viewBox="currentViewBox()" width="525" :height="currentBarHeight">
 					<mask id="msk0">
-						<rect x="0" y="0" width="10000" height="100" fill="white" />
+						<rect x="0" y="0" width="10000" height="100" fill="white" ></rect>
 						<text x="5" :y="currentTextOffset" style="font-weight: bold" fill="black">CLICK TO CONTINUE </text>
 					</mask>
-					<rect x="0" y="0" width="10000" height="100" fill="white" mask="url(#msk0)" />
+					<rect x="0" y="0" width="10000" height="100" fill="white" mask="url(#msk0)" ></rect>
 				</svg>
-				<div class="flex-grow bg-white" />
+				<div class="flex-grow bg-white" ></div>
 			</div>
-			<div class="flex-grow" />
+			<div class="flex-grow" ></div>
 		</spa-link>
 	</div>
 </template>
@@ -95,23 +95,23 @@ export default class extends Vue {
 		window.requestAnimationFrame((tm) => this.animate(tm));
 	}
 
-	private currentWaitTimer: number = 0;
-	private animationStatus: number = -1;
-	private lastTimestamp: number = 0;
-	private animStartTime: number = 0;
-	private anim2StartTime: number = 0;
-	private currentBarHeight: number = 0;
-	private currentViewBox() : string {
+	public currentWaitTimer: number = 0;
+	public animationStatus: number = -1;
+	public lastTimestamp: number = 0;
+	public animStartTime: number = 0;
+	public anim2StartTime: number = 0;
+	public currentBarHeight: number = 0;
+	public currentViewBox() : string {
 		return "0 0 525 " + this.currentBarHeight;
 	}
 
-	private currentTextOffset: number = 70;
+	public currentTextOffset: number = 70;
 
-	private readonly targetWaitTime: number = 250;
-	private readonly targetTime1: number = 750;
-	private readonly targetTime2: number = 500;
-	private readonly targetTextOffset: number = 34;
-	private readonly targetBarHeight: number = 43;
+	public readonly targetWaitTime: number = 250;
+	public readonly targetTime1: number = 750;
+	public readonly targetTime2: number = 500;
+	public readonly targetTextOffset: number = 34;
+	public readonly targetBarHeight: number = 43;
 
 	mounted() {
 		this.animationStatus = -1;

@@ -1,9 +1,9 @@
 <template>
 	<base-layout v-bind="index">
-		<div class="fill flex align-center">
-			<div class="flex-grow" />
+		<div class="h-full w-full flex items-center">
+			<div class="flex-grow" ></div>
 			<div class="font-l2">Select a season to start adding data</div>
-			<div class="flex-grow" />
+			<div class="flex-grow" ></div>
 		</div>
 	</base-layout>
 </template>

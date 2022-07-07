@@ -1,26 +1,28 @@
 <template>
-	<spa-link :target="'/drivers/' + result.driver.id" class="plain flex flex-vertical fill-h padding-5 card-2" v-if="result">
-		<div class="flex-grow fill-w relative">
-			<span class="font-xxxl text-border-5 absolute"
-				:style="'color: #' + result.team.mainColor + '; text-shadow: 10px 10px #' + result.team.secondaryColor">
-				{{ title }}
-			</span>
-			<div class="absolute fill-w fill-h">
-				<img class="object-position-bottom-right object-fit-contain fill-w fill-h"
-					:src="imageLink"
-				/>
+	<card>
+		<spa-link :target="'/drivers/' + result.driver.id" class="flex flex-col h-full p-1 text-white" v-if="result">
+			<div class="flex-grow w-full relative">
+				<span class=" text-8xl font-semibold text-border-5 absolute"
+					:style="'color: #' + result.team.mainColor + '; text-shadow: 10px 10px #' + result.team.secondaryColor">
+					{{ title }}
+				</span>
+				<div class="absolute w-full h-full">
+					<img class=" object-right-bottom object-contain w-full h-full"
+						:src="imageLink"
+					>
+				</div>
 			</div>
-		</div>
-							
-		<team-banner
-			:mainColor="result.team.mainColor"
-			:secondaryColor="result.team.secondaryColor"> 
-			{{ result.driver.nickname }}
-		</team-banner>
-	</spa-link>
+			<team-banner
+				:mainColor="result.team.mainColor"
+				:secondaryColor="result.team.secondaryColor"> 
+				{{ result.driver.nickname }}
+			</team-banner>
+		</spa-link>
+	</card>
 </template>
 
 <script lang="ts">
+import Section from '../section.vue';
 import RaceResult from '@/data/RaceResult';
 import SpaLink from '@/SPA/SpaLink.vue';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
@@ -30,7 +32,8 @@ import MissingDriver from "£/images/Missing_profile.png"
 @Component({
 	components: {
 		SpaLink,
-		TeamBanner
+		TeamBanner,
+		"card": Section
 	}
 })
 export default class extends Vue {

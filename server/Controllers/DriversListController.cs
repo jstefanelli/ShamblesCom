@@ -79,17 +79,24 @@ namespace ShamblesCom.Server.Controllers {
 				}
 			}
 
+			var seasonTask = Task.Run(() => { 
+				return new DTOSeason(currentSeason) {
+					Races = currentSeason.Races.Select(r => new DTORace(r) {
+						RaceResults = r.RaceResults.Select(rr => new DTORaceResult(rr)).ToList()
+					}).ToList()
+				};
+			});
+
+			var seasonsTask = Task.Run(() => {
+				return Db.Seasons.Where(s => s.Id != currentSeason.Id).Select(s => new DTOSeason(s)).ToList();
+			});
+
 			return new JsonResult(new SPAData() {
 				View = "drivers/index",
 				Data = new {
 					profiles = profiles,
-					season = await Task.Run(() => { 
-						return new DTOSeason(currentSeason) {
-							Races = currentSeason.Races.Select(r => new DTORace(r) {
-								RaceResults = r.RaceResults.Select(rr => new DTORaceResult(rr)).ToList()
-							}).ToList()
-						};
-					})
+					season = await seasonTask,
+					seasons = await seasonsTask
 				}
 			});
 		}

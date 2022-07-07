@@ -1,6 +1,6 @@
 <template>
 	<a :href="target" v-on:click="navigate">
-		<slot />
+		<slot ></slot>
 	</a>
 </template>
 

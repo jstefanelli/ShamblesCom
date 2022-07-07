@@ -1,43 +1,50 @@
 <template>
 	<base-page>
-		<div class="padding-25 fill-h flex flex-vertical">
-			<h1 class="font-l2 margin-b-25">
-				{{ season.name }}
-			</h1>
-			<div class="flex margin-b-25 fill-w margin-b-40">
-				<spa-link target="/drivers" class="card flex-grow padding-10 margin-r-25 plain">
-					<h4 class="font-l"> Driver standings </h4>
-				</spa-link>
-				<spa-link target="/teams" class="card flex-grow padding-10 disabled plain">
-					<h4 class="font-l"> Team standings </h4>
-				</spa-link>
+		<div class=" h-full flex flex-col p-6">
+			<div class="flex">
+				<h1 class="text-3xl mb-6 flex-grow">
+					{{ season.name }}
+				</h1>
 			</div>
-			<div class="grid cols-3 fill-w margin-b-25 gap-25">
-				<spa-link :target="'drivers/' + p.driver.id" :reqData="{ seasonId: season.id}" class="card flex flex-vertical padding-10 plain" v-for="(p, i) in profiles" :key="p.driver.id">
-					<div class="flex fill-w align-center margin-b-5">
-						<h3> #{{ i + 1 }} </h3>
-						<div class="flex-grow text-end font-ml">
-							Points: <b>{{ p.seasonPoints }}</b>
-						</div>
-					</div>
-					<h2>
-						{{ p.driver.nickname }}
-					</h2>
-					<div class="flex-grow relative fill-w height-250">
-						<div class="absolute fill-h fill-w">
-							<img class="object-position-bottom-right object-fit-contain fill-w fill-h"
-								:src="p.profile.imageLink" />
-						</div>
-						<span class="absolute bottom-left">
-							<h1 class="font-xl" :style="p.mostCommonTeam ? 'color: #' + p.mostCommonTeam.mainColor + '; text-shadow: 5px 5px #' + p.mostCommonTeam.secondaryColor : ''">{{ p.driver.number }}</h1>
-						</span>
-					</div>
-				</spa-link>
+			<div class="flex mb-10 w-full">
+				<card class="card flex-grow p-3 mr-6">
+					<spa-link target="/drivers">
+						<h4 class="font-l"> Driver standings </h4>
+					</spa-link>
+				</card>
+				<card class="card flex-grow p-3 mr-6" :disabled="true">
+					<spa-link target="/teams" class="card">
+						<h4 class="font-l"> Team standings </h4>
+					</spa-link>
+				</card>
 			</div>
-			<h1 class="font-l2 margin-b-25" v-if="chartOk">
+			<div class="grid grid-cols-3 w-full mb-6 gap-6">
+				<card v-for="(p, i) in profiles" :key="p.driver.id">
+					<spa-link :target="'drivers/' + p.driver.id" :reqData="{ seasonId: season.id}" class="flex flex-col p-4 text-2xl">
+						<div class="flex fill-w items-center mb-1">
+							<h3> #{{ i + 1 }} </h3>
+							<div class="flex-grow text-end font-semibold">
+								Points: <b>{{ p.seasonPoints }}</b>
+							</div>
+						</div>
+						<h2>
+							{{ p.driver.nickname }}
+						</h2>
+						<div class="flex-grow relative w-full h-64">
+							<div class="absolute w-full h-full">
+								<img class=" object-right-bottom object-contain w-full h-full" :src="p.profile.imageLink">
+							</div>
+							<span class="absolute left-0 bottom-0">
+								<h1 class="text-6xl" :style="p.mostCommonTeam ? 'color: #' + p.mostCommonTeam.mainColor + '; text-shadow: 5px 5px #' + p.mostCommonTeam.secondaryColor : ''">{{ p.driver.number }}</h1>
+							</span>
+						</div>
+					</spa-link>
+				</card>
+			</div>
+			<h1 class="text-3xl mb-6" v-if="chartOk">
 				Points Timeline
 			</h1>
-			<canvas class="fill-w" id="driver-points-canvas">
+			<canvas class="w-full" id="driver-points-canvas">
 
 			</canvas>
 		</div>
@@ -45,6 +52,7 @@
 </template>
 
 <script lang="ts">
+import Section from '../layout/section.vue';
 import DriverInfo from '@/data/DriverInfo';
 import Season from '@/data/Season';
 import SpaLink from '@/SPA/SpaLink.vue';
@@ -69,13 +77,14 @@ interface SeasonData {
 @Component({
 	components: {
 		BasePage,
-		SpaLink
-		
+		SpaLink,
+		"card": Section	
 	}
 })
 export default class extends Vue{
 	@Prop({default: (): DriverInfo[] => null}) readonly profiles: DriverInfo[];
 	@Prop({default: (): Season => null}) readonly season: Season;
+	@Prop({default: (): Season[] => null}) readonly seasons: Season[];
 
 	private _chart: Chart.Chart;
 
