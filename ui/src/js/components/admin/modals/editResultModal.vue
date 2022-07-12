@@ -5,54 +5,54 @@
 		</template>
 
 		<template>
-			<div class="flex flex-vertical">
-				<error-display v-if="errors && errors.DriverId" :errors="errors.DriverId" />
+			<div class="flex flex-col">
+				<error-display v-if="errors && errors.DriverId" :errors="errors.DriverId" ></error-display>
 				<span>Driver:</span>
-				<select v-model="driverId" class="margin-v-10">
+				<Myselect v-model="driverId" class="my-3">
 					<option v-for="d in drivers" :key="d.id" :value="d.id">
 						{{ d.nickname }}
 					</option>
-				</select>
+				</Myselect>
 
-				<error-display v-if="errors && errors.TeamId" :errors="errors.TeamId" />
+				<error-display v-if="errors && errors.TeamId" :errors="errors.TeamId" ></error-display>
 				<span>Team:</span>
-				<select v-model="teamId" class="margin-v-10">
+				<Myselect v-model="teamId" class="my-3">
 					<option v-for="t in teams" :key="t.id" :value="t.id">
 						{{ t.name }}
 					</option>
-				</select>
+				</Myselect>
 				
-				<error-display v-if="errors && errors.Position" :errors="errors.Position" />
+				<error-display v-if="errors && errors.Position" :errors="errors.Position" ></error-display>
 				<span>Final Position:</span>
-				<input type="number" v-model.number="position" class="margin-t-10" />
+				<Myinput type="number" v-model.number="position" class="mt-3" ></Myinput>
 
-				<error-display v-if="errors && errors.Finished" :errors="errors.Finished" />
-				<div class="flex margin-v-10">
-					<input type="checkbox" v-model="finished" />
+				<error-display v-if="errors && errors.Finished" :errors="errors.Finished" ></error-display>
+				<div class="flex my-3">
+					<input type="checkbox" v-model="finished" >
 					<span>Finished</span>
 				</div>
 				
-				<error-display v-if="errors && errors.Points" :errors="errors.Points" />
+				<error-display v-if="errors && errors.Points" :errors="errors.Points" ></error-display>
 				<span>Points:</span>
-				<input type="number" v-model.number="points" class="margin-v-10" />
+				<Myinput type="number" v-model.number="points" class="my-3" ></Myinput>
 				
-				<error-display v-if="errors && errors.StartPosition" :errors="errors.StartPosition" />
+				<error-display v-if="errors && errors.StartPosition" :errors="errors.StartPosition" ></error-display>
 				<span>Start Position:</span>
-				<input type="number" v-model.number="startPosition" class="margin-v-10" />
+				<Myinput type="number" v-model.number="startPosition" class="my-3" ></Myinput>
 				
-				<error-display v-if="errors && errors.Penalties" :errors="errors.Penalties" />
+				<error-display v-if="errors && errors.Penalties" :errors="errors.Penalties" ></error-display>
 				<span>Penalties:</span>
-				<input type="number" v-model.number="penalties" class="margin-v-10" />
+				<Myinput type="number" v-model.number="penalties" class="my-3" ></Myinput>
 			</div>
 		</template>
 
 		<template slot="footer">
-			<button @click="close" class="passive">
+			<Mybutton @click="close">
 				Cancel
-			</button>
-			<button @click="submit">
+			</Mybutton>
+			<Mybutton @click="submit" :main="true">
 				Save
-			</button>
+			</Mybutton>
 		</template>
 	</modal>
 </template>
@@ -67,36 +67,42 @@ import Season from '@/data/Season';
 import Team from '@/data/Team';
 import SPA from '@/SPA/spa';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import Myselect from '@/components/layout/controls/myselect.vue';
+import Myinput from '@/components/layout/controls/myinput.vue';
+import Mybutton from '@/components/layout/controls/mybutton.vue';
 
 @Component({
 	components: {
 		Modal,
-ErrorDisplay,
+		ErrorDisplay,
+		Myselect,
+		Myinput,
+		Mybutton
 	}
 })
 export default class extends Vue {
-	@Prop({default: (): Season => null}) private season: Season;
-	@Prop({default: (): Race => null}) private race: Race;
-	@Prop({default: (): RaceResult => null}) private result: RaceResult;
-	@Prop({default: (): Driver[] => []}) private drivers: Driver[];
-	@Prop({default: (): Team[] => []}) private teams: Team[];
+	@Prop({default: (): Season => null}) public season: Season;
+	@Prop({default: (): Race => null}) public race: Race;
+	@Prop({default: (): RaceResult => null}) public result: RaceResult;
+	@Prop({default: (): Driver[] => []}) public drivers: Driver[];
+	@Prop({default: (): Team[] => []}) public teams: Team[];
 
-	private driverId: number = 0;
-	private teamId: number = 0;
-	private finished: boolean = false;
-	private points: number = 0;
-	private startPosition: number = 0;
-	private penalties: number = 0;
-	private position: number = 0;
+	public driverId: number = 0;
+	public teamId: number = 0;
+	public finished: boolean = false;
+	public points: number = 0;
+	public startPosition: number = 0;
+	public penalties: number = 0;
+	public position: number = 0;
 
-	private errors: any = {};
+	public errors: any = {};
 
 	private modal(): any {
 		return (this.$refs.myModal as any);
 	}
 
 	@Watch("result")
-	private resultChanged(val: RaceResult, old: RaceResult) {
+	public resultChanged(val: RaceResult, old: RaceResult) {
 		if (val) {
 			this.driverId = val.driverId;
 			this.teamId = val.teamId;
@@ -164,7 +170,7 @@ export default class extends Vue {
 		}
 	}
 
-	private close() {
+	public close() {
 		this.modal().closeModal();
 	}
 

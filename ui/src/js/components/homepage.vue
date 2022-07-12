@@ -5,7 +5,7 @@
 				<h2 class="font-semibold text-3xl">
 					Last race:
 				</h2>
-				<div class="text-6xl font-bold">
+				<div class="text-6xl font-bold font-f1">
 					<spa-link v-if="lastRace" :target="'/race/' + lastRace.id" class=" text-red-titlebar"><h1>{{ lastRace.name }}</h1></spa-link>
 					<span class="xxl" v-else>No Data</span>
 				</div>
@@ -24,11 +24,11 @@
 				<div class="grid grid-cols-2" style="grid-auto-rows: 1fr">
 					<spa-link class=" flex padding-5 align-center max-height-50" v-for="(rr, i) in otherResults" :key="rr.id" :target="'/driver/' + rr.driver.id">
 						<h4>{{ rr.finished ? i + 4 : 'DNF' }}</h4>
-						<h3 class="flex-grow text-end">{{ rr.driver.nickname }}</h3>
 						<team-banner class="fill-h padding-v-5"
 							:mainColor="rr.team.mainColor"
 							:secondaryColor="rr.team.secondaryColor" >
 						</team-banner>
+						<h3 class="flex-grow text-left">{{ rr.driver.nickname }}</h3>
 					</spa-link>
 
 				</div>
@@ -38,7 +38,7 @@
 					<h2 class="font-semibold text-3xl">
 						Next up:
 					</h2>
-					<div class="text-6xl my-3 ">
+					<div class="text-6xl my-3 font-f1">
 						<spa-link v-if="nextRace" :target="'/race/' + nextRace.id" class="text-red-titlebar font-bold"> {{ nextRace.name }}</spa-link>
 						<span v-else>No race planned</span>
 					</div>

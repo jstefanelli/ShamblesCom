@@ -35,7 +35,7 @@
 								<img class=" object-right-bottom object-contain w-full h-full" :src="p.profile.imageLink">
 							</div>
 							<span class="absolute left-0 bottom-0">
-								<h1 class="text-6xl" :style="p.mostCommonTeam ? 'color: #' + p.mostCommonTeam.mainColor + '; text-shadow: 5px 5px #' + p.mostCommonTeam.secondaryColor : ''">{{ p.driver.number }}</h1>
+								<h1 class="text-6xl font-f1" :style="p.mostCommonTeam ? 'color: #' + p.mostCommonTeam.mainColor + '; text-shadow: 5px 5px #' + p.mostCommonTeam.secondaryColor : ''">{{ p.driver.number }}</h1>
 							</span>
 						</div>
 					</spa-link>

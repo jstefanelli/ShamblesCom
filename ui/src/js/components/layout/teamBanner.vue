@@ -1,9 +1,9 @@
 <template>
-		<div :class="'team-banner'">
-			<div class="color-main" :style="'background-color: #' + mainColor" />
-			<div class="color-secondary" :style="'background-color: #' + secondaryColor" />
+		<div class="flex overflow-hidden items-center m-[5px]">
+			<div class=" w-3 self-stretch" :style="'background-color: #' + mainColor" ></div>
+			<div class=" w-3 self-stretch mr-3" :style="'background-color: #' + secondaryColor" ></div>
 			<div class="font-l">
-				<slot />
+				<slot ></slot>
 			</div>
 		</div>
 </template>
@@ -23,25 +23,3 @@ export default class extends Vue {
 }
 
 </script>
-
-<style lang="scss">
-@import "#/colors";
-
-.team-banner {
-	display: flex;
-	overflow: hidden;
-	align-items: center;
-	margin: 5px;
-
-	> .color-main {
-		width: 10px;
-		height: 100%;
-	}
-
-	> .color-secondary {
-		width: 10px;
-		height: 100%;
-		margin-right: 10px;
-	}
-}
-</style>

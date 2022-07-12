@@ -2,7 +2,7 @@
 	<card>
 		<spa-link :target="'/drivers/' + result.driver.id" class="flex flex-col h-full p-1 text-white" v-if="result">
 			<div class="flex-grow w-full relative">
-				<span class=" text-8xl font-semibold text-border-5 absolute"
+				<span class=" text-8xl font-semibold text-border-5 absolute font-f1"
 					:style="'color: #' + result.team.mainColor + '; text-shadow: 10px 10px #' + result.team.secondaryColor">
 					{{ title }}
 				</span>

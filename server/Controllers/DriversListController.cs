@@ -108,19 +108,34 @@ namespace ShamblesCom.Server.Controllers {
 				seasonId = (await Db.Settings.FirstOrDefaultAsync())?.CurrentHomeSeasonId ?? throw new Exception("No default season ID");
 			}
 
-			Season s = await Db.Seasons.Include(s => s.Races.Where(r => r.RaceResults.Where(rr => rr.DriverId == driverId).Count() > 0)).ThenInclude(r => r.RaceResults.Where(rr => rr.DriverId == driverId)).FirstOrDefaultAsync();
-			
-			DriverProfile p = await Db.Profiles.Where(p => p.DriverId == driverId && p.SeasonId == seasonId).FirstOrDefaultAsync();
+			Season s = await Db.Seasons.FindAsync(seasonId);
+			DriverProfile p = await Db.Profiles.Where(p => p.DriverId == driverId && p.SeasonId == seasonId).Include(p => p.Driver).FirstOrDefaultAsync();
+
+			int mainTeamId = (await Db.RaceResults.Where(rr => rr.Race.SeasonId == seasonId && rr.DriverId == driverId).ToListAsync())
+				.GroupBy(rr => rr.TeamId).Select(g => new { t = g.Key, c = g.Count() }).OrderByDescending(g => g.c).Select(g => g.t).FirstOrDefault();
+			int totalEvents = await Db.RaceResults.Where(rr => rr.DriverId == driverId).CountAsync();
+			int seasonEvents = await Db.RaceResults.Where(rr => rr.DriverId == driverId && rr.Race.SeasonId == seasonId).CountAsync();
+			RaceResult bestOverallResult = await Db.RaceResults.Where(rr => rr.DriverId == driverId).OrderBy(rr => rr.Position).Include(rr => rr.Race).FirstOrDefaultAsync();
+			RaceResult bestSeasonResult = await Db.RaceResults.Where(rr => rr.DriverId == driverId && rr.Race.SeasonId == seasonId).Include(rr => rr.Race).OrderBy(rr => rr.Position).FirstOrDefaultAsync();
+			int seasonPoints = await Db.RaceResults.Where(rr => rr.DriverId == driverId && rr.Race.SeasonId == seasonId).SumAsync(rr => rr.Points);
 
 			return new JsonResult(new SPAData() {
 				View = "drivers/detail",
 				Data = new {
-					season = new DTOSeason(s) {
-						Races = s.Races.Select(r => new DTORace(r) {
-							RaceResults = r.RaceResults.Select(rr => new DTORaceResult(rr)).ToList()
-						}).ToList()
+					season = new DTOSeason(s) {},
+					profile = new DTODriverProfile(p) {
+						Driver = new DTODriver(p.Driver)
 					},
-					profile = new DTODriverProfile(p)
+					mainTeam = new DTOTeam(await Db.Teams.FindAsync(mainTeamId)),
+					totalEvents = totalEvents,
+					seasonEvents = seasonEvents,
+					bestOverall = new DTORaceResult(bestOverallResult) {
+						Race = new DTORace(bestOverallResult.Race)
+					},
+					bestSeason = new DTORaceResult(bestSeasonResult) {
+						Race = new DTORace(bestSeasonResult.Race)
+					},
+					seasonPoints = seasonPoints
 				}
 			});
 		}
