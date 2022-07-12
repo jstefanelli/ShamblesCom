@@ -1,46 +1,47 @@
 <template>
-	<div class="flex align-center">
-		<div class="flex flex-grow align-center">
+	<div class="flex items-center text-lg gap-3">
+		<div class="flex flex-grow items-center gap-3 mh-3">
 			<span>Day:</span>
-			<input type="date" :class="'margin-h-10 sm' + (dayError ? ' error' : '')" v-model="day" />
+			<Myinput type="date" :class="'text-sm ' + (dayError ? ' error' : '')" v-model="day"></Myinput>
 		</div>
-		<div class="flex flex-grow-3 align-center">
+		<div class="flex flex-grow-[3] items-center gap-3 mh-3">
 			<span>Hour:</span>
-			<input type="number" :class="'margin-h-10 sm ' + (hourError ? ' error' : '')" v-model.number="hour" />
+			<Myinput type="number" :class="'text-sm' + (hourError ? ' error' : '')" v-model.number="hour"></Myinput>
 
 			<span>Minute:</span>
-			<input type="number" :class="'margin-l-10 sm ' + (minuteError ? ' error' : '')" v-model.number="minute" />
+			<Myinput type="number" :class="'text-sm' + (minuteError ? ' error' : '')" v-model.number="minute" ></Myinput>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import Myinput from './myinput.vue';
 
 
 @Component({
 	components: {
-
+		Myinput
 	}
 })
 export default class extends Vue {
-	private day: string = '';
-	private hour: number = 0;
-	private minute: number = 0;
+	public day: string = '';
+	public hour: number = 0;
+	public minute: number = 0;
 
-	private dayError: boolean = false;
-	private hourError: boolean = false;
-	private minuteError: boolean = false;
+	public dayError: boolean = false;
+	public hourError: boolean = false;
+	public minuteError: boolean = false;
 
-	private editing: boolean = false;
-	private updating: boolean = false;
+	public editing: boolean = false;
+	public updating: boolean = false;
 
 	@Prop({default: (): Date => new Date(1970, 1, 1, 10, 30)}) private value: Date;
 
 	@Watch("day")
 	@Watch("hour")
 	@Watch("minute")
-	private update(): void {
+	public update(): void {
 		if (this.updating) {
 			return;
 		}
@@ -67,14 +68,14 @@ export default class extends Vue {
 		});
 	}
 
-	private parseDateString(date: string): Date {
+	public parseDateString(date: string): Date {
 		let bits = date.split("-");
 		
 		let dt = new Date(Number(bits[0]), Number(bits[1]) - 1, Number(bits[2]));
 		return dt;
 	}
 
-	private createDateString(date: Date) : string {
+	public createDateString(date: Date) : string {
 		let year = date.getFullYear();
 		let month = date.getMonth() + 1;
 		let day = date.getDate();

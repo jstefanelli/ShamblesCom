@@ -1,69 +1,69 @@
 <template>
 	<base-layout v-bind="index">
-		<div class="fill card no-hover flex flex-vertical padding-25">
-			<div class="flex margin-b-25 align-center">
-				<button class="margin-r-25 passive" @click="goUp">
+		<card class="w-full h-full flex flex-col p-6">
+			<div class="flex mb-6 items-center">
+				<Mybutton class="mr-6 passive" @click="goUp">
 					Back
-				</button>
-				<div class="font-m margin-r-10">
+				</Mybutton>
+				<div class="font-m mr-3">
 					Race:
 				</div>
-				<select class="flex-grow fill-h margin-r-10" @change="onRaceChanged" v-model="internalSelectedRaceId">
+				<Myselect class="flex-grow h-full mr-3" @change="onRaceChanged" v-model="internalSelectedRaceId">
 					<option v-for="race in season.races" :key="race.id" :value="race.id">
 						{{ race.name }}
 					</option>
-				</select>
-				<button @click="showEditRaceDialog" class="margin-r-10">
+				</Myselect>
+				<Mybutton @click="showEditRaceDialog" class="mr-3">
 					Edit Race
-				</button>
-				<button @click="showNewRaceDialog" class="passive">
+				</Mybutton>
+				<Mybutton :main="true" @click="showNewRaceDialog">
 					New Race
-				</button>
+				</Mybutton>
 			</div>
-			<div class="flex-grow flex align-center" v-if="!selectedRace">
+			<div class="flex-grow flex items-center" v-if="!selectedRace">
 				<div class="text-center font-m flex-grow">
 					Select or create a race
 				</div>
 			</div>
 			<div class="flex-grow" v-else>
-				<div class="flex flex-vertical fill-w fill-h">
+				<div class="flex flex-col w-full h-full">
 					<div class="flex-grow">
-						<table class="fill-w">
+						<table class="w-full">
 							<thead>
-								<th class="width-100">
+								<th class="w-28">
 									#
 								</th>
 								<th>
 									Driver
 								</th>
-								<th class="width-200">
+								<th class="w-56">
 									Team
 								</th>
-								<th class="width-100">
+								<th class="w-28">
 									Points
 								</th>
-								<th class="width-200">
+								<th class="w-56">
 									Edit
 								</th>
 							</thead>
 							<tbody class="overflow-y-auto">
 								<tr v-for="rr in results" :key="rr.id">
-									<td>
+									<td class="text-center">
 										{{ rr.finished ? rr.position : "DNF" }}
 									</td>
-									<td>
+									<td class="text-center">
 										{{ rr.driver.nickname }}
 									</td>
-									<td>
+									<td class="text-center">
 										{{ rr.team.name}}
 									</td>
-									<td>
+									<td class="text-center">
 										{{ rr.points }}
 									</td>
-									<td>
-										<button @click="editResult(rr)">
+									<td class="text-center">
+										<Mybutton @click="editResult(rr)">
 											Edit
-										</button>
+										</Mybutton>
 									</td>
 								</tr>
 							</tbody>
@@ -71,13 +71,13 @@
 					</div>
 					<div class="flex">
 						<div class="flex-grow" ></div>
-						<button class="passive" @click="addResult">
+						<Mybutton @click="addResult">
 							Add Result
-						</button>
+						</Mybutton>
 					</div>
 				</div>
 			</div>
-		</div>
+		</card>
 
 		<edit-race-modal :season="season" :tracks="tracks" ref="new_race_modal" :race="editingRace" ></edit-race-modal>
 		<edit-result-modal :season="season" :teams="season.teams" :drivers="drivers" :result="activeResult" :race="selectedRace" ref="edit_result_modal" ></edit-result-modal>
@@ -95,12 +95,18 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import BaseLayout from './baseLayout.vue';
 import EditRaceModal from './modals/editRaceModal.vue';
 import EditResultModal from './modals/editResultModal.vue';
+import Section from '../layout/section.vue';
+import Mybutton from '../layout/controls/mybutton.vue';
+import Myselect from '../layout/controls/myselect.vue';
 
 @Component({
 	components: {
 		BaseLayout,
 		EditRaceModal,
-		EditResultModal
+		EditResultModal,
+		'card': Section,
+		Mybutton,
+		Myselect
 	}
 })
 export default class extends Vue {

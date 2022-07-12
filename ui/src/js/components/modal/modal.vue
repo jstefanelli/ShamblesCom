@@ -4,7 +4,7 @@
 			<div class="flex items-start">
 				<div class="flex-grow" ></div>
 				<card class="flex flex-col mt-6 p-6 bg-opacity-100">
-					<div class="text-xl mb-6">
+					<div class="text-3xl  mb-6">
 						<slot name="header" ></slot>
 					</div>
 

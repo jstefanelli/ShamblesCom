@@ -15,31 +15,31 @@
 						Profile image:
 					</div>
 					<div class="flex-grow relative w-full" id="img_holder">
-						<img class="absolute inset-0 object-contain object-right-bottom" :src="profile.imageLink">
+						<img class="absolute inset-0 object-contain w-full h-full object-right-bottom overflow-hidden" :src="profile.imageLink">
 					</div>
 					<div class="flex items-center w-full">
 						<Myinput class="flex-grow margin-r-25" type="file" id="file_picker" name="file"></Myinput>
 						<Mybutton @click="uploadImage">Upload</Mybutton>
 					</div>
 				</div>
-				<div class="flex flex-vertical flex-grow no-hover margin-r-25">
-					<div class="font-m fill-w margin-b-5">
+				<div class="flex flex-col flex-grow mr-6">
+					<div class="font-m w-full mb-2">
 						Short description:
 					</div>
-					<textarea class="flex-grow-2 fill-w noresize margin-b-5" v-model="shortDescription">
+					<Mytextarea class="flex-grow-[2] w-full resize-none mb-2" v-model="shortDescription">
 
-					</textarea> 
-					<div class="font-m fill-w margin-b-5">
+					</Mytextarea> 
+					<div class="font-m w-full mb-2">
 						Full description:
 					</div>
-					<textarea class="flex-grow-3 fill-w noresize margin-b-5" v-model="description">
+					<Mytextarea class="flex-grow-[3] w-full resize-none mb-2" v-model="description">
 
-					</textarea>
+					</Mytextarea>
 					<div class="flex">
 						<div class="flex-grow" ></div>
-						<button @click="submit">
+						<Mybutton :main="true" @click="submit">
 							Save
-						</button>
+						</Mybutton>
 					</div>
 				</div>
 			</div>
@@ -55,13 +55,15 @@ import BaseLayout from './baseLayout.vue';
 import Myinput from '../layout/controls/myinput.vue';
 import Mybutton from '../layout/controls/mybutton.vue';
 import Section from '../layout/section.vue';
+import Mytextarea from '../layout/controls/mytextarea.vue';
 
 @Component({
 	components: {
 		BaseLayout,
 		Myinput,
 		Mybutton,
-		"card": Section
+		"card": Section,
+		Mytextarea
 	}
 })
 export default class extends Vue {
@@ -75,18 +77,12 @@ export default class extends Vue {
 	private mounted() {
 		this.description = this.profile.description;
 		this.shortDescription = this.profile.shortDescription;
-
-		let holder = document.getElementById("img_holder") as HTMLDivElement;
-		let image = document.createElement("img");
-		image.src = this.profile.imageLink;
-		image.style.position = "absolute";
-		image.style.height = holder.offsetHeight + "px";
-		image.style.width = (holder.offsetHeight * (10 / 13)) + "px";
-		//holder.appendChild(image);
 	}
 
 	public unmounted() {
-		window.removeEventListener("resize", this.resizeHandler);
+		if (this.resizeHandler) {
+			window.removeEventListener("resize", this.resizeHandler);
+		}
 	}
 
 	public goBack() {

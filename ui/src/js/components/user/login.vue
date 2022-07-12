@@ -1,21 +1,23 @@
 <template>
 	<base-page>
-		<div class="fill-w margin-fill-h padding-50 flex align-center">
-			<div class="flex-grow" />
-			<my-section class="flex flex-vertical padding-50 align-right">
-				<span class="font-m margin-b-10 color-red" v-if="errors && errors.name">
+		<div class="w-full p-12 flex items-center">
+			<div class="flex-grow" ></div>
+			<my-section class="flex flex-col p-12 items-start">
+				<span class="font-m mb-3 text-red-500" v-if="errors && errors.name">
 					<b>Error:</b> {{ errors.name }}
 				</span>
-				<span class="font-m margin-b-5">Email:</span>
-				<input type="text" class="width-350" v-model="form.email" />
-				<span class="font-m margin-b-5 margin-t-10 ">Password:</span>
-				<input type="password" class="width-350" v-model="form.password" />
-				<div class="flex">
-					<div class="flex-grow" />
-					<spa-link class="button margin-t-15" target="/login" method="POST" :reqData="form" >Login</spa-link>
+				<span class="font-m mb-3">Email:</span>
+				<Myinput type="text" class="width-350" v-model="form.email" ></Myinput>
+				<span class="font-m mb-3 mt-10 ">Password:</span>
+				<Myinput type="password" class="width-350" v-model="form.password" ></Myinput>
+				<div class="flex self-stretch">
+					<div class="flex-grow" ></div>
+					<Mybutton :main="true" class="mt-4">
+						<spa-link target="/login" method="POST" :reqData="form" >Login</spa-link>
+					</Mybutton>
 				</div>
 			</my-section>
-			<div class="flex-grow" />
+			<div class="flex-grow"></div>
 		</div>
 	</base-page>
 	
@@ -26,6 +28,8 @@ import SpaLink from '@/SPA/SpaLink.vue';
 import BasePage from "@/components/layout/basePage.vue";
 import Section from "@/components/layout/section.vue";
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import Myinput from '../layout/controls/myinput.vue';
+import Mybutton from '../layout/controls/mybutton.vue';
 
 export class LoginData {
 	public email: string;
@@ -36,7 +40,9 @@ export class LoginData {
 	components: {
 		SpaLink,
 		BasePage,
-		"my-section": Section
+		"my-section": Section,
+		Myinput,
+		Mybutton
 	}
 })
 export default class extends Vue {

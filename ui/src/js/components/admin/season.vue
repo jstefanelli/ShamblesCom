@@ -1,6 +1,6 @@
 <template>
 	<base-layout v-bind="index">
-		<card class="w-full flex flex-col p-6">
+		<card class="w-full h-full flex flex-col p-6">
 			<div class="flex mb-6 items-center">
 				<div class="text-3xl ">
 					{{ season ? season.name : "unknown-season"}}

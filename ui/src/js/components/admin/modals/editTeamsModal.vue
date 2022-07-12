@@ -75,7 +75,7 @@ import Myinput from '@/components/layout/controls/myinput.vue';
 export default class extends Vue {
 	@Prop({default: (): Season => null}) public season: Season;
 	public currentTeam: Team = null;
-	public currentTeamId: number = 0;
+	public currentTeamId: number = null;
 
 	public errors: any = null;
 

@@ -5,46 +5,46 @@
 		</template>
 
 		<template>
-			<div class="flex flex-vertical">
-				<span v-if="errors && errors.Name" class="color-red margin-b-10"><b>Error:</b> {{ errors.Name }}</span>
+			<div class="flex flex-col text-xl">
+				<span v-if="errors && errors.Name" class="text-red-500 mb-3"><b>Error:</b> {{ errors.Name }}</span>
 				<span>Name:</span>
-				<input type="text" class="margin-v-10" v-model="name"/>
+				<Myinput type="text" class="my-3" v-model="name"></Myinput>
 
-				<span v-if="errors && errors.TrackId" class="color-red margin-b-10"><b>Error:</b> {{ errrors.TrackId }}</span>
+				<span v-if="errors && errors.TrackId" class="text-red-500 mb-3"><b>Error:</b> {{ errors.TrackId }}</span>
 				<span>Track:</span>
-				<select v-model="trackId" class="margin-v-10">
+				<Myselect v-model="trackId" class="my-3">
 					<option v-for="t in tracks" :key="t.id" :value="t.id">
 						{{ t.name }} ({{ t.country }})
 					</option>
-				</select>
+				</Myselect>
 
-				<span v-if="errors && errors.DateTime" class="color-red margin-b-10"><b>Error:</b> {{ errors.DateTime }}</span>
+				<span v-if="errors && errors.DateTime" class="text-red-500 mb-3"><b>Error:</b> {{ errors.DateTime }}</span>
 				<span>Start Date/Time:</span>
-				<date-picker v-model="date" class="margin-v-10" />
+				<date-picker v-model="date" class="my-3" ></date-picker>
 
-				<span v-if="errors && errors.LivestreamLink" class="color-red margin-b-10"><b>Error:</b> {{ errors.LivestreamLink }}</span>
+				<span v-if="errors && errors.LivestreamLink" class="text-red-500 mb-3"><b>Error:</b> {{ errors.LivestreamLink }}</span>
 				<span>Stream Link:</span>
-				<input type="text" class="margin-v-10" v-model="streamLink" />
+				<Myinput type="text" class="my-3" v-model="streamLink" ></Myinput>
 
-				<span v-if="errors && errors.VodLink" class="color-red margin-b-10"><b>Error:</b> {{ errors.VodLink }}</span>
+				<span v-if="errors && errors.VodLink" class="text-red-500 mb-3"><b>Error:</b> {{ errors.VodLink }}</span>
 				<span>VoD Link:</span>
-				<input type="text" class="margin-v-10" v-model="vodLink" />
+				<Myinput type="text" class="my-3" v-model="vodLink" ></Myinput>
 			</div>
 		</template>
 
 		<template slot="footer-heading">
-			<button @click="deleteRace" class="passive" v-if="race">
+			<Mybutton @click="deleteRace" v-if="race">
 				Delete this race
-			</button>
+			</Mybutton>
 		</template>
 
 		<template slot="footer">
-			<button @click="close" class="passive">
+			<Mybutton @click="close">
 				Cancel
-			</button>
-			<button @click="submit">
+			</Mybutton>
+			<Mybutton :main="true" @click="submit">
 				Save
-			</button>
+			</Mybutton>
 		</template>
 	</modal>
 </template>
@@ -57,30 +57,36 @@ import Season from '@/data/Season';
 import Track from '@/data/Track';
 import SPA from '@/SPA/spa';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import Myinput from '@/components/layout/controls/myinput.vue';
+import Myselect from '@/components/layout/controls/myselect.vue';
+import Mybutton from '@/components/layout/controls/mybutton.vue';
 
 @Component({
 	components: {
 		Modal,
-		DatePicker
+		DatePicker,
+		Myinput,
+		Myselect,
+		Mybutton
 	}
 })
 export default class extends Vue {
-	@Prop({default: (): Season => null}) private season: Season;
-	@Prop({default: (): Track[] => null}) private tracks: Track[];
-	@Prop({default: (): Race => null}) private race: Race;
-	private errors: any = {};
-	private name: string = "";
-	private trackId: number = 0;
-	private date: Date = null;
-	private streamLink: string = '';
-	private vodLink: string = '';
+	@Prop({default: (): Season => null}) public season: Season;
+	@Prop({default: (): Track[] => null}) public tracks: Track[];
+	@Prop({default: (): Race => null}) public race: Race;
+	public errors: any = {};
+	public name: string = "";
+	public trackId: number = 0;
+	public date: Date = null;
+	public streamLink: string = '';
+	public vodLink: string = '';
 
-	private modal(): any {
+	public modal(): any {
 		return (this.$refs.myModal as any);
 	}
 
 	@Watch("race")
-	private raceChanged(val: Race, old: Race) {
+	public raceChanged(val: Race, old: Race) {
 		if (val) {
 			this.name = val.name;
 			this.trackId = val.trackId;
@@ -134,14 +140,14 @@ export default class extends Vue {
 		}
 	}
 	
-	private deleteRace() {
+	public deleteRace() {
 		if (!this.race)
 			return;
 
 		SPA.navigateAndRender("/admin/" + this.season.id + "/races/" + this.race.id, "DELETE");
 	}
 
-	private close() {
+	public close() {
 		this.modal().closeModal();
 	}
 

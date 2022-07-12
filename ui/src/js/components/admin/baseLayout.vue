@@ -1,6 +1,6 @@
 <template>
 	<base-page>
-		<div class="p-6 flex flex-col">
+		<div class="p-6 flex flex-col h-full w-full">
 			<div class="flex items-center mb-6">
 				<div class="text-2xl">
 					Season:

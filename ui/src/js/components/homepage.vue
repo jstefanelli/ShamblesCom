@@ -17,9 +17,9 @@
 						No results available
 					</span>
 
-					<driver-card :result="firstResult" title="#1" ></driver-card>
-					<driver-card :result="secondResult" title="#2" ></driver-card>
-					<driver-card :result="thirdResult" title="#3" ></driver-card>
+					<driver-card :result="firstResult" title="#1" v-if="firstResult" ></driver-card>
+					<driver-card :result="secondResult" title="#2" v-if="secondResult"></driver-card>
+					<driver-card :result="thirdResult" title="#3" v-if="thirdResult"></driver-card>
 				</div>
 				<div class="grid grid-cols-2" style="grid-auto-rows: 1fr">
 					<spa-link class=" flex padding-5 align-center max-height-50" v-for="(rr, i) in otherResults" :key="rr.id" :target="'/driver/' + rr.driver.id">

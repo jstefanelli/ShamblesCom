@@ -29,11 +29,11 @@
 				<span class="flex-grow" ></span>
 			</div>
 		</header>
-		<main class=" pt-28 min-h-screen">
-			<div class=" max-w-[1320px] mx-auto">
+		<main class="pt-28 min-h-screen flex items-stretch justify-center">
+			
+			<div class=" max-w-[1320px] flex-grow">
 				<slot ></slot>
 			</div>
-		
 		</main>
 	</div>
 </template>
