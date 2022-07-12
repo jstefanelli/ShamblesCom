@@ -33,8 +33,8 @@ namespace ShamblesCom.Server.DB {
 			builder.Entity<Season>()
 				.Property(s => s.Options)
 				.HasConversion(
-					v => JsonSerializer.Serialize(v, null),
-					v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, null)
+					v => JsonSerializer.Serialize(v, null as JsonSerializerOptions),
+					v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, null as JsonSerializerOptions)
 				);
 
 			builder.Entity<ShamblesUser>()
