@@ -7,6 +7,7 @@ module.exports = {
                     titlebar: "#e10600"
                 },
                 bg: {
+                    light: "#20202d",
                     DEFAULT: "#15151e",
                     second: "#35354b"
                 }

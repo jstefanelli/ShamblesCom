@@ -3,7 +3,7 @@
 		<div class="modal fixed overflow-x-hidden overflow-y-auto inset-0 top-28 bg-opacity-50 bg-black " v-if="visible">
 			<div class="flex items-start">
 				<div class="flex-grow" ></div>
-				<card class="flex flex-col mt-6 bg-opacity-100">
+				<card class="flex flex-col mt-6 p-6 bg-opacity-100">
 					<div class="text-xl mb-6">
 						<slot name="header" ></slot>
 					</div>

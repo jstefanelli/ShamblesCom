@@ -1,27 +1,27 @@
 <template>
 	<base-layout v-bind="index">
-		<card class="w-full h-full flex flex-col p-6">
+		<card class="w-full flex flex-col p-6">
 			<div class="flex mb-6 items-center">
-				<div class="font-m ">
+				<div class="text-3xl ">
 					{{ season ? season.name : "unknown-season"}}
 				</div>
 				<div class="flex-grow">
 
 				</div>
-				<button class="passive" @click="showOneHomepage" v-if="settings && season && settings.currentHomeSeasonId != season.id">
+				<Mybutton @click="showOneHomepage" v-if="settings && season && settings.currentHomeSeasonId != season.id">
 					Display this season on the HomePage
-				</button>
+				</Mybutton>
 			</div>
 			<div class="flex-grow flex">
-				<button class="passive flex-grow margin-r-25 font-m" @click="viewRaces">
+				<Mybutton class="passive flex-grow mr-6 text-xl" @click="viewRaces">
 					Edit Races
-				</button>
-				<button class="passive flex-grow margin-r-25 font-m" @click="viewDrivers">
+				</Mybutton>
+				<Mybutton class="passive flex-grow mr-6 text-xl" @click="viewDrivers">
 					Edit Drivers
-				</button>
-				<button class="passive flex-grow font-m" @click="($refs.editTeamsModal).open()">
+				</Mybutton>
+				<Mybutton class="passive flex-grow text-xl" @click="openModal">
 					Edit Teams
-				</button>
+				</Mybutton>
 			</div>
 			<edit-teams-modal :season="season" ref="editTeamsModal"></edit-teams-modal>
 		</card>
@@ -36,12 +36,14 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import EditTeamsModal from './modals/editTeamsModal.vue';
 import BaseLayout from './baseLayout.vue';
 import SiteSettings from '@/data/SiteSettings'
+import Mybutton from '../layout/controls/mybutton.vue';
 
 @Component({
 	components: {
 		EditTeamsModal,
 		BaseLayout,
-		"card": Section
+		"card": Section,
+		Mybutton
 	}
 })
 export default class extends Vue {
@@ -55,6 +57,10 @@ export default class extends Vue {
 
 	public viewDrivers() {
 		SPA.navigateAndRender("/admin/" + this.season.id + "/drivers");
+	}
+
+	public openModal() {
+		(this.$refs.editTeamsModal as any).open();
 	}
 
 	showOneHomepage() {

@@ -1,5 +1,5 @@
 <template>
-	<div class="w-full box-border text-white bg-bg">
+	<div class="w-full box-border min-h-screen text-white bg-bg">
 		<header class="fixed w-screen bg-red-titlebar h-28 flex flex-row items-center font-semibold text-2xl font-haas z-50">
 			<div class="flex-grow flex items-center">
 				<span class="flex-grow" ></span>
@@ -29,10 +29,11 @@
 				<span class="flex-grow" ></span>
 			</div>
 		</header>
-		<main class=" pt-28">
+		<main class=" pt-28 min-h-screen">
 			<div class=" max-w-[1320px] mx-auto">
 				<slot ></slot>
 			</div>
+		
 		</main>
 	</div>
 </template>

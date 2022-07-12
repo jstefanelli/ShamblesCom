@@ -5,27 +5,27 @@
 		</template>
 
 		<template>
-			<div class="flex flex-vertical">
-				<span v-if="errors && errors.Name" class="color-red margin-b-10"><b>Error:</b> {{ errors.Name }}</span>
+			<div class="flex flex-col">
+				<span v-if="errors && errors.Name" class="text-red-500 mb-3"><b>Error:</b> {{ errors.Name }}</span>
 				<span>Name:</span>
-				<input type="text" class="margin-v-10" v-model="nextName"/>
+				<Myinput type="text" class="my-3" v-model="nextName"></Myinput>
 
 				<span>Category:</span>
-				<select class="margin-v-10" v-model="nextCategoryId">
+				<Myselect class="my-3" v-model="nextCategoryId">
 					<option v-for="category in categories" :key="category.id" :value="category.id">
 						{{ category.name }}
 					</option>
-				</select>
+				</Myselect>
 			</div>
 		</template>
 
 		<template slot="footer">
-			<button @click="close()" class="passive">
+			<Mybutton @click="close()" :main="false">
 				Cancel
-			</button>
-			<button @click="submit">
+			</Mybutton>
+			<Mybutton @click="submit" :main="true">
 				Save
-			</button>
+			</Mybutton>
 		</template>
 	</modal>
 </template>
@@ -37,17 +37,22 @@ import Game from '@/data/Game';
 import Season from '@/data/Season';
 import SPA from '@/SPA/spa';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import Myselect from '@/components/layout/controls/myselect.vue';
+import Myinput from '@/components/layout/controls/myinput.vue';
+import Mybutton from '@/components/layout/controls/mybutton.vue';
 
 @Component({
 	components: {
-		Modal
-
+		Modal,
+		Myselect,
+		Myinput,
+		Mybutton
 	}
 })
 export default class extends Vue {
 	@Prop({default: (): Category[] => []}) public categories: Category[];
-	private nextName: string = null;
-	private nextCategoryId: number = 0;
+	public nextName: string = null;
+	public nextCategoryId: number = 0;
 
 	public errors: any = null;
 

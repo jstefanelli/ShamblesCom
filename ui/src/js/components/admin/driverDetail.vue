@@ -1,25 +1,25 @@
 <template>
 	<base-layout v-bind="index">
-		<div class="fill card no-hover padding-25 flex flex-vertical">
-			<div class="flex align-center margin-b-25">
-				<button class="passive" @click="goBack">
+		<card class="w-fll min-h-screen p-6 flex flex-col">
+			<div class="flex items-center mb-6">
+				<Mybutton class="passive" @click="goBack">
 					Back
-				</button>
-				<span class="font-m margin-l-5">
+				</Mybutton>
+				<span class="text-xl ml-1">
 					{{ profile.driver.nickname }}'s Profile:
 				</span>
 			</div>
-			<div class="flex flex-grow fill-h">
-				<div class="flex flex-vertical align-center flex-grow no-hover margin-r-25">
-					<div class="font-m margin-b-5 fill-w">
+			<div class="flex flex-grow h-full">
+				<div class="flex flex-col items-center flex-grow mr-6">
+					<div class="text-xl mb-1 w-full">
 						Profile image:
 					</div>
-					<div class="flex-grow relative fill-w" id="img_holder">
-
+					<div class="flex-grow relative w-full" id="img_holder">
+						<img class="absolute inset-0 object-contain object-right-bottom" :src="profile.imageLink">
 					</div>
-					<div class="flex align-center fill-w">
-						<input class="flex-grow margin-r-25" type="file" id="file_picker" name="file" />
-						<button @click="uploadImage">Upload</button>
+					<div class="flex items-center w-full">
+						<Myinput class="flex-grow margin-r-25" type="file" id="file_picker" name="file"></Myinput>
+						<Mybutton @click="uploadImage">Upload</Mybutton>
 					</div>
 				</div>
 				<div class="flex flex-vertical flex-grow no-hover margin-r-25">
@@ -36,14 +36,14 @@
 
 					</textarea>
 					<div class="flex">
-						<div class="flex-grow" />
+						<div class="flex-grow" ></div>
 						<button @click="submit">
 							Save
 						</button>
 					</div>
 				</div>
 			</div>
-		</div>
+		</card>
 	</base-layout>
 </template>
 
@@ -52,20 +52,25 @@ import DriverProfile from '@/data/DriverProfile';
 import SPA from '@/SPA/spa';
 import { Vue, Prop, Watch, Component } from 'vue-property-decorator';
 import BaseLayout from './baseLayout.vue';
+import Myinput from '../layout/controls/myinput.vue';
+import Mybutton from '../layout/controls/mybutton.vue';
+import Section from '../layout/section.vue';
 
 @Component({
 	components: {
-		BaseLayout
-		
+		BaseLayout,
+		Myinput,
+		Mybutton,
+		"card": Section
 	}
 })
 export default class extends Vue {
-	@Prop({default: (): any => {}}) private index: any;
-	@Prop({default: (): any => []}) private profile: DriverProfile;
+	@Prop({default: (): any => {}}) public index: any;
+	@Prop({default: (): any => []}) public profile: DriverProfile;
 
-	private description: string = "";
-	private shortDescription: string = "";
-	private resizeHandler: (ev: any) => boolean;
+	public description: string = "";
+	public shortDescription: string = "";
+	public resizeHandler: (ev: any) => boolean;
 
 	private mounted() {
 		this.description = this.profile.description;
@@ -76,27 +81,19 @@ export default class extends Vue {
 		image.src = this.profile.imageLink;
 		image.style.position = "absolute";
 		image.style.height = holder.offsetHeight + "px";
-		image.style.widows = (holder.offsetHeight * (10 / 13)) + "px";
-		holder.appendChild(image);
-
-		this.resizeHandler = (ev) => {
-			image.style.height = holder.offsetHeight + "px";
-			image.style.widows = (holder.offsetHeight * (10 / 13)) + "px";
-			return true;
-		};
-
-		window.addEventListener("resize", this.resizeHandler);
+		image.style.width = (holder.offsetHeight * (10 / 13)) + "px";
+		//holder.appendChild(image);
 	}
 
-	private unmounted() {
+	public unmounted() {
 		window.removeEventListener("resize", this.resizeHandler);
 	}
 
-	private goBack() {
+	public goBack() {
 		SPA.navigateAndRender("/admin/" + this.profile.seasonId + "/drivers");
 	}
 
-	private uploadImage() {
+	public uploadImage() {
 		let thiz = this;
 		var fileInput = document.getElementById('file_picker') as HTMLInputElement;
 		if (fileInput.files == null || fileInput.files.length == 0)
@@ -117,7 +114,7 @@ export default class extends Vue {
 		};
 	}
 
-	private submit() {
+	public submit() {
 		let d : DriverProfile = {
 			id: this.profile.id,
 			driverId: this.profile.driverId,

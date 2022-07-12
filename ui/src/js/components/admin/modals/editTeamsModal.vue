@@ -5,51 +5,51 @@
 		</template>
 
 		<template>
-			<div class="flex flex-vertical">
-				<div class="flex margin-v-10">
-					<select class="flex-grow margin-h-10" v-model="currentTeamId">
+			<div class="flex flex-col">
+				<div class="flex my-3">
+					<Myselect class="flex-grow mr-3" v-model="currentTeamId">
 						<option v-for="team in season.teams" :key="team.id" :value="team.id">
 							{{ team.name }}
 						</option>
-					</select>
-					<button @click="addTeam">
+					</Myselect>
+					<Mybutton @click="addTeam">
 						New Team
-					</button>
+					</Mybutton>
 				</div>
-				<div class="flex flex-vertical" v-if="currentTeam">
-					<span v-if="errors && errors.Name" class="color-red margin-b-10"><b>Error:</b> {{ errors.Name }}</span>
+				<div class="flex flex-col" v-if="currentTeam">
+					<span v-if="errors && errors.Name" class="text-red-500 mb-3"><b>Error:</b> {{ errors.Name }}</span>
 					<span>Name:</span>
-					<input type="text" class="margin-v-10" v-model="currentTeam.name"/>
+					<Myinput type="text" class="my-3" v-model="currentTeam.name"></Myinput>
 
-					<span v-if="errors && errors.MainColor" class="colo-red margin-b-10"><b>Error:</b> {{ errors.MainColor }}</span>
+					<span v-if="errors && errors.MainColor" class="text-red-500 mb-3"><b>Error:</b> {{ errors.MainColor }}</span>
 					<span>Main Color:</span>
-					<div class="flex margin-v-10">
-						<input type="text" class="flex-grow margin-r-10" v-model="currentTeam.mainColor" />
-						<div class="width-100" :style="'background-color: #' + this.currentTeam.mainColor" />
+					<div class="flex my-3">
+						<Myinput type="text" class="flex-grow mr-3" v-model="currentTeam.mainColor" ></Myinput>
+						<div class="w-28" :style="'background-color: #' + currentTeam.mainColor" ></div>
 					</div>
 					
 					<span v-if="errors && errors.MainColor" class="colo-red margin-b-10"><b>Error:</b> {{ errors.MainColor }}</span>
 					<span>Secondary Color:</span>
-					<div class="flex margin-v-10">
-						<input type="text" class="flex-grow margin-r-10" v-model="currentTeam.secondaryColor" />
-						<div class="width-100" :style="'background-color: #' + this.currentTeam.secondaryColor" />
+					<div class="flex my-3">
+						<Myinput type="text" class="flex-grow mr-3" v-model="currentTeam.secondaryColor" ></Myinput>
+						<div class="w-28" :style="'background-color: #' + currentTeam.secondaryColor" ></div>
 					</div>
 				</div>
-				<div class="flex flex-vertical align-center" v-else>
-					<div class="flex-grow" />
+				<div class="flex flex-col items-center" v-else>
+					<div class="flex-grow" ></div>
 					<span class="font-m">Select or create a team</span>
-					<div class="flex-grow" />
+					<div class="flex-grow" ></div>
 				</div>
 			</div>
 		</template>
 
 		<template slot="footer">
-			<button @click="close()" class="passive">
+			<Mybutton @click="close()">
 				Cancel
-			</button>
-			<button @click="submit">
+			</Mybutton>
+			<Mybutton @click="submit" :main="true">
 				Save
-			</button>
+			</Mybutton>
 		</template>
 	</modal>
 </template>
@@ -60,20 +60,26 @@ import Team from '@/data/Team';
 import Season from '@/data/Season';
 import SPA from '@/SPA/spa';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import Myselect from '@/components/layout/controls/myselect.vue';
+import Mybutton from '@/components/layout/controls/mybutton.vue';
+import Myinput from '@/components/layout/controls/myinput.vue';
 
 @Component({
 	components: {
-		Modal
+		Modal,
+		Myselect,
+		Mybutton,
+		Myinput
 	}
 })
 export default class extends Vue {
 	@Prop({default: (): Season => null}) public season: Season;
-	private currentTeam: Team = null;
-	private currentTeamId: number = 0;
+	public currentTeam: Team = null;
+	public currentTeamId: number = 0;
 
 	public errors: any = null;
 
-	private addTeam() {
+	public addTeam() {
 		this.currentTeamId = 0;
 		this.currentTeam = {
 			id: 0,
@@ -86,7 +92,7 @@ export default class extends Vue {
 	}
 
 	@Watch("currentTeamId")
-	private onCurrentTeamIdChanged(val: number, oldVal: number) {
+	public onCurrentTeamIdChanged(val: number, oldVal: number) {
 		this.season.teams.forEach((t) => {
 			if (t.id == val) {
 				this.currentTeam = t;
@@ -94,7 +100,7 @@ export default class extends Vue {
 		})	
 	}
 
-	private modal(): any {
+	public modal(): any {
 		return (this.$refs.myModal as any);
 	}
 

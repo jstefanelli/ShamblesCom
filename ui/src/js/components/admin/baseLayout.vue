@@ -12,7 +12,7 @@
 						{{season.name}}
 					</option>
 				</Myselect>
-				<my-button v-on:click="$refs.newSeasonModal.open()" class="ml-3">
+				<my-button v-on:click="openModal()" class="ml-3">
 					Create new
 				</my-button>
 			</div>
@@ -36,7 +36,7 @@ import SPA from '@/SPA/spa';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import BasePage from '../layout/basePage.vue';
 import NewSeasonModal from './modals/newSeasonModal.vue';
-import Button from '../layout/controls/button.vue';
+import Button from '../layout/controls/mybutton.vue';
 import Myselect from '../layout/controls/myselect.vue';
 
 @Component({
@@ -58,6 +58,10 @@ export default class extends Vue {
 
 	public selectSeason() {
 		SPA.navigateAndRender("/admin/" + this.activeSeasonId);
+	}
+
+	public openModal() {
+		(this.$refs.newSeasonModal as any).open();
 	}
 
 	private mounted(): void {

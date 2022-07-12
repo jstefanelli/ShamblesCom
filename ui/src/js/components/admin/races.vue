@@ -70,17 +70,17 @@
 						</table>
 					</div>
 					<div class="flex">
-						<div class="flex-grow" />
+						<div class="flex-grow" ></div>
 						<button class="passive" @click="addResult">
-							Add Resiòt
+							Add Result
 						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<edit-race-modal :season="season" :tracks="tracks" ref="new_race_modal" :race="editingRace" />
-		<edit-result-modal :season="season" :teams="season.teams" :drivers="drivers" :result="activeResult" :race="selectedRace" ref="edit_result_modal" />
+		<edit-race-modal :season="season" :tracks="tracks" ref="new_race_modal" :race="editingRace" ></edit-race-modal>
+		<edit-result-modal :season="season" :teams="season.teams" :drivers="drivers" :result="activeResult" :race="selectedRace" ref="edit_result_modal" ></edit-result-modal>
 	</base-layout>
 </template>
 
@@ -104,30 +104,30 @@ import EditResultModal from './modals/editResultModal.vue';
 	}
 })
 export default class extends Vue {
-	@Prop({default: (): any => {} }) private index: any;
-	@Prop({default: (): Season => null }) private season: Season;
-	@Prop({default: (): Track[] => [] }) private tracks: Track[];
-	@Prop({default: (): RaceResult[] => []}) private results: RaceResult[]
-	@Prop({default: 0}) private selectedRaceId: number;
-	@Prop({default: (): Driver[] => []}) private drivers: Driver[]
+	@Prop({default: (): any => {} }) public index: any;
+	@Prop({default: (): Season => null }) public season: Season;
+	@Prop({default: (): Track[] => [] }) public tracks: Track[];
+	@Prop({default: (): RaceResult[] => []}) public results: RaceResult[]
+	@Prop({default: 0}) public selectedRaceId: number;
+	@Prop({default: (): Driver[] => []}) public drivers: Driver[]
 
-	private activeResult: RaceResult = null;
-	private internalSelectedRaceId: number = 0;
-	private selectedRace: Race = null;
-	private editingRace: Race = null;
+	public activeResult: RaceResult = null;
+	public internalSelectedRaceId: number = 0;
+	public selectedRace: Race = null;
+	public editingRace: Race = null;
 
-	private goUp(): void {
+	public goUp(): void {
 		SPA.navigateAndRender("/admin/" + this.season.id);
 	}
 
-	private showNewRaceDialog(): void {
+	public showNewRaceDialog(): void {
 		this.editingRace = null;
 		this.$nextTick(() => {
 			(this.$refs.new_race_modal as any).open();
 		});
 	}
 
-	private showEditRaceDialog(): void {
+	public showEditRaceDialog(): void {
 		if (!this.selectedRace) {
 			return;
 		}
@@ -138,7 +138,7 @@ export default class extends Vue {
 		});
 	}
 
-	private onRaceChanged(ev: Event) {
+	public onRaceChanged(ev: Event) {
 		SPA.navigateAndRender("/admin/" + this.season.id + "/races/" + this.internalSelectedRaceId);
 	}
 
@@ -158,12 +158,12 @@ export default class extends Vue {
 			this.selectedRace = null;
 	}
 
-	private editResult(r: RaceResult) {
+	public editResult(r: RaceResult) {
 		this.activeResult = r;
 		(this.$refs["edit_result_modal"] as any).open()
 	}
 
-	private addResult() {
+	public addResult() {
 		this.activeResult = null;
 		(this.$refs["edit_result_modal"] as any).open();
 	}
