@@ -12,7 +12,7 @@
 			<div class="flex flex-grow gap-5">
 				<div class="flex-[2] flex flex-col gap-3 justify-evenly">
 					<card class="flex-1 relative p-3">
-						<img class="absolute inset-0 w-full h-full object-contain object-right-bottom" :src="profile.imageLink">
+						<img class="absolute inset-0 top-1 right-1 w-full h-full object-contain object-right-bottom" :src="profile.imageLink">
 						<span v-if="profile" class="absolute top-3 left-3 font-f1 text-6xl font-bold" 
 							:style="'color: #' + (mainTeam ? mainTeam.mainColor : 'FFF' ) + '; text-shadow: 5px 5px #' + (mainTeam ? mainTeam.secondaryColor : '000')">
 							{{ profile.driver.number }}
@@ -45,23 +45,28 @@
 				</div>
 				<card class="flex flex-col flex-[3] gap-3 p-3">
 					<span class="text-2xl font-bold">
-						Results
+						Latest Results
 					</span>
-					<div class="flex-grow flex flex-col gap-3 overflow-y-auto">
+					<div class="flex-grow flex flex-col gap-3 overflow-y-auto" v-if="results">
 						<div class="rounded-lg flex items-center gap-3 text-xl p-5 w-full border-2 border-white border-opacity-30" v-for="r in results" :key="r.id">
-							<span>
+							<span class=" min-w-[3rem]">
 								{{ r.finished ? r.position : 'DNF'}}
 							</span>
-							<team-banner class="align-self-stretch" :mainColor="r.team.mainColor" :secondaryColor="r.team.secondaryColor">
+							<team-banner class="min-w-[10rem] align-self-stretch" :mainColor="r.team.mainColor" :secondaryColor="r.team.secondaryColor">
 								{{ r.team.name }}
 							</team-banner>
 							<span class="font-f1 text-xl text-center font-bold text-red-titlebar flex-grow">
-								{{ r.race.name }}
+								<spa-link :target="'/race/' + r.raceId">
+									{{ r.race.name }}
+								</spa-link>
 							</span>
 							<span>
 								{{ r.points }} points
 							</span>
 						</div>
+					</div>
+					<div v-else class="flex items-center justify-center gap-3 text-xl p-5 w-full">
+						No results avialble
 					</div>
 				</card>
 			</div>
@@ -110,7 +115,7 @@ export default class extends Vue {
 
 	public requestResults(offset: number) {
 		return new Promise<RaceResult[]>((resolve, fail) => {
-			const url = "/api/driver/" + this.profile.driverId + "/Results?skip=" + (this.resultsOffset * ResultsPerPage) + "&count=" + ResultsPerPage;
+			const url = "/api/driver/" + this.profile.driverId + "/Results?skip=" + (offset * ResultsPerPage) + "&count=" + ResultsPerPage;
 			fetch(url).then((res) => {
 				res.json().then(data => {
 					if(Array.isArray(data) && data.length > 0) {

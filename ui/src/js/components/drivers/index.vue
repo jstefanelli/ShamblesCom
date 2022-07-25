@@ -92,14 +92,13 @@ export default class extends Vue{
 		return this._chart != null;
 	}
 
-	mounted() {
+	public mounted() {
 		let data: SeasonData = {
 			labels: [],
 			datasets:  [],
 		};
 
 		let profileDatasets = new Map<number, ProfileDataset>();
-
 
 		if (this.profiles) {
 			this.profiles.forEach((p) => {

@@ -40,19 +40,19 @@ namespace ShamblesCom.Server.Controllers {
 			if (currentSeason == null) {
 				return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
 			}
-			List<DTODriverInfo> profiles = await Db.Profiles.Where(p => p.SeasonId == currentSeason.Id)
-				.Include(p => p.Driver)
-					.ThenInclude(d => d.RaceResults.Where(rr => rr.Race.SeasonId == currentSeason.Id))
-						.ThenInclude(rr => rr.Race)
-				.Select(p => new DTODriverInfo(new DTODriver(p.Driver) {
-					RaceResults = p.Driver.RaceResults.Select(rr => new DTORaceResult(rr) {
+			List<DTODriverInfo> profiles = await Db.Drivers.Where(d => d.RaceResults.Where(rr => rr.Race.SeasonId == currentSeason.Id).Any())
+				.Include(d => d.Profiles.Where(pr => pr.SeasonId == currentSeason.Id))
+				.Include(d => d.RaceResults.Where(rr => rr.Race.SeasonId == currentSeason.Id))
+					.ThenInclude(rr => rr.Race)
+				.Select(d => new DTODriverInfo(new DTODriver(d) {
+					RaceResults = d.RaceResults.Select(rr => new DTORaceResult(rr) {
 						Race = new DTORace(rr.Race)
-					}).ToList()
+					}).ToList(),
 				}) {
-					Profile = new DTODriverProfile(p),
-					SeasonPoints = p.Driver.RaceResults.Where(r => r.Race.SeasonId == seasonId).Sum(rr => rr.Points),
-				})
-				.ToListAsync();
+					Profile = 
+						d.Profiles.Where(pr => pr.SeasonId == currentSeason.Id).Any() ? new DTODriverProfile(d.Profiles.Where(pr => pr.SeasonId == currentSeason.Id).First()) : DTODriverProfile.EmptyForSeason(d.Id, seasonId),
+					SeasonPoints = d.RaceResults.Where(rr => rr.Race.SeasonId == currentSeason.Id).Sum(rr => rr.Points)
+				}).ToListAsync();
 
 			foreach(var i in profiles) {
 				int maxTeamId = 0;
@@ -110,6 +110,7 @@ namespace ShamblesCom.Server.Controllers {
 
 			Season s = await Db.Seasons.FindAsync(seasonId);
 			DriverProfile p = await Db.Profiles.Where(p => p.DriverId == driverId && p.SeasonId == seasonId).Include(p => p.Driver).FirstOrDefaultAsync();
+			Driver d = (p == null ? await Db.Drivers.Where(d => d.Id == driverId).FirstAsync() : p.Driver);
 
 			int mainTeamId = (await Db.RaceResults.Where(rr => rr.Race.SeasonId == seasonId && rr.DriverId == driverId).ToListAsync())
 				.GroupBy(rr => rr.TeamId).Select(g => new { t = g.Key, c = g.Count() }).OrderByDescending(g => g.c).Select(g => g.t).FirstOrDefault();
@@ -119,13 +120,14 @@ namespace ShamblesCom.Server.Controllers {
 			RaceResult bestSeasonResult = await Db.RaceResults.Where(rr => rr.DriverId == driverId && rr.Race.SeasonId == seasonId).Include(rr => rr.Race).OrderBy(rr => rr.Position).FirstOrDefaultAsync();
 			int seasonPoints = await Db.RaceResults.Where(rr => rr.DriverId == driverId && rr.Race.SeasonId == seasonId).SumAsync(rr => rr.Points);
 
+			DTODriverProfile profile = p == null ? DTODriverProfile.EmptyForSeason(d.Id, seasonId) : new DTODriverProfile(p);
+			profile.Driver = new DTODriver(d);
+
 			return new JsonResult(new SPAData() {
 				View = "drivers/detail",
 				Data = new {
 					season = new DTOSeason(s) {},
-					profile = new DTODriverProfile(p) {
-						Driver = new DTODriver(p.Driver)
-					},
+					profile = profile,
 					mainTeam = new DTOTeam(await Db.Teams.FindAsync(mainTeamId)),
 					totalEvents = totalEvents,
 					seasonEvents = seasonEvents,

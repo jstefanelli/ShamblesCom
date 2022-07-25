@@ -25,16 +25,17 @@ namespace ShamblesCom.Server.Controllers {
 			if (r == null) {
 				return new SeeOtherResult("/homepage");
 			}
-
+			var RaceResults = await Db.RaceResults.Where(rr => rr.RaceId == r.Id).Include(rr => rr.Driver).ThenInclude(d => d.Profiles.Where(p => p.SeasonId == r.SeasonId))
+				.Include(rr => rr.Team)
+				.ToListAsync();
+			RaceResults.Sort();
 			DTORace race = new DTORace(r) {
-				RaceResults = await Db.RaceResults.Where(rr => rr.RaceId == r.Id).Include(rr => rr.Driver).ThenInclude(d => d.Profiles.Where(p => p.SeasonId == r.SeasonId))
-								.Include(rr => rr.Team)
-								.Select(rr => new DTORaceResult(rr) {
-									Team = new DTOTeam(rr.Team),
-									Driver = new DTODriver(rr.Driver) {
-										Profiles = rr.Driver.Profiles.Select(p => new DTODriverProfile(p)).ToList()
-									}
-								}).ToListAsync()
+				RaceResults = RaceResults.Select(rr => new DTORaceResult(rr) {
+					Team = new DTOTeam(rr.Team),
+					Driver = new DTODriver(rr.Driver) {
+						Profiles = rr.Driver.Profiles.Select(p => new DTODriverProfile(p)).ToList()
+					}
+				}).ToList()
 			};
 
 			return new JsonResult(new SPAData() {

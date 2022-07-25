@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace ShamblesCom.Server.DB.Models {
-	public class RaceResult : IComparable<RaceResult> {
+	public class RaceResult : IComparable<RaceResult>, IComparable{
 		[Required]
 		public int Id { get; set; }
 		[Required]
@@ -39,5 +39,16 @@ namespace ShamblesCom.Server.DB.Models {
 
 			return Position - other.Position;
 		}
-	}
+
+        public int CompareTo(object obj)
+        {
+			if (obj is RaceResult rr) {
+				return CompareTo(rr);
+			} else if (obj == null) {
+				return -1;
+			}
+
+			throw new InvalidOperationException($"Cannot compare RaceResult to object of type: {obj.GetType()}");
+        }
+    }
 }

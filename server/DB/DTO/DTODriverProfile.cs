@@ -28,5 +28,13 @@ namespace ShamblesCom.Server.DB.DTO {
 			Description = pr.Description;
 			ImageLink = $"/api/pics/profile/{Id}";
 		}
+
+		public static DTODriverProfile EmptyForSeason(int driverId, int seasonid) {
+			return new DTODriverProfile() {
+				ImageLink = $"/api/pics/profile/{0}",
+				DriverId = driverId,
+				SeasonId = seasonid
+			};
+		}
 	}
 }

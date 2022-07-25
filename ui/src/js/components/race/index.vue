@@ -15,13 +15,13 @@ import Upcoming from './upcoming.vue';
 @Component({
 	components: {
 		BasePage,
-Upcoming,
-Done
+		Upcoming,
+		Done
 
 	}
 })
 export default class extends Vue {
-	@Prop({default: (): any => null}) private readonly race: Race;
+	@Prop({default: (): any => null}) public readonly race: Race;
 
 	public isUpcoming() {
 		return new Date(this.race.dateTime) > new Date();
