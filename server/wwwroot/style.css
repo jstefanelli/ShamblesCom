@@ -742,17 +742,11 @@ video {
   bottom: 0px;
   left: 0px;
 }
-.inset-1{
+.top-1{
   top: 0.25rem;
-  right: 0.25rem;
-  bottom: 0.25rem;
-  left: 0.25rem;
 }
-.inset-2{
-  top: 0.5rem;
-  right: 0.5rem;
-  bottom: 0.5rem;
-  left: 0.5rem;
+.right-1{
+  right: 0.25rem;
 }
 .top-3{
   top: 0.75rem;
@@ -769,12 +763,6 @@ video {
 .top-28{
   top: 7rem;
 }
-.top-1{
-  top: 0.25rem;
-}
-.right-1{
-  right: 0.25rem;
-}
 .z-50{
   z-index: 50;
 }
@@ -787,6 +775,10 @@ video {
 .my-3{
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
+}
+.my-2{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .mb-6{
   margin-bottom: 1.5rem;
@@ -896,20 +888,20 @@ video {
 .w-3{
   width: 0.75rem;
 }
-.min-w-\[5rem\]{
-  min-width: 5rem;
-}
-.min-w-\[4rem\]{
-  min-width: 4rem;
+.w-1\/2{
+  width: 50%;
 }
 .min-w-\[3rem\]{
   min-width: 3rem;
 }
+.min-w-\[10rem\]{
+  min-width: 10rem;
+}
 .min-w-\[8rem\]{
   min-width: 8rem;
 }
-.min-w-\[10rem\]{
-  min-width: 10rem;
+.min-w-\[25rem\]{
+  min-width: 25rem;
 }
 .max-w-\[1320px\]{
   max-width: 1320px;
@@ -931,6 +923,9 @@ video {
 }
 .flex-grow-\[3\]{
   flex-grow: 3;
+}
+.flex-grow-\[1\]{
+  flex-grow: 1;
 }
 .cursor-pointer{
   cursor: pointer;
@@ -991,8 +986,14 @@ video {
 .gap-3{
   gap: 0.75rem;
 }
+.self-end{
+  align-self: flex-end;
+}
 .self-stretch{
   align-self: stretch;
+}
+.self-baseline{
+  align-self: baseline;
 }
 .overflow-hidden{
   overflow: hidden;
@@ -1150,6 +1151,10 @@ video {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
 }
+.px-5{
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
 .pb-2{
   padding-bottom: 0.5rem;
 }
@@ -1231,6 +1236,12 @@ video {
 .text-gray-200{
   --tw-text-opacity: 1;
   color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+.text-opacity-100{
+  --tw-text-opacity: 1;
+}
+.text-opacity-50{
+  --tw-text-opacity: 0.5;
 }
 .transition{
   transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;

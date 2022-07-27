@@ -21,7 +21,7 @@ namespace ShamblesCom.Server.Controllers {
 		[HttpGet("{id}")]
 		[SPA]
 		public async Task<ActionResult> Index(int id) {
-			Race r = await Db.Races.FindAsync(id);
+			Race r = await Db.Races.Include(r => r.Track).Where(r => r.Id == id).FirstOrDefaultAsync();
 			if (r == null) {
 				return new SeeOtherResult("/homepage");
 			}
@@ -30,6 +30,7 @@ namespace ShamblesCom.Server.Controllers {
 				.ToListAsync();
 			RaceResults.Sort();
 			DTORace race = new DTORace(r) {
+				Track = new DTOTrack(r.Track),
 				RaceResults = RaceResults.Select(rr => new DTORaceResult(rr) {
 					Team = new DTOTeam(rr.Team),
 					Driver = new DTODriver(rr.Driver) {

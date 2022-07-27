@@ -5,24 +5,24 @@
 		</template>
 
 		<template>
-			<div class="flex flex-vertical">
+			<div class="flex flex-col">
 				<error-display v-if="errors && errors.Nickname" :errors="errors.Nickname" />
 				<span>Nickname:</span>
-				<input type="text" class="margin-v-10" v-model="name"/>
+				<my-input type="text" class=" my-2" v-model="name"/>
 
 				<error-display v-if="errors && errors.Number" :errors="errors.Number" />
 				<span>Driver Number:</span>
-				<input type="number" v-model.number="number" class="margin-v-10" />
+				<my-input type="number" v-model.number="number" class="my-2" />
 			</div>
 		</template>
 
 		<template slot="footer">
-			<button @click="close" class="passive">
+			<my-button @click="close">
 				Cancel
-			</button>
-			<button @click="submit">
+			</my-button>
+			<my-button @click="submit" :main="true">
 				Save
-			</button>
+			</my-button>
 		</template>
 	</modal>
 </template>
@@ -33,27 +33,31 @@ import Modal from '@/components/modal/modal.vue';
 import Driver from '@/data/Driver';
 import Season from '@/data/Season';
 import SPA from '@/SPA/spa';
+import MyInput from '@/components/layout/controls/myinput.vue';
+import MyButton from '@/components/layout/controls/mybutton.vue';
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 
 @Component({
 	components: {
 		Modal,
 ErrorDisplay,
+MyInput,
+MyButton
 	}
 })
 export default class extends Vue {
-	@Prop({default: (): Season => null}) private season: Season;
-	@Prop({default: (): Driver => null}) private driver: Driver;
-	private errors: any = {};
-	private name: string = "";
-	private number: number = 0;
+	@Prop({default: (): Season => null}) public readonly season: Season;
+	@Prop({default: (): Driver => null}) public readonly driver: Driver;
+	public errors: any = {};
+	public name: string = "";
+	public number: number = 0;
 
-	private modal(): any {
+	public modal(): any {
 		return (this.$refs.myModal as any);
 	}
 
 	@Watch("driver")
-	private driverChanged(val: Driver, old: Driver) {
+	public driverChanged(val: Driver, old: Driver) {
 		if (val) {
 			this.name = val.nickname;
 			this.number = val.number;
@@ -105,7 +109,7 @@ export default class extends Vue {
 		}
 	}
 
-	private close() {
+	public close() {
 		this.modal().closeModal();
 	}
 

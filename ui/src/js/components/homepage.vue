@@ -56,9 +56,7 @@
 					<div>
 						<a class="twitter-link" href="https://twitter.com/shambleschamp"> Official Shambles Championship Twitter </a><br>
 						<a class="youtube-link" href="https://www.youtube.com/channel/UCwByts4CkdG2Oc_LO77wD3w"> Official Shambles Championship Clips channel</a><br>
-						<a class="twitch-link" href="https://twitch.tv/lhudsonx"> LHudson's Twitch Page </a><br>
-						<a class="twitch-link" href="https://twitch.tv/thepatyman"> ThePatyMan's Twitch Page </a><br>
-						<a class="twitch-link" href="https://twitch.tv/clu_snake"> Clu's Twitch Page </a><br>
+						<a class="twitch-link" href="https://twitch.tv/shambleschampionship"> Official Shambles Championship Twitch Page </a><br>
 					</div>
 					
 				</my-section>
