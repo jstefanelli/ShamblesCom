@@ -21,7 +21,7 @@
 				<card class="flex overflow-y-auto flex-col gap-3 p-5">
 					<div class="flex flex-col gap-6">
 						<div class="flex p-5 rounded-md bg-bg-second border-2 border-white text-3xl items-center" v-for="r in race.raceResults" v-if="race && race.raceResults && !displayStartingGrid" :key="r.id">
-							<span class="font-f1 min-w-[10rem]" :style="'color: #' + r.team.mainColor + '; text-shadow: 10px 10px #' + r.team.secondaryColor + ';'">
+							<span class="font-f1 min-w-[10rem] text-3xl" :style="'color: #' + r.team.mainColor + '; text-shadow: 3px 3px #' + r.team.secondaryColor + ';'">
 								{{ r.finished ? '#' + r.position : 'DNF' }}
 							</span>
 							<span class="font-f1 text-red-titlebar flex-grow text-center">
@@ -32,7 +32,7 @@
 							</span>
 						</div>
 						<div class="flex p-5 rounded-md bg-bg-second border-2 border-white text-3xl items-center" v-for="r in startResults" v-if="displayStartingGrid && startResults" :key="r.id">
-							<span class="font-f1 min-w-[10rem]" :style="'color: #' + r.team.mainColor + '; text-shadow: 10px 10px #' + r.team.secondaryColor + ';'">
+							<span class="font-f1 min-w-[10rem] text-3xl" :style="'color: #' + r.team.mainColor + '; text-shadow: 3px 3px #' + r.team.secondaryColor + ';'">
 								{{ '#' + r.startPosition }}
 							</span>
 							<span class="font-f1 text-red-titlebar flex-grow text-center">
